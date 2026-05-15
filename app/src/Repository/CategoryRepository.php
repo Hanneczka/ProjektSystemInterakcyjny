@@ -9,4 +9,12 @@ class CategoryRepository extends ServiceEntityRepository{
     {
         parent::__construct($registry, Category::class);
     }
+    public function queryAll(): QueryBuilder
+    {
+        return $this->createQueryBuilder('category');}
+    public function save(Category $category): void
+    {
+        $this->getEntityManager()->persist($category);
+        $this->getEntityManager()->flush();
+    }
 }
