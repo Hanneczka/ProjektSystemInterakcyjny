@@ -17,6 +17,9 @@
                 <td>{{ category.id }}</td>
                 <td>{{ category.name }}</td>
                 <td>{{ category.createdAt|date('Y-m-d H:i') }}</td>
+                <td><a href="{{ path('category_edit', {id: category.id}) }}">
+                        {{ 'action.edit'|trans }}
+                    </a></td>
             </tr>
         {% else %}
             <tr>
