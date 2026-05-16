@@ -18,7 +18,10 @@
                 <td>{{ category.name }}</td>
                 <td>{{ category.createdAt|date('Y-m-d H:i') }}</td>
                 <td><a href="{{ path('category_edit', {id: category.id}) }}">
-                        {{ 'action.edit'|trans }}
+                        {{ 'action.edit' }}
+                    </a></td>
+                <td><a href="{{ path('category_delete', {id: category.id}) }}">
+                        {{ 'action.delete' }}
                     </a></td>
             </tr>
         {% else %}

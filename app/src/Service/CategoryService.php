@@ -15,5 +15,9 @@ class CategoryService implements CategoryServiceInterface{
         }
         $this->categoryRepository->save($category);
     }
+    public function delete(Category $category): void
+    {
+        $this->categoryRepository->delete($category);
+    }
 
 }
