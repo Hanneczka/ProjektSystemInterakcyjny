@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Lista Elementów</h1>
+
+    <table border="1">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nazwa</th>
+            <th>Data utworzenia</th>
+            <th>Kategoria</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for element in elements %}
+            <tr>
+                <td>{{ element.id }}</td>
+                <td>{{ element.title }}</td>
+                <td>{{ element.createdAt|date('Y-m-d H:i') }}</td>
+                <td>{{ element.category }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">Brak elementów w bazie.</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
