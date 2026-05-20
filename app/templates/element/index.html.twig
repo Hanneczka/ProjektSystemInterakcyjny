@@ -2,24 +2,32 @@
 
 {% block body %}
     <h1>Lista Elementów</h1>
-
+    {% if pagination is defined and pagination.items|length %}
+    <div class="navigation text-center">
+        {{ knp_pagination_render(pagination) }}
+    </div>
     <table border="1">
         <thead>
         <tr>
-            <th>ID</th>
-            <th>Nazwa</th>
-            <th>Data utworzenia</th>
-            <th>Kategoria</th>
+            <th>{{ knp_pagination_sortable(pagination, 'label.id'|trans, 'element.id') }}</th>
+            <th>{{ knp_pagination_sortable(pagination, 'label.created_at'|trans, 'element.createdAt') }}</th>
+            <th>{{ knp_pagination_sortable(pagination, 'label.updated_at'|trans, 'element.updatedAt') }}</th>
+            <th>{{ knp_pagination_sortable(pagination, 'label.title'|trans, 'element.title') }}</th>
+            <th>{{ knp_pagination_sortable(pagination, 'label.title'|trans, 'element.category') }}</th>
+            <th>{{ 'label.actions'|trans }}</th>
         </tr>
         </thead>
         <tbody>
-        {% for element in elements %}
+        {% for element in pagination.items %}
             <tr>
                 <td>{{ element.id }}</td>
                 <td>{{ element.title }}</td>
                 <td>{{ element.createdAt|date('Y-m-d H:i') }}</td>
                 <td>{{ element.category }}</td>
             </tr>
+            <div class="navigation text-center">
+                {{ knp_pagination_render(pagination) }}
+            </div>
         {% else %}
             <tr>
                 <td colspan="3">Brak elementów w bazie.</td>

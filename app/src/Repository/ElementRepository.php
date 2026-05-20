@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Element;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -15,6 +16,18 @@ class ElementRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Element::class);
     }
+
+    public function queryAll(): QueryBuilder
+    {
+        return $this->createQueryBuilder('element');
+    }
+
+    public function save(Element $element): void
+    {
+        $this->getEntityManager()->persist($element);
+        $this->getEntityManager()->flush();
+    }
+    public const PAGINATOR_ITEMS_PER_PAGE = 3;
 
     //    /**
     //     * @return Element[] Returns an array of Element objects

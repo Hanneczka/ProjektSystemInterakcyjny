@@ -8,9 +8,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Entity\Element;
-use Symfony\Component\Form\Extension\Core\Type\FormType;
+use Knp\Component\Pager\PaginatorInterface;
 use App\Form\Type\ElementType;
 use Symfony\Component\HttpFoundation\Request;
+
 
 
 #[Route('/element')]
@@ -21,10 +22,19 @@ class ElementController extends AbstractController
         name: 'element_index',
         methods: ['GET'],
 )]
-public function index(ElementRepository $elementRepository): Response
+public function index(ElementRepository $elementRepository, PaginatorInterface $paginator, #[MapQueryParameter] int $page = 1): Response
     {
-        $elements = $elementRepository->findAll();
-        return $this->render('element/index.html.twig', ['elements' => $elements]);
+        $pagination = $paginator->paginate(
+            $elementRepository->queryAll(),
+            $page,
+            ElementRepository::PAGINATOR_ITEMS_PER_PAGE,
+            [
+                'sortFieldAllowList' => ['element.id', 'element.createdAt', 'element.updatedAt', 'element.title'],
+                'defaultSortFieldName' => 'element.updatedAt',
+                'defaultSortDirection' => 'desc',
+            ]
+        );
+        return $this->render('element/index.html.twig', ['pagination' => $pagination]);
     }
     #[Route(
         '/create',

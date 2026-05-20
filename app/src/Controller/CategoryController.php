@@ -63,7 +63,7 @@ class CategoryController extends AbstractController
         '/{id}/edit',
         name: 'category_edit',
         requirements: ['id' => '[1-9]\d*'],
-        methods: ['GET', 'POST']
+        methods: ['GET', 'PUT']
     )]
     public function edit(Request $request, Category $category): Response
     {
@@ -71,7 +71,7 @@ class CategoryController extends AbstractController
             CategoryType::class,
             $category,
             [
-                'method' => 'POST',
+                'method' => 'PUT',
                 'action' => $this->generateUrl('category_edit', ['id' => $category->getId()]),
             ]
         );
@@ -107,12 +107,12 @@ class CategoryController extends AbstractController
         '/{id}/delete',
         name: 'category_delete',
         requirements: ['id' => '[1-9]\d*'],
-        methods: ['GET', 'POST']
+        methods: ['GET', 'DELETE']
     )]
     public function delete(Request $request, Category $category): Response
     {
         $form = $this->createForm(FormType::class, $category, [
-            'method' => 'POST',
+            'method' => 'DELETE',
             'action' => $this->generateUrl('category_delete', ['id' => $category->getId()]),
         ]);
         $form->handleRequest($request);
@@ -131,7 +131,6 @@ class CategoryController extends AbstractController
             ]
         );
     }
-// ...
 
 
 
