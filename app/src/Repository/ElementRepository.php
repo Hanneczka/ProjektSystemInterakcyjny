@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Category;
 use App\Entity\Element;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
@@ -28,6 +29,12 @@ class ElementRepository extends ServiceEntityRepository
         $this->getEntityManager()->flush();
     }
     public const PAGINATOR_ITEMS_PER_PAGE = 3;
+
+    public function delete(Element $element): void
+    {
+        $this->getEntityManager()->remove($element);
+        $this->getEntityManager()->flush();
+    }
 
     //    /**
     //     * @return Element[] Returns an array of Element objects

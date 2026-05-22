@@ -6,4 +6,5 @@ use App\Entity\Element;
 
 interface ElementServiceInterface {
 public function save(Element $element): void;
+public function delete(Element $element): void;
 }

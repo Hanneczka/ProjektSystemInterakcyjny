@@ -3,6 +3,7 @@ namespace App\Controller;
 
 use App\Entity\Category;
 use App\Repository\CategoryRepository;
+use App\Repository\ElementRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -10,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Form\Type\CategoryType;
 use App\Service\CategoryServiceInterface;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
+use Knp\Component\Pager\PaginatorInterface;
 
 #[Route('/category')]
 class CategoryController extends AbstractController
@@ -22,11 +24,40 @@ class CategoryController extends AbstractController
         name: 'category_index',
         methods: ['GET']
     )]
-    public function index(CategoryRepository $categoryRepository): Response
+    public function index(CategoryRepository $categoryRepository, PaginatorInterface $paginator, Request $request): Response
     {
+        $pagination = $paginator->paginate(
+            $categoryRepository->queryAll(),
+            $request->query->getInt('page', 1),
+            CategoryRepository::PAGINATOR_ITEMS_PER_PAGE,
+            [
+                'sortFieldAllowList' => ['category.id', 'category.name', 'category.createdAt', 'category.updatedAt'],
+                'defaultSortFieldName' => 'category.createdAt',
+                'defaultSortDirection' => 'desc',
+            ]
+        );
         return $this->render(
             'category/index.html.twig',
-            ['categories' => $categoryRepository->findAll()]);
+            ['pagination' => $pagination]);
+    }
+    #[Route(
+        '/{id}',
+        name: 'category_view',
+        requirements: ['id' => '[1-9]\d*'],
+        methods: ['GET']
+    )]
+    public function view(CategoryRepository $repository, int $id): Response
+    {
+        $category = $repository->findOneById($id);
+
+        if (null === $category) {
+            throw $this->createNotFoundException();
+        }
+
+        return $this->render(
+            'category/view.html.twig',
+            ['category' => $category]
+        );
     }
 
     #[Route(

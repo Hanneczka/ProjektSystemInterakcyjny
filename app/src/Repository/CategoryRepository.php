@@ -4,6 +4,7 @@ namespace App\Repository;
 use App\Entity\Category;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\QueryBuilder;
 class CategoryRepository extends ServiceEntityRepository{
     public function __construct(ManagerRegistry $registry)
     {
@@ -12,6 +13,7 @@ class CategoryRepository extends ServiceEntityRepository{
     public function queryAll(): QueryBuilder
     {
         return $this->createQueryBuilder('category');}
+
     public function save(Category $category): void
     {
         $this->getEntityManager()->persist($category);
@@ -27,4 +29,5 @@ class CategoryRepository extends ServiceEntityRepository{
         $this->getEntityManager()->remove($category);
         $this->getEntityManager()->flush();
     }
+    public const PAGINATOR_ITEMS_PER_PAGE = 3;
 }

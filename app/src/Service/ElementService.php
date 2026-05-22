@@ -16,4 +16,8 @@ class ElementService implements ElementServiceInterface{
         }
         $this->elementRepository->save($element);
     }
+    public function delete(Element $element): void
+    {
+        $this->elementRepository->delete($element);
+    }
 }

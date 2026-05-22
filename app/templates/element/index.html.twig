@@ -9,25 +9,34 @@
     <table border="1">
         <thead>
         <tr>
-            <th>{{ knp_pagination_sortable(pagination, 'label.id'|trans, 'element.id') }}</th>
-            <th>{{ knp_pagination_sortable(pagination, 'label.created_at'|trans, 'element.createdAt') }}</th>
-            <th>{{ knp_pagination_sortable(pagination, 'label.updated_at'|trans, 'element.updatedAt') }}</th>
-            <th>{{ knp_pagination_sortable(pagination, 'label.title'|trans, 'element.title') }}</th>
-            <th>{{ knp_pagination_sortable(pagination, 'label.title'|trans, 'element.category') }}</th>
-            <th>{{ 'label.actions'|trans }}</th>
+            <th>{{ knp_pagination_sortable(pagination, 'Id', 'element.id') }}</th>
+            <th>{{ knp_pagination_sortable(pagination, 'Tytuł', 'element.title') }}</th>
+            <th>{{ knp_pagination_sortable(pagination, 'Autor', 'element.author') }}</th>
+            <th>{{ knp_pagination_sortable(pagination, 'Rok wydania', 'element.year') }}</th>
+            <th>{{ knp_pagination_sortable(pagination, 'Kategoria', 'element.category') }}</th>
+            <th>{{ knp_pagination_sortable(pagination, 'Utworzono', 'element.createdAt') }}</th>
+            <th>Akcje</th>
         </tr>
         </thead>
         <tbody>
-        {% for element in pagination.items %}
+        {% for element in pagination %}
             <tr>
                 <td>{{ element.id }}</td>
                 <td>{{ element.title }}</td>
+                <td>{{ element.author }}</td>
+                <td>{{ element.year }}</td>
+                <td>{{ element.category.name }}</td>
                 <td>{{ element.createdAt|date('Y-m-d H:i') }}</td>
-                <td>{{ element.category }}</td>
+                <td><a href="{{ path('element_view', {id: element.id}) }}">
+                        {{ 'element.view' }}
+                    </a></td>
+                <td><a href="{{ path('element_edit', {id: element.id}) }}">
+                        {{ 'element.edit' }}
+                    </a></td>
+                <td><a href="{{ path('element_delete', {id: element.id}) }}">
+                        {{ 'element.delete' }}
+                    </a></td>
             </tr>
-            <div class="navigation text-center">
-                {{ knp_pagination_render(pagination) }}
-            </div>
         {% else %}
             <tr>
                 <td colspan="3">Brak elementów w bazie.</td>
@@ -35,6 +44,12 @@
         {% endfor %}
         </tbody>
     </table>
+        <div class="navigation text-center mt-3">
+            {{ knp_pagination_render(pagination) }}
+        </div>
+    {% else %}
+        <p>Brak elementów do wyświetlenia.</p>
+    {% endif %}
     <a href="{{ path('element_create') }}">Dodaj nowy element</a>
 
 {% endblock %}

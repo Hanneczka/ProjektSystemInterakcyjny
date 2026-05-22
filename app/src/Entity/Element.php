@@ -25,6 +25,12 @@ class Element
     #[ORM\ManyToOne]
     private ?Category $category = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $author = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $year = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -74,6 +80,30 @@ class Element
     public function setCategory(?Category $category): static
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    public function getAuthor(): ?string
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(?string $author): static
+    {
+        $this->author = $author;
+
+        return $this;
+    }
+
+    public function getYear(): ?int
+    {
+        return $this->year;
+    }
+
+    public function setYear(?int $year): static
+    {
+        $this->year = $year;
 
         return $this;
     }

@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    View element
+{% endblock %}
+
+{% block body %}
+    <h1>View record</h1>
+    {% if element is defined and element|length %}
+        <dl>
+            <dt>Title</dt>
+            <dd>{{ element.title }}</dd>
+            <dt>Author</dt>
+            <dd>{{ element.author }}</dd>
+            <dt>Release year</dt>
+            <dd>{{ element.year }}</dd>
+            <dt>Category</dt>
+            <dd>{{ element.category.name }}</dd>
+            <dt>When Added</dt>
+            <dd>{{ element.createdAt|date('Y-m-d H:i:s') }}</dd>
+        </dl>
+    {% else %}
+        <p>
+            Record not found.
+        </p>
+    {% endif %}
+{% endblock %}
