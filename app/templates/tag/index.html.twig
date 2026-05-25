@@ -1,13 +1,19 @@
 {% extends 'base.html.twig' %}
 {% block body %}
 <h1>Lista tagów</h1>
-{% if tags is defined and tags|length  %}
+    {% if pagination is defined and pagination.items|length %}
+        <div class="navigation text-center">
+            {{ knp_pagination_render(pagination) }}
+        </div>
 <table>
     <thead>
-    <th>Id</th>
-    <th>Nazwa</th>
+    <tr>
+        <th>{{ knp_pagination_sortable(pagination, 'Id', 'tag.id') }}</th>
+        <th>{{ knp_pagination_sortable(pagination, 'Nazwa', 'tag.title') }}</th>
+        <th>Akcje</th>
+    </tr>
     </thead>
-{% for tag in tags %}
+    {% for tag in pagination %}
 <tr>
     <td>{{ tag.id }}</td>
     <td>{{ tag.title }}</td>
@@ -22,6 +28,9 @@
     Brak tagów
     {% endfor %}
 </table>
+        <div class="navigation text-center mt-3">
+            {{ knp_pagination_render(pagination) }}
+        </div>
     {%else %}
     Brak tagów
     {% endif %}

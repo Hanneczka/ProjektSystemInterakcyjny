@@ -31,6 +31,8 @@ class TagRepository extends ServiceEntityRepository
         $this->getEntityManager()->remove($tag);
         $this->getEntityManager()->flush();
     }
+
+    public const PAGINATOR_ITEMS_PER_PAGE = 3;
     //    /**
     //     * @return Tag[] Returns an array of Tag objects
     //     */
