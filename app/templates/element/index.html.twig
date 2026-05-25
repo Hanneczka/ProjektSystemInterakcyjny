@@ -14,6 +14,7 @@
             <th>{{ knp_pagination_sortable(pagination, 'Autor', 'element.author') }}</th>
             <th>{{ knp_pagination_sortable(pagination, 'Rok wydania', 'element.year') }}</th>
             <th>{{ knp_pagination_sortable(pagination, 'Kategoria', 'element.category') }}</th>
+            <th>{{ knp_pagination_sortable(pagination, 'Tagi', 'element.tag') }}</th>
             <th>{{ knp_pagination_sortable(pagination, 'Utworzono', 'element.createdAt') }}</th>
             <th>Akcje</th>
         </tr>
@@ -26,6 +27,7 @@
                 <td>{{ element.author }}</td>
                 <td>{{ element.year }}</td>
                 <td>{{ element.category.name }}</td>
+                <td>{{ element.tags|map(t => t.title)|join(', ') }}</td>
                 <td>{{ element.createdAt|date('Y-m-d H:i') }}</td>
                 <td><a href="{{ path('element_view', {id: element.id}) }}">
                         {{ 'element.view' }}

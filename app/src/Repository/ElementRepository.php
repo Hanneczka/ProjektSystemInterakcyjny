@@ -7,6 +7,7 @@ use App\Entity\Element;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
+use App\Entity\Tag;
 
 /**
  * @extends ServiceEntityRepository<Element>

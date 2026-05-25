@@ -24,17 +24,8 @@ class TagController extends AbstractController{
     name: 'tag_index',
     methods: ['GET']
 )]
-public function index(TagRepository $tagRepository, PaginatorInterface $paginator, Request $request){
-        $pagination = $paginator->paginate(
-            $tagRepository->queryAll(),
-            $request->query->getInt('page', 1),
-            tagRepository::PAGINATOR_ITEMS_PER_PAGE,
-            [
-                'sortFieldAllowList' => ['tag.id', 'tag.name', 'tag.createdAt', 'tag.updatedAt'],
-                'defaultSortFieldName' => 'tag.createdAt',
-                'defaultSortDirection' => 'desc',
-            ]
-        );
+public function index(#[MapQueryParameter] int $page = 1){
+        $pagination = $this->tagService->getPaginatedList($page);
         return $this->render(
             'tag/index.html.twig',
             ['pagination' => $pagination]);

@@ -4,9 +4,26 @@ namespace App\Service;
 
 use App\Entity\Element;
 use App\Repository\ElementRepository;
+use Knp\Component\Pager\Pagination\PaginationInterface;
+use Knp\Component\Pager\PaginatorInterface;
 
 class ElementService implements ElementServiceInterface{
-    public function __construct(private readonly ElementRepository $elementRepository) {
+
+    private const PAGINATOR_ITEMS_PER_PAGE = 3;
+    public function __construct(private readonly ElementRepository $elementRepository, private readonly PaginatorInterface $paginator) {
+    }
+    public function getPaginatedList(int $page): PaginationInterface
+    {
+        return $this->paginator->paginate(
+            $this->elementRepository->queryAll(),
+            $page,
+            self::PAGINATOR_ITEMS_PER_PAGE,
+            [
+                'sortFieldAllowList' => ['element.id', 'element.createdAt', 'element.updatedAt', 'element.title', 'element.author', 'element.year', 'element.tags.title', 'element.category'],
+                'defaultSortFieldName' => 'element.updatedAt',
+                'defaultSortDirection' => 'desc',
+            ]
+        );
     }
     public function save(Element $element): void
     {

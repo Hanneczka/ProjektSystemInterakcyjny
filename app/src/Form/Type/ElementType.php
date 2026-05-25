@@ -10,6 +10,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use App\Entity\Category;
+use App\Entity\Tag;
 
 class ElementType extends AbstractType{
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -37,6 +38,14 @@ $builder
         'label' => 'Kategoria',
         'required' => true,
         'placeholder' => '--- Wybierz kategorię ---',
+    ])
+    ->add('tags', EntityType::class, [
+        'class' => Tag::class,
+        'choice_label' => 'title',
+        'multiple' => true,
+        'label' => 'Tag',
+        'required' => false,
+        'expanded' => false,
     ]);
     }
 

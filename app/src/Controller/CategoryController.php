@@ -24,18 +24,9 @@ class CategoryController extends AbstractController
         name: 'category_index',
         methods: ['GET']
     )]
-    public function index(CategoryRepository $categoryRepository, PaginatorInterface $paginator, Request $request): Response
+    public function index(#[MapQueryParameter] int $page = 1): Response
     {
-        $pagination = $paginator->paginate(
-            $categoryRepository->queryAll(),
-            $request->query->getInt('page', 1),
-            CategoryRepository::PAGINATOR_ITEMS_PER_PAGE,
-            [
-                'sortFieldAllowList' => ['category.id', 'category.name', 'category.createdAt', 'category.updatedAt'],
-                'defaultSortFieldName' => 'category.createdAt',
-                'defaultSortDirection' => 'desc',
-            ]
-        );
+        $pagination = $this->categoryService->getPaginatedList($page);
         return $this->render(
             'category/index.html.twig',
             ['pagination' => $pagination]);

@@ -24,18 +24,9 @@ class ElementController extends AbstractController
         name: 'element_index',
         methods: ['GET'],
 )]
-public function index(ElementRepository $elementRepository, PaginatorInterface $paginator, Request $request): Response
+public function index(#[MapQueryParameter] int $page = 1): Response
     {
-        $pagination = $paginator->paginate(
-            $elementRepository->queryAll(),
-            $request->query->getInt('page', 1),
-            ElementRepository::PAGINATOR_ITEMS_PER_PAGE,
-            [
-                'sortFieldAllowList' => ['element.id', 'element.createdAt', 'element.updatedAt', 'element.title'],
-                'defaultSortFieldName' => 'element.createdAt',
-                'defaultSortDirection' => 'desc',
-            ]
-        );
+        $pagination = $this->elementService->getPaginatedList($page);
         return $this->render('element/index.html.twig', ['pagination' => $pagination]);
     }
     #[Route(
