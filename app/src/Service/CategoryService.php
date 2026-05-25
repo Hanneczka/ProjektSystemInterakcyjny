@@ -4,8 +4,10 @@ namespace App\Service;
 
 use App\Entity\Category;
 use App\Repository\CategoryRepository;
+use App\Repository\ElementRepository;
 class CategoryService implements CategoryServiceInterface{
-    public function __construct(private readonly CategoryRepository $categoryRepository) {
+    public function __construct(private readonly CategoryRepository $categoryRepository,
+                                private readonly ElementRepository $elementRepository) {
     }
     public function save(Category $category): void
     {
@@ -19,5 +21,18 @@ class CategoryService implements CategoryServiceInterface{
     {
         $this->categoryRepository->delete($category);
     }
+
+    public function canBeDeleted(Category $category): bool
+    {
+        try {
+            $result = $this->elementRepository->countByCategory($category);
+
+            return !($result > 0);
+        } catch (NoResultException|NonUniqueResultException) {
+            return false;
+        }
+    }
+
+
 
 }

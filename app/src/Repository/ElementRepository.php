@@ -36,6 +36,22 @@ class ElementRepository extends ServiceEntityRepository
         $this->getEntityManager()->flush();
     }
 
+    public function countByCategory(Category $category): int
+    {
+        $qb = $this->getOrCreateQueryBuilder();
+
+        return $qb->select($qb->expr()->countDistinct('element.id'))
+            ->where('element.category = :category')
+            ->setParameter(':category', $category)
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+    public function getOrCreateQueryBuilder(QueryBuilder $qb = null): QueryBuilder
+    {
+        return $qb ?? $this->createQueryBuilder('element');
+    }
+
     //    /**
     //     * @return Element[] Returns an array of Element objects
     //     */

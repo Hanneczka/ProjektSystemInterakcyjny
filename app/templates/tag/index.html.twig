@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<h1>Lista tagów</h1>
+{% if tags is defined and tags|length  %}
+<table>
+    <thead>
+    <th>Id</th>
+    <th>Nazwa</th>
+    </thead>
+{% for tag in tags %}
+<tr>
+    <td>{{ tag.id }}</td>
+    <td>{{ tag.title }}</td>
+    <td><a href="{{ path('tag_view', {id: tag.id}) }}">
+            {{ 'tag.view' }}</a></td>
+    <td><a href="{{ path('tag_edit', {id: tag.id}) }}">
+            {{ 'tag.edit' }}</a></td>
+    <td><a href="{{ path('tag_delete', {id: tag.id}) }}">
+            {{ 'tag.delete' }}</a></td>
+</tr>
+    {% else %}
+    Brak tagów
+    {% endfor %}
+</table>
+    {%else %}
+    Brak tagów
+    {% endif %}
+    <a href="{{ path('tag_create') }}">Dodaj nowy tag</a>
+    {% endblock %}
+

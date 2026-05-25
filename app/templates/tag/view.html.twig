@@ -1,17 +1,17 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    View category
+    View tag
 {% endblock %}
 
 {% block body %}
     <h1>View record</h1>
-    {% if category is defined and category|length %}
+    {% if tag is defined and tag|length %}
         <dl>
             <dt>Title</dt>
-            <dd>{{ category.name }}</dd>
+            <dd>{{ tag.title }}</dd>
             <dt>When Added</dt>
-            <dd>{{ category.createdAt|date('Y-m-d H:i:s') }}</dd>
+            <dd>{{ tag.createdAt|date('Y-m-d H:i:s') }}</dd>
         </dl>
     {% else %}
         <p>
