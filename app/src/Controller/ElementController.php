@@ -13,6 +13,7 @@ use Knp\Component\Pager\PaginatorInterface;
 use App\Form\Type\ElementType;
 use Symfony\Component\HttpFoundation\Request;
 use App\Service\TagService;
+use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 
 
 

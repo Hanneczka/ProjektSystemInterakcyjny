@@ -12,6 +12,7 @@ use App\Form\Type\CategoryType;
 use App\Service\CategoryServiceInterface;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 
 #[Route('/category')]
 class CategoryController extends AbstractController

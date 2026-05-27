@@ -96,7 +96,9 @@
             "./vendor/bin/php-cs-fixer fix tests/ --rules=@Symfony,@PSR1,@PSR2,@PSR12",
             "./vendor/bin/rector process src",
             "./vendor/bin/rector process tests"
+
         ]
+
     },
     "conflict": {
         "symfony/symfony": "*"
@@ -120,4 +122,5 @@
         "symfony/stopwatch": "7.4.*",
         "symfony/web-profiler-bundle": "7.4.*"
     }
+
 }

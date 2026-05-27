@@ -12,6 +12,7 @@ use App\Service\TagServiceInterface;
 use App\Form\Type\TagType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
+use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 
 #[Route('/tag')]
 class TagController extends AbstractController{
