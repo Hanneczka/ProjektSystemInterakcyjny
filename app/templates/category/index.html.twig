@@ -1,7 +1,10 @@
 {% extends 'base.html.twig' %}
 
+{% block title %}
+    {{ 'title.category_list'|trans }}
+{% endblock %}
+
 {% block body %}
-    <h1>Lista Kategorii</h1>
     {% if pagination is defined and pagination.items|length %}
     <div class="navigation text-center">
         {{ knp_pagination_render(pagination) }}
@@ -10,10 +13,10 @@
     <table border="1">
         <thread>
         <tr>
-            <th>{{ knp_pagination_sortable(pagination, 'Id', 'category.id') }}</th>
-            <th>{{ knp_pagination_sortable(pagination, 'Tytuł', 'category.name') }}</th>
-            <th>{{ knp_pagination_sortable(pagination, 'Utworzono', 'category.createdAt') }}</th>
-            <th>Akcje</th>
+            <th>{{ knp_pagination_sortable(pagination, 'label.id'|trans, 'category.id') }}</th>
+            <th>{{ knp_pagination_sortable(pagination, 'label.category'|trans, 'category.name') }}</th>
+            <th>{{ knp_pagination_sortable(pagination, 'label.created_at'|trans, 'category.createdAt') }}</th>
+            <th>{{ 'label.actions'|trans }}</th>
         </tr>
         </thread>
         <tbody>
@@ -23,18 +26,18 @@
                 <td>{{ category.name }}</td>
                 <td>{{ category.createdAt|date('Y-m-d H:i') }}</td>
                 <td><a href="{{ path('category_view', {id: category.id}) }}">
-                        {{ 'category.view' }}
+                        {{ 'action.view'|trans }}
                     </a></td>
                 <td><a href="{{ path('category_edit', {id: category.id}) }}">
-                        {{ 'action.edit' }}
+                        {{ 'action.edit'|trans }}
                     </a></td>
                 <td><a href="{{ path('category_delete', {id: category.id}) }}">
-                        {{ 'action.delete' }}
+                        {{ 'action.delete'|trans }}
                     </a></td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="3">Brak kategorii w bazie.</td>
+                {{ 'message.empty_list'|trans }}
             </tr>
         {% endfor %}
         </tbody>
@@ -43,8 +46,8 @@
             {{ knp_pagination_render(pagination) }}
         </div>
     {% else %}
-        <p>Brak elementów do wyświetlenia.</p>
+        {{ 'message.empty_list'|trans }}
     {% endif %}
-    <a href="{{ path('category_create') }}">Dodaj nową kategorię</a>
+    <a href="{{ path('category_create') }}">{{ 'title.category_create'|trans }}</a>
 
 {% endblock %}

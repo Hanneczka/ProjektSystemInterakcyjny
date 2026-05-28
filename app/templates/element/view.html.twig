@@ -1,29 +1,29 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    View element
+    {{ 'title.record_view'|trans }}
 {% endblock %}
 
 {% block body %}
-    <h1>View record</h1>
+    <h1>{{ 'title.record_view'|trans }}</h1>
     {% if element is defined and element|length %}
         <dl>
-            <dt>Title</dt>
+            <dt>{{ 'label.title'|trans }}</dt>
             <dd>{{ element.title }}</dd>
-            <dt>Author</dt>
+            <dt>{{ 'label.author'|trans }}</dt>
             <dd>{{ element.author }}</dd>
-            <dt>Release year</dt>
+            <dt>{{ 'label.year'|trans }}</dt>
             <dd>{{ element.year }}</dd>
-            <dt>Category</dt>
+            <dt>{{ 'label.category'|trans }}</dt>
             <dd>{{ element.category.name }}</dd>
-            <dt>Tag</dt>
+            <dt>{{ 'label.tags'|trans }}</dt>
             <dd>{{ element.tag.title }}</dd>
-            <dt>When Added</dt>
+            <dt>{{ 'label.created_at'|trans }}</dt>
             <dd>{{ element.createdAt|date('Y-m-d H:i:s') }}</dd>
         </dl>
     {% else %}
         <p>
-            Record not found.
+            {{ 'message.empty_list'|trans }}
         </p>
     {% endif %}
 {% endblock %}

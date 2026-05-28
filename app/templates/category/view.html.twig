@@ -1,21 +1,21 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    View category
+    {{ 'title.category_view'|trans }}
 {% endblock %}
 
 {% block body %}
-    <h1>View record</h1>
+    {{ 'title.category_view'|trans }}
     {% if category is defined and category|length %}
         <dl>
-            <dt>Title</dt>
+            {{ 'label.category'|trans }}
             <dd>{{ category.name }}</dd>
-            <dt>When Added</dt>
+            {{ 'label.created_at'|trans }}
             <dd>{{ category.createdAt|date('Y-m-d H:i:s') }}</dd>
         </dl>
     {% else %}
         <p>
-            Record not found.
+            {{ 'message.record_not_found'|trans }}
         </p>
     {% endif %}
 

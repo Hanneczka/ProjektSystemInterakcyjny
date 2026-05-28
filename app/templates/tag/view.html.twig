@@ -1,21 +1,21 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-    View tag
+    {{ 'title.tag_view'|trans }}
 {% endblock %}
 
 {% block body %}
     <h1>View record</h1>
     {% if tag is defined and tag|length %}
         <dl>
-            <dt>Title</dt>
+            {{ 'label.tags'|trans }}
             <dd>{{ tag.title }}</dd>
-            <dt>When Added</dt>
+            {{ 'label.created_at'|trans }}
             <dd>{{ tag.createdAt|date('Y-m-d H:i:s') }}</dd>
         </dl>
     {% else %}
         <p>
-            Record not found.
+        <p>{{ 'message.record_not_found'|trans }}</p>
         </p>
     {% endif %}
 

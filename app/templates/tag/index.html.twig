@@ -1,6 +1,11 @@
 {% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ 'title.tag_list'|trans }}
+{% endblock %}
+
 {% block body %}
-<h1>Lista tagów</h1>
+<h1>{{ 'title.tag_list'|trans }}</h1>
     {% if pagination is defined and pagination.items|length %}
         <div class="navigation text-center">
             {{ knp_pagination_render(pagination) }}
@@ -8,9 +13,9 @@
 <table>
     <thead>
     <tr>
-        <th>{{ knp_pagination_sortable(pagination, 'Id', 'tag.id') }}</th>
-        <th>{{ knp_pagination_sortable(pagination, 'Nazwa', 'tag.title') }}</th>
-        <th>Akcje</th>
+        <th>{{ knp_pagination_sortable(pagination, 'label.id'|trans , 'tag.id') }}</th>
+        <th>{{ knp_pagination_sortable(pagination,  'label.tags'|trans , 'tag.title') }}</th>
+        <th>{{ 'label.actions'|trans }}</th>
     </tr>
     </thead>
     {% for tag in pagination %}
@@ -18,21 +23,21 @@
     <td>{{ tag.id }}</td>
     <td>{{ tag.title }}</td>
     <td><a href="{{ path('tag_view', {id: tag.id}) }}">
-            {{ 'tag.view' }}</a></td>
+            {{ 'action.view'|trans }}</a></td>
     <td><a href="{{ path('tag_edit', {id: tag.id}) }}">
-            {{ 'tag.edit' }}</a></td>
+            {{ 'action.edit'|trans }}</a></td>
     <td><a href="{{ path('tag_delete', {id: tag.id}) }}">
-            {{ 'tag.delete' }}</a></td>
+            {{ 'action.delete'|trans }}</a></td>
 </tr>
     {% else %}
-    Brak tagów
+        <p>{{ 'message.empty_list'|trans }}</p>
     {% endfor %}
 </table>
         <div class="navigation text-center mt-3">
             {{ knp_pagination_render(pagination) }}
         </div>
     {%else %}
-    Brak tagów
+        <p>{{ 'message.empty_list'|trans }}</p>
     {% endif %}
     <a href="{{ path('tag_create') }}">Dodaj nowy tag</a>
     {% endblock %}

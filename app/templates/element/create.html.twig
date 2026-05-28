@@ -6,15 +6,15 @@
 
 {% block body %}
     {{ form_start(form) }}
-    <h1>{{ 'title.element_create'|trans }}</h1>
+    <h1>{{ 'label.title'|trans }}</h1>
     {{ form_row(form.title) }}
-    <h1>{{ 'category.element_create'|trans }}</h1>
+    <h1>{{ 'label.category'|trans }}</h1>
     {{ form_row(form.category) }}
-    <h1>{{ 'author.element_create'|trans }}</h1>
+    <h1>{{ 'label.author'|trans }}</h1>
     {{ form_row(form.author) }}
     <h1>{{ 'year.element_create'|trans }}</h1>
     {{ form_row(form.year) }}
-    <h1>{{ 'tag.element_create'|trans }}</h1>
+    <h1>{{ 'label.tags'|trans }}</h1>
     {{ form_row(form.tags) }}
     <div class="form-group row float-sm-right">
         <input type="submit" value="{{ 'action.save'|trans }}" class="btn btn-primary"/>
