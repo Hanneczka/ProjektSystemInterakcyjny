@@ -9,7 +9,7 @@ use Knp\Component\Pager\PaginatorInterface;
 
 class ElementService implements ElementServiceInterface{
 
-    private const PAGINATOR_ITEMS_PER_PAGE = 3;
+    private const PAGINATOR_ITEMS_PER_PAGE = 10;
     public function __construct(private readonly ElementRepository $elementRepository, private readonly PaginatorInterface $paginator) {
     }
     public function getPaginatedList(int $page): PaginationInterface

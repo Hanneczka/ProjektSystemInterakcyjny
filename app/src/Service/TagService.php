@@ -9,7 +9,7 @@ use Knp\Component\Pager\PaginatorInterface;
 
 class TagService implements TagServiceInterface{
 public function __construct(private readonly TagRepository $tagRepository, private readonly PaginatorInterface $paginator) {}
-    private const PAGINATOR_ITEMS_PER_PAGE = 3;
+    private const PAGINATOR_ITEMS_PER_PAGE = 10;
     public function getPaginatedList(int $page): PaginationInterface
     {
         return $this->paginator->paginate(
