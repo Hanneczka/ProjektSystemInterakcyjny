@@ -17,9 +17,9 @@
             <dt>{{ 'label.category'|trans }}</dt>
             <dd>{{ element.category.name }}</dd>
             <dt>{{ 'label.tags'|trans }}</dt>
-            <dd>{{ element.tag.title }}</dd>
+            <dd>{{ element.tags|map(t => t.title)|join(', ') }}</dd>
             <dt>{{ 'label.created_at'|trans }}</dt>
-            <dd>{{ element.createdAt|date('Y-m-d H:i:s') }}</dd>
+            <dd>{{ element.createdAt|format_date('long') }}</dd>
         </dl>
     {% else %}
         <p>

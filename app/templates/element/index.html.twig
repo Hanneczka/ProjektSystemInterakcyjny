@@ -18,7 +18,7 @@
             <th>{{ knp_pagination_sortable(pagination, 'label.author'|trans, 'element.author') }}</th>
             <th>{{ knp_pagination_sortable(pagination, 'label.year'|trans, 'element.year') }}</th>
             <th>{{ knp_pagination_sortable(pagination, 'label.category'|trans, 'element.category') }}</th>
-            <th>{{ knp_pagination_sortable(pagination, 'label.tags'|trans, 'element.tag') }}</th>
+            <th>{{ knp_pagination_sortable(pagination, 'label.tags'|trans, 'element.tags') }}</th>
             <th>{{ knp_pagination_sortable(pagination, 'label.created_at'|trans, 'element.createdAt') }}</th>
             <th>{{ 'label.actions'|trans }}</th>
         </tr>
@@ -32,20 +32,20 @@
                 <td>{{ element.year }}</td>
                 <td>{{ element.category.name }}</td>
                 <td>{{ element.tags|map(t => t.title)|join(', ') }}</td>
-                <td>{{ element.createdAt|date('Y-m-d H:i') }}</td>
+                <td>{{ element.createdAt|format_date('long') }}</td>
                 <td><a href="{{ path('element_view', {id: element.id}) }}">
                         {{ 'action.view'|trans }}
                     </a></td>
                 <td><a href="{{ path('element_edit', {id: element.id}) }}">
-                        {{ 'element.edit'|trans }}
+                        {{ 'action.edit'|trans }}
                     </a></td>
                 <td><a href="{{ path('element_delete', {id: element.id}) }}">
-                        {{ 'element.delete'|trans }}
+                        {{ 'action.delete'|trans }}
                     </a></td>
             </tr>
         {% else %}
             <tr>
-                {{ 'message.empty_list'|trans }}
+                <td>{{ 'message.empty_list'|trans }}</td>
             </tr>
         {% endfor %}
         </tbody>
@@ -56,6 +56,6 @@
     {% else %}
         <p>{{ 'message.empty_list'|trans }}</p>
     {% endif %}
-    <a href="{{ path('element_create') }}">Dodaj nowy element</a>
+    <a href="{{ path('element_create') }}">{{ 'title.element_create'|trans }}</a>
 
 {% endblock %}

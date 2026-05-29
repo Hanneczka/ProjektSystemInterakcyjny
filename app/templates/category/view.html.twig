@@ -11,7 +11,7 @@
             {{ 'label.category'|trans }}
             <dd>{{ category.name }}</dd>
             {{ 'label.created_at'|trans }}
-            <dd>{{ category.createdAt|date('Y-m-d H:i:s') }}</dd>
+            <dd>{{ category.createdAt|format_date('long') }}</dd>
         </dl>
     {% else %}
         <p>

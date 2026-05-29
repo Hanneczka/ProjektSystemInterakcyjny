@@ -11,7 +11,7 @@
             {{ 'label.tags'|trans }}
             <dd>{{ tag.title }}</dd>
             {{ 'label.created_at'|trans }}
-            <dd>{{ tag.createdAt|date('Y-m-d H:i:s') }}</dd>
+            <dd>{{ tag.createdAt|format_date('long') }}</dd>
         </dl>
     {% else %}
         <p>

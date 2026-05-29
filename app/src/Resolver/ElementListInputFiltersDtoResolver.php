@@ -19,6 +19,6 @@ class ElementListInputFiltersDtoResolver implements ValueResolverInterface{
         $categoryId = $request->query->get('categoryId');
         $tagId = $request->query->get('tagId');
 
-        return [new ElementListInputFiltersDto($categoryId, $tagId, $statusId)];
+        return [new ElementListInputFiltersDto($categoryId, $tagId)];
     }
 }

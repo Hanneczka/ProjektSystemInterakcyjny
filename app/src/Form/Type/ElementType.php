@@ -10,9 +10,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use App\Entity\Category;
+use App\Form\DataTransformer\TagsDataTransformer;
 use App\Entity\Tag;
 
 class ElementType extends AbstractType{
+    public function __construct(private readonly TagsDataTransformer $tagsDataTransformer)
+    {
+    }
     public function buildForm(FormBuilderInterface $builder, array $options): void
 {
 $builder
@@ -25,28 +29,33 @@ $builder
     'attr' => ['max_length' => 64],
     ])
     ->add('author', TextType::class, [
-        'label' => 'Autor',
+        'label' => 'label.author',
         'required' => false,
     ])
     ->add('year', IntegerType::class, [
-    'label' => 'Rok wydania',
+    'label' => 'label.year',
     'required' => false,
 ])
     ->add('category', EntityType::class, [
         'class' => Category::class,
         'choice_label' => 'name',
-        'label' => 'Kategoria',
+        'label' => 'label.category',
         'required' => true,
         'placeholder' => '--- Wybierz kategorię ---',
     ])
-    ->add('tags', EntityType::class, [
-        'class' => Tag::class,
-        'choice_label' => 'title',
-        'multiple' => true,
-        'label' => 'Tag',
-        'required' => false,
-        'expanded' => false,
-    ]);
+    ->add(
+        'tags',
+        TextType::class,
+        [
+            'label' => 'label.tags',
+            'required' => false,
+            'attr' => ['max_length' => 128],
+        ]
+    )
+
+        ->get('tags')->addModelTransformer(
+            $this->tagsDataTransformer
+        );
     }
 
 public function configureOptions(OptionsResolver $resolver): void
