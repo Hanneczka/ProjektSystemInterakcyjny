@@ -17,7 +17,7 @@ public function __construct(private readonly TagRepository $tagRepository, priva
             $page,
             self::PAGINATOR_ITEMS_PER_PAGE,
             [
-                'sortFieldAllowList' => ['tag.id', 'tag.createdAt', 'tag.updatedAt', 'tag.titile'],
+                'sortFieldAllowList' => ['tag.id', 'tag.createdAt', 'tag.updatedAt', 'tag.title'],
                 'defaultSortFieldName' => 'tag.updatedAt',
                 'defaultSortDirection' => 'desc',
             ]

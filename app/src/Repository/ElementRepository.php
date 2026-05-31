@@ -21,7 +21,9 @@ class ElementRepository extends ServiceEntityRepository
 
     public function queryAll(): QueryBuilder
     {
-        return $this->createQueryBuilder('element');
+        return $this->createQueryBuilder('element')
+            ->select('element', 'category')
+            ->join('element.category', 'category');
     }
 
     public function save(Element $element): void
@@ -52,6 +54,7 @@ class ElementRepository extends ServiceEntityRepository
     {
         return $qb ?? $this->createQueryBuilder('element');
     }
+
 
     //    /**
     //     * @return Element[] Returns an array of Element objects
