@@ -24,7 +24,8 @@ class Element
     #[ORM\Column(length: 255)]
     private ?string $title = null;
 
-    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\ManyToOne(targetEntity: Category::class, fetch: 'EXTRA_LAZY')]
     private ?Category $category = null;
 
     #[ORM\Column(length: 255, nullable: true)]

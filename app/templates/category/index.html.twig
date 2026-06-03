@@ -20,7 +20,7 @@
         {{ knp_pagination_render(pagination) }}
     </div>
 
-    <table border="1">
+    <table class="table table-stripped" border="1">
         <thread>
         <tr>
             <th>{{ knp_pagination_sortable(pagination, 'label.id'|trans, 'category.id') }}</th>
@@ -35,13 +35,13 @@
                 <td>{{ category.id }}</td>
                 <td>{{ category.name }}</td>
                 <td>{{ category.createdAt|format_date('long') }}</td>
-                <td><a href="{{ path('category_view', {id: category.id}) }}">
+                <td><a href="{{ path('category_view', {id: category.id}) }}"class="btn btn-primary">
                         {{ 'action.view'|trans }}
                     </a></td>
-                <td><a href="{{ path('category_edit', {id: category.id}) }}">
+                <td><a href="{{ path('category_edit', {id: category.id}) }}"class="btn btn-primary">
                         {{ 'action.edit'|trans }}
                     </a></td>
-                <td><a href="{{ path('category_delete', {id: category.id}) }}">
+                <td><a href="{{ path('category_delete', {id: category.id}) }}"class="btn btn-primary">
                         {{ 'action.delete'|trans }}
                     </a></td>
             </tr>
@@ -58,6 +58,6 @@
     {% else %}
         {{ 'message.empty_list'|trans }}
     {% endif %}
-    <a href="{{ path('category_create') }}">{{ 'title.category_create'|trans }}</a>
+    <a href="{{ path('category_create') }}"class="btn btn-primary">{{ 'title.category_create'|trans }}</a>
 
 {% endblock %}

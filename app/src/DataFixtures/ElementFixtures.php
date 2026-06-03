@@ -33,7 +33,7 @@ class ElementFixtures extends AbstractBaseFixtures implements DependentFixtureIn
             );
             $category = $this->getRandomReference('category', Category::class);
             $element->setCategory($category);
-            $tag = $this->getRandomReferenceList('tag', Tag::class, 3);
+            $tag = $this->getRandomReference('tag', Tag::class);
             $element->addTag($tag);
 
             return $element;

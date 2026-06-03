@@ -19,7 +19,7 @@
         <div class="navigation text-center">
             {{ knp_pagination_render(pagination) }}
         </div>
-<table border="1">
+<table class="table table-stripped" border="1">
     <thead>
     <tr>
         <th>{{ knp_pagination_sortable(pagination, 'label.id'|trans , 'tag.id') }}</th>
@@ -31,11 +31,11 @@
 <tr>
     <td>{{ tag.id }}</td>
     <td>{{ tag.title }}</td>
-    <td><a href="{{ path('tag_view', {id: tag.id}) }}">
+    <td><a href="{{ path('tag_view', {id: tag.id}) }}"class="btn btn-primary">
             {{ 'action.view'|trans }}</a></td>
-    <td><a href="{{ path('tag_edit', {id: tag.id}) }}">
+    <td><a href="{{ path('tag_edit', {id: tag.id}) }}"class="btn btn-primary">
             {{ 'action.edit'|trans }}</a></td>
-    <td><a href="{{ path('tag_delete', {id: tag.id}) }}">
+    <td><a href="{{ path('tag_delete', {id: tag.id}) }}"class="btn btn-primary">
             {{ 'action.delete'|trans }}</a></td>
 </tr>
     {% else %}
@@ -48,6 +48,6 @@
     {%else %}
         <p>{{ 'message.empty_list'|trans }}</p>
     {% endif %}
-    <a href="{{ path('tag_create') }}">{{ 'title.tag_create'|trans }}</a>
+    <a href="{{ path('tag_create') }}"class="btn btn-primary">{{ 'title.tag_create'|trans }}</a>
     {% endblock %}
 

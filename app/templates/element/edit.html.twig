@@ -1,30 +1,6 @@
-{% extends 'base.html.twig' %}
-
-{% block title %}
-    {{ 'title.element_edit'|trans |default('') }}
-{% endblock %}
-
-{% block body %}
-    <h1>{{ 'title.element_edit'|trans |default('') }}</h1>
-    {{ form_start(form) }}
-    {{ form_start(form) }}
-    <h1>{{ 'label.title'|trans }}</h1>
-    {{ form_row(form.title) }}
-    <h1>{{ 'label.category'|trans }}</h1>
-    {{ form_row(form.category) }}
-    <h1>{{ 'label.author'|trans }}</h1>
-    {{ form_row(form.author) }}
-    <h1>{{ 'label.year'|trans }}</h1>
-    {{ form_row(form.year) }}
-    <h1>{{ 'label.tags'|trans }}</h1>
-    {{ form_row(form.tags) }}
-    <div class="form-group row float-sm-right">
-        <input type="submit" value="{{ 'action.save'|trans }}" class="btn btn-primary"/>
-    </div>
-    <div class="form-group row float-sm-left">
-        <a href="{{ url('element_index') }}" class="btn btn-link">
-            {{ 'action.back_to_list'|trans }}
-        </a>
-    </div>
-    {{ form_end(form) }}
-{% endblock %}
+{% include 'default/_form.html.twig' with {
+    page_title: 'title.element_edit'|trans({'%id%': element.id|default('')}),
+    form: form,
+    submit_label: 'action.edit'|trans,
+    back_to_list_path: 'element_index',
+} %}
