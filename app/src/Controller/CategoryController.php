@@ -145,7 +145,7 @@ class CategoryController extends AbstractController
         if (!$this->categoryService->canBeDeleted($category)) {
             $this->addFlash(
                 'warning',
-                'nie można usunąć kategorii'
+                $this->translator->trans('message.category_contains_tasks')
             );
 
             return $this->redirectToRoute('category_index');

@@ -25,10 +25,7 @@ public function __construct(private readonly TagRepository $tagRepository, priva
     }
     public function save(Tag $tag): void
     {
-        $tag->setUpdatedAt(new \DateTimeImmutable());
-        if (null === $tag->getId()) {
-            $tag->setCreatedAt(new \DateTimeImmutable());
-        }
+
         $this->tagRepository->save($tag);
     }
     public function delete(Tag $tag): void
