@@ -64,7 +64,10 @@
             {{ knp_pagination_render(pagination) }}
         </div>
     {% else %}
-        <p>{{ 'message.empty_list'|trans }}</p>
+        {% include 'default/_single_alert_message.html.twig' with {
+            type: 'warning',
+            message: 'message.empty_list'|trans
+        } %}
     {% endif %}
     <a href="{{ path('element_create') }}"class="btn btn-primary">{{ 'title.element_create'|trans }}</a>
 

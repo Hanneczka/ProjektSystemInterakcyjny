@@ -14,13 +14,13 @@ use App\Form\Type\ElementType;
 use Symfony\Component\HttpFoundation\Request;
 use App\Service\TagService;
 use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
-
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 
 #[Route('/element')]
 class ElementController extends AbstractController
 {
-    public function __construct(private readonly ElementServiceInterface $elementService) {}
+    public function __construct(private readonly ElementServiceInterface $elementService,  private readonly TranslatorInterface $translator) {}
     #[Route(
         name: 'element_index',
         methods: ['GET'],
@@ -42,6 +42,10 @@ public function index(#[MapQueryParameter] int $page = 1): Response
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $this->elementService->save($element);
+            $this->addFlash(
+                'success',
+                $this->translator->trans('message.created_successfully')
+            );
 
             return $this->redirectToRoute('element_index');
         }
@@ -72,9 +76,10 @@ public function index(#[MapQueryParameter] int $page = 1): Response
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->elementService->save($element);
-
-
-
+            $this->addFlash(
+                'success',
+                $this->translator->trans('message.edited_successfully')
+            );
             return $this->redirectToRoute('element_index');
         }
 
@@ -123,6 +128,10 @@ public function index(#[MapQueryParameter] int $page = 1): Response
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->elementService->delete($element);
+            $this->addFlash(
+                'success',
+                $this->translator->trans('message.deleted_successfully')
+            );
 
             return $this->redirectToRoute('element_index');
         }

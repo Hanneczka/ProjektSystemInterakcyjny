@@ -13,10 +13,11 @@ use App\Form\Type\TagType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route('/tag')]
 class TagController extends AbstractController{
-    public function __construct(private readonly TagServiceInterface $tagService) {
+    public function __construct(private readonly TagServiceInterface $tagService,  private readonly TranslatorInterface $translator) {
 
     }
 
@@ -64,6 +65,10 @@ public function create(Request $request): Response{
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
             $this->tagService->save($tag);
+            $this->addFlash(
+                'success',
+                $this->translator->trans('message.created_successfully')
+            );
             return $this->redirectToRoute('tag_index');
         }
         return $this->render('tag/create.html.twig', ['form' => $form->createView()]);
@@ -84,6 +89,10 @@ public function edit(Request $request, Tag $tag): Response{
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
             $this->tagService->save($tag);
+            $this->addFlash(
+                'success',
+                $this->translator->trans('message.edited_successfully')
+            );
             return $this->redirectToRoute('tag_index');
         }
         return $this->render('tag/edit.html.twig', ['form' => $form->createView(), 'tag' => $tag]);
@@ -105,6 +114,10 @@ public function edit(Request $request, Tag $tag): Response{
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->tagService->delete($tag);
+            $this->addFlash(
+                'success',
+                $this->translator->trans('message.deleted_successfully')
+            );
 
             return $this->redirectToRoute('tag_index');
         }

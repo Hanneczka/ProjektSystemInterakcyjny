@@ -13,11 +13,12 @@ use App\Service\CategoryServiceInterface;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route('/category')]
 class CategoryController extends AbstractController
 {
-    public function __construct(private readonly CategoryServiceInterface $categoryService) {
+    public function __construct(private readonly CategoryServiceInterface $categoryService,  private readonly TranslatorInterface $translator) {
 
     }
     #[Route(
@@ -66,6 +67,11 @@ class CategoryController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->categoryService->save($category);
 
+            $this->addFlash(
+                'success',
+                $this->translator->trans('message.created_successfully')
+            );
+
             return $this->redirectToRoute('category_index');
         }
 
@@ -103,9 +109,10 @@ class CategoryController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->categoryService->save($category);
-
-
-
+            $this->addFlash(
+                'success',
+                $this->translator->trans('message.edited_successfully')
+            );
             return $this->redirectToRoute('category_index');
         }
 
@@ -152,6 +159,10 @@ class CategoryController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->categoryService->delete($category);
+            $this->addFlash(
+                'success',
+                $this->translator->trans('message.deleted_successfully')
+            );
 
             return $this->redirectToRoute('category_index');
         }
