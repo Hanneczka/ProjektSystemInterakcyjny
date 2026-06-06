@@ -5,15 +5,7 @@
 {% endblock %}
 
 {% block body %}
-    <p><a href="{{ path('element_index') }}">
-            {{ 'title.record_list'|trans }}
-        </a></p>
-    <p><a href="{{ path('category_index') }}">
-            {{ 'title.category_list'|trans }}
-        </a></p>
-    <p><a href="{{ path('tag_index') }}">
-            {{ 'title.tag_list'|trans }}
-        </a></p>
+
 <h1>{{ 'title.tag_list'|trans }}</h1>
     {% if pagination is defined and pagination.items|length %}
         <div class="navigation text-center">

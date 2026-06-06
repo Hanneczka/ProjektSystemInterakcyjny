@@ -17,7 +17,7 @@
 <body>
 <main role="main" >
     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-        <div>{{ app.user.email }}</div>
+        <div><a href="{{ path('user_profile', {'id': app.user.id}) }}">{{ app.user.email }}</a></div>
         <div>
             <a href="{{ url('app_logout') }}">{{ 'action.logout'|trans }}</a>
         </div>
@@ -26,6 +26,17 @@
             <a href="{{ url('app_login') }}">{{ 'action.login'|trans }}</a>
         </div>
     {% endif %}
+    {% block menu %}
+    <p><a href="{{ path('element_index') }}">
+            {{ 'title.record_list'|trans }}
+        </a></p>
+    <p><a href="{{ path('category_index') }}">
+            {{ 'title.category_list'|trans }}
+        </a></p>
+    <p><a href="{{ path('tag_index') }}">
+            {{ 'title.tag_list'|trans }}
+        </a></p>
+    {%  endblock %}
     <div class="container-fluid">
         {% include 'default/_flash_messages.html.twig' %}
         {% block body %}{% endblock %}
