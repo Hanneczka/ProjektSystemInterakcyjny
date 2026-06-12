@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ 'title.user_list'|trans }}{% endblock %}
+
+{% block body %}
+    <h2>{{ 'title.user_list'|trans }}</h2>
+
+    <table class="table table-stripped" border="1">
+        <thread>
+            <tr>
+                <th>{{ knp_pagination_sortable(pagination, 'label.id'|trans, 'user.id') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'label.email'|trans, 'user.name') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'label.name'|trans, 'user.name') }}</th>
+                <th>{{ 'label.actions'|trans }}</th>
+            </tr>
+        </thread>
+        <tbody>
+        {% for user in pagination %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.name }}</td>
+
+                    <td><a href="{{ path('admin_edit_user', {id: user.id}) }}"class="btn btn-primary">
+                            {{ 'action.edit_user'|trans }}
+                        </a></td>
+
+                    <td><a href="{{ path('admin_edit_password', {id: user.id}) }}"class="btn btn-primary">
+                            {{ 'action.edit_password'|trans }}
+                        </a></td>
+
+
+            </tr>
+        {% else %}
+            <tr>
+                {{ 'message.empty_list'|trans }}
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="navigation text-center mt-3">
+        {{ knp_pagination_render(pagination) }}
+    </div>
+
+{% endblock %}
