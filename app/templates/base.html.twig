@@ -17,7 +17,7 @@
 <body>
 <main role="main" >
     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-        <div><a href="{{ path('user_profile', {'id': app.user.id}) }}">{{ app.user.email }}</a></div>
+        <div><a href="{{ path('user_profile', {'id': app.user.id}) }}">{{ app.user.name }}</a></div>
         <div>
             <a href="{{ url('app_logout') }}">{{ 'action.logout'|trans }}</a>
         </div>

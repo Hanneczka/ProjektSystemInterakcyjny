@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Form\Type\PasswordType;
+use App\Form\Type\UserType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -44,6 +45,29 @@ class UserController extends AbstractController{
 
         }
         return $this->render('profile/edit_password.html.twig', ['form' => $form->createView()]);
+    }
+    #[Route('/profile/edit-user', name: 'user_edit_user', methods: ['GET', 'POST'])]
+    public function editUser(Request $request):Response{
+        $user = $this->getUser();
+
+        if (!$user) {
+            throw $this->createAccessDeniedException();
+        }
+
+        $form = $this->createForm(UserType::class, $user, [
+        'method'=>'POST',
+        'action'=> $this->generateUrl('user_edit_user')]
+    );
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()){
+            $this->userService->save($user);
+
+            $this->addFlash('success', $this->translator->trans('message.user_updated'));
+
+            return $this->redirectToRoute('user_profile', ['id' => $user->getId()]);
+
+        }
+        return $this->render('profile/edit_user.html.twig', ['form' => $form->createView()]);
     }
 
     #[Route('/profile/{id}', name: 'user_profile', methods: ['GET'])]

@@ -38,8 +38,7 @@ class Category
      * Slug.
      * @var string|null
      */
-    #[ORM\Column(type: 'string', length: 64)]
-    #[Gedmo\Slug(fields: ['name'])]
+    #[ORM\Column(length: 64, nullable: true)]
     private ?string $slug;
 
     public function getId(): ?int
