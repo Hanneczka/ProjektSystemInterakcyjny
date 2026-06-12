@@ -30,12 +30,16 @@
                 <td><a href="{{ path('category_view', {id: category.id}) }}"class="btn btn-primary">
                         {{ 'action.view'|trans }}
                     </a></td>
+                {% if is_granted('CATEGORY_EDIT', category) %}
                 <td><a href="{{ path('category_edit', {id: category.id}) }}"class="btn btn-primary">
                         {{ 'action.edit'|trans }}
                     </a></td>
+                {% endif %}
+                {% if is_granted('CATEGORY_DELETE', category) %}
                 <td><a href="{{ path('category_delete', {id: category.id}) }}"class="btn btn-primary">
                         {{ 'action.delete'|trans }}
                     </a></td>
+                {% endif %}
             </tr>
         {% else %}
             <tr>
@@ -53,6 +57,8 @@
             message: 'message.empty_list'|trans
         } %}
     {% endif %}
+    {% if is_granted('IS_AUTHENTICATED_FULLY') %}
     <a href="{{ path('category_create') }}"class="btn btn-primary">{{ 'title.category_create'|trans }}</a>
+    {% endif %}
 
 {% endblock %}

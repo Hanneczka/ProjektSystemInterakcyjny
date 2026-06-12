@@ -14,6 +14,8 @@ use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use App\Security\Voter\CategoryVoter;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/category')]
 class CategoryController extends AbstractController
@@ -33,20 +35,17 @@ class CategoryController extends AbstractController
             'category/index.html.twig',
             ['pagination' => $pagination]);
     }
+
     #[Route(
         '/{id}',
         name: 'category_view',
         requirements: ['id' => '[1-9]\d*'],
         methods: ['GET']
     )]
-    public function view(CategoryRepository $repository, int $id): Response
+
+    #[IsGranted(CategoryVoter::VIEW, subject: 'category')]
+    public function view(Category $category): Response
     {
-        $category = $repository->findOneById($id);
-
-        if (null === $category) {
-            throw $this->createNotFoundException();
-        }
-
 
         return $this->render(
             'category/view.html.twig',
@@ -59,6 +58,7 @@ class CategoryController extends AbstractController
         name: 'category_create',
         methods: ['GET', 'POST']
     )]
+    #[IsGranted('IS_AUTHENTICATED_FULLY')]
     public function create(Request $request): Response
     {
         $category = new Category();
@@ -95,8 +95,10 @@ class CategoryController extends AbstractController
         requirements: ['id' => '[1-9]\d*'],
         methods: ['GET', 'PUT']
     )]
+    #[IsGranted(CategoryVoter::EDIT, subject: 'category')]
     public function edit(Request $request, Category $category): Response
     {
+
         $form = $this->createForm(
             CategoryType::class,
             $category,
@@ -140,6 +142,7 @@ class CategoryController extends AbstractController
         requirements: ['id' => '[1-9]\d*'],
         methods: ['GET', 'DELETE']
     )]
+    #[IsGranted(CategoryVoter::DELETE, subject: 'category')]
     public function delete(Request $request, Category $category): Response
     {
         if (!$this->categoryService->canBeDeleted($category)) {
