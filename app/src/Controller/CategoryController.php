@@ -58,7 +58,7 @@ class CategoryController extends AbstractController
         name: 'category_create',
         methods: ['GET', 'POST']
     )]
-    #[IsGranted('IS_AUTHENTICATED_FULLY')]
+    #[IsGranted('ROLE_ADMIN')]
     public function create(Request $request): Response
     {
         $category = new Category();

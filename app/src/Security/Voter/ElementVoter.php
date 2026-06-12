@@ -6,37 +6,36 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Vote;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\User\UserInterface;
-use App\Entity\Category;
 
-final class CategoryVoter extends Voter
+final class ElementVoter extends Voter
 {
     /**
      * Delete permission.
      *
      * @const string
      */
-    public const DELETE = 'CATEGORY_DELETE';
+    public const DELETE = 'ELEMENT_DELETE';
 
     /**
      * Edit permission.
      *
      * @const string
      */
-    public const EDIT = 'CATEGORY_EDIT';
+    public const EDIT = 'ELEMENT_EDIT';
 
     /**
      * Show permission.
      *
      * @const string
      */
-    public const VIEW = 'CATEGORY_VIEW';
+    public const VIEW = 'ELEMENT_VIEW';
 
     protected function supports(string $attribute, mixed $subject): bool
     {
         // replace with your own logic
         // https://symfony.com/doc/current/security/voters.html
         return in_array($attribute, [self::EDIT, self::VIEW, self::DELETE])
-            && $subject instanceof \App\Entity\Category;
+            && $subject instanceof \App\Entity\Element;
     }
 
     protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token, ?Vote $vote = null): bool

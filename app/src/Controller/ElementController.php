@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\ElementRepository;
+use App\Security\Voter\ElementVoter;
 use App\Service\ElementServiceInterface;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,6 +15,7 @@ use App\Form\Type\ElementType;
 use Symfony\Component\HttpFoundation\Request;
 use App\Service\TagService;
 use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 
@@ -35,6 +37,7 @@ public function index(#[MapQueryParameter] int $page = 1): Response
         name: 'element_create',
         methods: ['GET', 'POST']
     )]
+    #[IsGranted('ROLE_ADMIN')]
     public function create(Request $request): Response
     {
         $element = new Element();
@@ -62,6 +65,7 @@ public function index(#[MapQueryParameter] int $page = 1): Response
         requirements: ['id' => '[1-9]\d*'],
         methods: ['GET', 'PUT']
     )]
+    #[IsGranted(ElementVoter::EDIT, subject: 'element')]
     public function edit(Request $request, Element $element): Response
     {
         $form = $this->createForm(
@@ -98,13 +102,10 @@ public function index(#[MapQueryParameter] int $page = 1): Response
         requirements: ['id' => '[1-9]\d*'],
         methods: ['GET']
     )]
-    public function view(ElementRepository $repository, int $id): Response
+    #[IsGranted(ElementVoter::VIEW, subject: 'element')]
+    public function view(Element $element): Response
     {
-        $element = $repository->findOneById($id);
 
-        if (null === $element) {
-            throw $this->createNotFoundException();
-        }
 
         return $this->render(
             'element/view.html.twig',
@@ -118,6 +119,7 @@ public function index(#[MapQueryParameter] int $page = 1): Response
         requirements: ['id' => '[1-9]\d*'],
         methods: ['GET', 'DELETE']
     )]
+    #[IsGranted(ElementVoter::DELETE, subject: 'element')]
     public function delete(Request $request, Element $element): Response
     {
         $form = $this->createForm(FormType::class, $element, [
