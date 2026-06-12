@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Sign up{% endblock %}
+
+{% block body %}
+    <h1>Sign up</h1>
+
+    {{ form_errors(registrationForm) }}
+
+    {{ form_start(registrationForm) }}
+    {{ form_row(registrationForm.email) }}
+    {{ form_row(registrationForm.name) }}
+
+    {{ form_row(registrationForm.password) }}
+
+    {% if false == registrationForm.vars.valid %}
+        {% include 'default/_single_alert_message.html.twig' with {
+            type: 'danger',
+            message: 'message.form_error'|trans,
+        }%}
+    {% endif %}
+
+    <button type="submit" class="btn btn-primary">Sign up</button>
+    {{ form_end(registrationForm) }}
+
+{% endblock %}

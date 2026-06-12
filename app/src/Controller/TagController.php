@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\TagRepository;
+use App\Security\Voter\TagVoter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Knp\Component\Pager\PaginatorInterface;
@@ -13,6 +14,7 @@ use App\Form\Type\TagType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route('/tag')]
@@ -39,14 +41,9 @@ public function index(#[MapQueryParameter] int $page = 1){
         requirements: ['id' => '[1-9]\d*'],
         methods: ['GET']
     )]
-    public function view(TagRepository $repository, int $id): Response
+    #[IsGranted(TagVoter::VIEW, subject: 'tag')]
+    public function view(Tag $tag): Response
     {
-        $tag = $repository->findOneById($id);
-
-        if (null === $tag) {
-            throw $this->createNotFoundException();
-        }
-
 
         return $this->render(
             'tag/view.html.twig',
@@ -59,6 +56,7 @@ public function index(#[MapQueryParameter] int $page = 1){
     name: 'tag_create',
     methods: ['GET', 'POST']
 )]
+    #[IsGranted('ROLE_ADMIN')]
 public function create(Request $request): Response{
         $tag = new Tag();
         $form = $this->createForm(TagType::class, $tag);
@@ -80,6 +78,7 @@ public function create(Request $request): Response{
     requirements: ['id' => '[1-9]\d*'],
     methods: ['GET', 'PUT']
 )]
+    #[IsGranted(TagVoter::EDIT, subject: 'tag')]
 public function edit(Request $request, Tag $tag): Response{
         $form = $this->createForm(TagType::class, $tag,
         [
@@ -104,6 +103,7 @@ public function edit(Request $request, Tag $tag): Response{
         requirements: ['id' => '[1-9]\d*'],
         methods: ['GET', 'DELETE']
     )]
+    #[IsGranted(TagVoter::DELETE, subject: 'tag')]
     public function delete(Request $request, Tag $tag): Response
     {
         $form = $this->createForm(FormType::class, $tag, [
