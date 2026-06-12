@@ -50,9 +50,6 @@ class UserController extends AbstractController{
     public function editUser(Request $request):Response{
         $user = $this->getUser();
 
-        if (!$user) {
-            throw $this->createAccessDeniedException();
-        }
 
         $form = $this->createForm(UserType::class, $user, [
         'method'=>'POST',
@@ -60,7 +57,7 @@ class UserController extends AbstractController{
     );
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
-            $this->userService->save($user);
+            $this->entityManager->flush();
 
             $this->addFlash('success', $this->translator->trans('message.user_updated'));
 
