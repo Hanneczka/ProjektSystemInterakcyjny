@@ -18,7 +18,9 @@ use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use App\Service\CommentServiceInterface;
-
+use App\Form\Type\CommentType;
+use Doctrine\ORM\EntityManagerInterface;
+use App\Entity\Comment;
 
 #[Route('/element')]
 class ElementController extends AbstractController
@@ -94,7 +96,8 @@ public function index(#[MapQueryParameter] int $page = 1): Response
             'element/edit.html.twig',
             [
                 'form' => $form->createView(),
-                'element' => $element,
+                'element' => $element
+
             ]
         );
     }
@@ -102,18 +105,39 @@ public function index(#[MapQueryParameter] int $page = 1): Response
         '/{id}',
         name: 'element_view',
         requirements: ['id' => '[1-9]\d*'],
-        methods: ['GET']
+        methods: ['GET', 'POST']
     )]
     #[IsGranted(ElementVoter::VIEW, subject: 'element')]
-    public function view(Element $element, #[MapQueryParameter] int $page = 1): Response
+    public function view(Element $element,Request $request,EntityManagerInterface $entityManager, #[MapQueryParameter] int $page = 1): Response
     {
+        $comment = new Comment();
+        $form = $this->createForm(CommentType::class, $comment);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $comment->setElement($element);
+            $comment->setAuthor($this->getUser());
+            $comment->setCreatedAt(new \DateTimeImmutable());
+            $comment->setUpdatedAt(new \DateTimeImmutable());
+
+            $entityManager->persist($comment);
+            $entityManager->flush();
+
+            $this->addFlash(
+                'success',
+                $this->translator->trans('comment_added'));
+
+            return $this->redirectToRoute('element_view', ['id' => $element->getId()]);
+
+
+        }
         $comments = $this->commentService->getPaginatedList($page, $element);
 
 
         return $this->render(
             'element/view.html.twig',
             ['element' => $element
-            , 'comment_pagination' => $comments]
+            , 'comment_pagination' => $comments,
+            'comment_form' => $form->createView()]
         );
     }
 

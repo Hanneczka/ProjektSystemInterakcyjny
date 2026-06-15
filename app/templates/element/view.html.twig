@@ -27,6 +27,15 @@
         </p>
     {% endif %}
 
+    {% if app.user %}
+        {{ form_start(comment_form) }}
+        {{ form_widget(comment_form) }}
+        <button class="btn btn-primary mt-2">{{ 'action.send_comment'|trans }}</button>
+        {{ form_end(comment_form) }}
+    {% else %}
+        <p>Musisz się <a href="{{ path('app_login') }}">zalogować</a>, aby dodać komentarz.</p>
+    {% endif %}
+
     <ul>
         {% for comment in comment_pagination %}
             <li>
