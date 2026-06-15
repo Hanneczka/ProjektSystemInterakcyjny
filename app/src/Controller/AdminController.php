@@ -78,6 +78,34 @@ class AdminController extends AbstractController{
         }
         return $this->render('admin/edit_user.html.twig', ['form' => $form->createView()]);
     }
+    #[Route('/{id}/change_role', name: 'admin_change_roles', requirements: ['id' => '[1-9]\d*'], methods: ['POST', 'GET'])]
+    public function changeRoles(User $user, UserRepository $userRepository):Response{
+        $roles = $user->getRoles();
+
+        if (in_array('ROLE_ADMIN', $roles, true)) {
+            $allAdmins = $userRepository->createQueryBuilder('u')
+                ->where('u.roles LIKE :role')
+                ->setParameter('role', '%"ROLE_ADMIN"%')
+                ->getQuery()
+                ->getResult();
+
+            if (count($allAdmins) <= 1) {
+                $this->addFlash('danger', $this->translator->trans('message.cannot_remove_last_admin'));
+                return $this->redirectToRoute('user_index');
+            }
+
+            $roles = array_diff($roles, ['ROLE_ADMIN']);
+            $this->addFlash('success', $this->translator->trans('message.admin_role_removed'));
+        } else {
+            $roles[] = 'ROLE_ADMIN';
+            $this->addFlash('success', $this->translator->trans('message.admin_role_granted'));
+        }
+
+        $user->setRoles(array_values(array_unique($roles)));
+        $this->entityManager->flush();
+
+        return $this->redirectToRoute('user_index');
+    }
 
 
 }

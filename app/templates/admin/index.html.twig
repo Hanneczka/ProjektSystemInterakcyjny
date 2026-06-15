@@ -28,7 +28,17 @@
                     <td><a href="{{ path('admin_edit_password', {id: user.id}) }}"class="btn btn-primary">
                             {{ 'action.edit_password'|trans }}
                         </a></td>
-
+                <td>
+                    {% if 'ROLE_ADMIN' in user.roles %}
+                        <a href="{{ path('admin_change_roles', {id: user.id}) }}" class="btn btn-warning btn-sm">
+                            {{ 'action.revoke_admin'|trans }}
+                        </a>
+                    {% else %}
+                        <a href="{{ path('admin_change_roles', {id: user.id}) }}" class="btn btn-success btn-sm">
+                            {{ 'action.grant_admin'|trans }}
+                        </a>
+                    {% endif %}
+                </td>
 
             </tr>
         {% else %}
