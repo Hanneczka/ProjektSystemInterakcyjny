@@ -32,8 +32,22 @@
                 <td>{{ element.title }}</td>
                 <td>{{ element.author }}</td>
                 <td>{{ element.year }}</td>
-                <td>{{ element.category.name }}</td>
-                <td>{{ element.tags|map(t => t.title)|join(', ') }}</td>
+                <td><a class="btn btn-outline-primary"
+                       href="{{ url('element_index', {'categoryId' : element.category.id}) }}"
+                       title="{{ element.category.name }}">
+                        {{ element.category.name }}
+                    </a></td>
+                <td>{% if element.tags is defined and element.tags|length %}
+    {% for tag in element.tags %}
+        <a class="btn btn-outline-primary"
+           href="{{ url('element_index', {'tagId' : tag.id}) }}"
+           title="{{ tag.title }}">
+            {{ tag.title }}
+        </a>
+    {% endfor %}
+{% else %}
+    &nbsp;
+{% endif %}</td>
                 <td>{{ element.createdAt|format_date('long') }}</td>
                 {% if is_granted('ELEMENT_VIEW', element) %}
                 <td><a href="{{ path('element_view', {id: element.id}) }}"class="btn btn-primary">

@@ -8,6 +8,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 use App\Entity\Tag;
+use App\Dto\ElementListFiltersDto;
 
 /**
  * @extends ServiceEntityRepository<Element>
@@ -19,11 +20,18 @@ class ElementRepository extends ServiceEntityRepository
         parent::__construct($registry, Element::class);
     }
 
-    public function queryAll(): QueryBuilder
+    public function queryAll(ElementListFiltersDto $filters): QueryBuilder
     {
-        return $this->createQueryBuilder('element')
-            ->select('element', 'category')
-            ->join('element.category', 'category');
+        $queryBuilder = $this->createQueryBuilder('element')
+            ->select(
+                'partial element.{id, createdAt, updatedAt, title}',
+                'partial category.{id, name}',
+                'partial tags.{id, title}'
+            )
+            ->join('element.category', 'category')
+            ->leftJoin('element.tags', 'tags');
+
+        return $this->applyFiltersToList($queryBuilder, $filters);
     }
 
     public function save(Element $element): void
@@ -63,7 +71,21 @@ class ElementRepository extends ServiceEntityRepository
             ->orderBy('element.createdAt', 'DESC');
     }
 
+    private function applyFiltersToList(QueryBuilder $queryBuilder, ElementListFiltersDto $filters): QueryBuilder
+    {
+        if ($filters->category instanceof Category) {
+            $queryBuilder->andWhere('category = :category')
+                ->setParameter('category', $filters->category);
+        }
 
+        if ($filters->tag instanceof Tag) {
+            $queryBuilder->andWhere('tags IN (:tag)')
+                ->setParameter('tag', $filters->tag);
+        }
+
+
+        return $queryBuilder;
+    }
     //    /**
     //     * @return Element[] Returns an array of Element objects
     //     */

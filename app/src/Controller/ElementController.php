@@ -22,6 +22,7 @@ use App\Form\Type\CommentType;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Comment;
 use App\Security\Voter\CommentVoter;
+use App\Dto\ElementListInputFiltersDto;
 
 #[Route('/element')]
 class ElementController extends AbstractController
@@ -32,9 +33,9 @@ class ElementController extends AbstractController
         name: 'element_index',
         methods: ['GET'],
 )]
-public function index(#[MapQueryParameter] int $page = 1): Response
+public function index(#[MapQueryString(resolver: ElementListInputFiltersDtoResolver::class)] ElementListInputFiltersDto $filters, #[MapQueryParameter] int $page = 1): Response
     {
-        $pagination = $this->elementService->getPaginatedList($page);
+        $pagination = $this->elementService->getPaginatedList($page, $filters);
         return $this->render('element/index.html.twig', ['pagination' => $pagination]);
     }
     #[Route(
