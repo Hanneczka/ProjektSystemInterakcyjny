@@ -4,6 +4,7 @@ namespace App\Controller;
 use App\Entity\Category;
 use App\Repository\CategoryRepository;
 use App\Repository\ElementRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -16,6 +17,7 @@ use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use App\Security\Voter\CategoryVoter;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use App\Service\ElementServiceInterface;
 
 #[Route('/category')]
 class CategoryController extends AbstractController
@@ -44,12 +46,13 @@ class CategoryController extends AbstractController
     )]
 
     #[IsGranted(CategoryVoter::VIEW, subject: 'category')]
-    public function view(Category $category): Response
+    public function view(Category $category,ElementServiceInterface $elementService, #[MapQueryParameter] int $page = 1): Response
     {
-
+        $elements = $elementService->getPaginatedListByCategory($page, $category);
         return $this->render(
             'category/view.html.twig',
-            ['category' => $category]
+            ['category' => $category,
+                'pagination' => $elements,]
         );
     }
 

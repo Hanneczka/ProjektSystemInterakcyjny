@@ -25,6 +25,12 @@ class CommentRepository extends ServiceEntityRepository
             ->setParameter('element', $element)
             ->orderBy('comment.createdAt', 'DESC');
     }
+
+    public function delete(Comment $comment): void
+    {
+        $this->getEntityManager()->remove($comment);
+        $this->getEntityManager()->flush();
+    }
     //    /**
     //     * @return Comment[] Returns an array of Comment objects
     //     */

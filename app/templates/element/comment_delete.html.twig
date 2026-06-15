@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ 'title.comment_delete'|trans({'%id%': comment.id}) }}
+{% endblock %}
+
+{% block body %}
+    <h1>{{ 'title.comment_delete'|trans({'%id%': comment.id}) }}</h1>
+
+    <p>Czy na pewno chcesz usunąć ten komentarz?</p>
+    <blockquote class="blockquote bg-light p-3">
+        "{{ comment.content }}"
+    </blockquote>
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+
+    <button class="btn btn-danger">
+        {{ 'action.delete'|trans }}
+    </button>
+
+    <a href="{{ path('element_view', {'id': comment.element.id}) }}" class="btn btn-secondary">
+        {{ 'action.back_to_list'|trans }}
+    </a>
+    {{ form_end(form) }}
+{% endblock %}

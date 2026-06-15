@@ -21,6 +21,7 @@ use App\Service\CommentServiceInterface;
 use App\Form\Type\CommentType;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Comment;
+use App\Security\Voter\CommentVoter;
 
 #[Route('/element')]
 class ElementController extends AbstractController
@@ -138,6 +139,40 @@ public function index(#[MapQueryParameter] int $page = 1): Response
             ['element' => $element
             , 'comment_pagination' => $comments,
             'comment_form' => $form->createView()]
+        );
+    }
+
+    #[Route(
+        '/comment/{id}/delete',
+        name: 'comment_delete',
+        requirements: ['id' => '[1-9]\d*'],
+        methods: ['GET', 'DELETE']
+    )]
+    #[IsGranted(CommentVoter::DELETE, subject: 'comment')]
+    public function comment_delete(Request $request, Comment $comment): Response
+    {
+        $form = $this->createForm(FormType::class, $comment, [
+            'method' => 'DELETE',
+            'action' => $this->generateUrl('comment_delete', ['id' => $comment->getId()]),
+        ]);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->commentService->delete($comment);
+            $this->addFlash(
+                'success',
+                $this->translator->trans('message.deleted_successfully')
+            );
+
+            return $this->redirectToRoute('element_view', ['id' => $comment->getElement()->getId()]);
+        }
+
+        return $this->render(
+            'element/comment_delete.html.twig',
+            [
+                'form' => $form->createView(),
+                'comment' => $comment,
+            ]
         );
     }
 

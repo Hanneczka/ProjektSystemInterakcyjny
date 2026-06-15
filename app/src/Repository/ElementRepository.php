@@ -55,6 +55,14 @@ class ElementRepository extends ServiceEntityRepository
         return $qb ?? $this->createQueryBuilder('element');
     }
 
+    public function queryByCategory(Category $category): QueryBuilder
+    {
+        return $this->createQueryBuilder('element')
+            ->where('element.category = :category')
+            ->setParameter('category', $category)
+            ->orderBy('element.createdAt', 'DESC');
+    }
+
 
     //    /**
     //     * @return Element[] Returns an array of Element objects

@@ -41,6 +41,11 @@
             <li>
                 <strong>{{ comment.author.name }}</strong> ({{ comment.createdAt|format_date('long') }}):
                 <p>{{ comment.content }}</p>
+                {% if is_granted('COMMENT_DELETE', comment) %}
+                    <td><a href="{{ path('comment_delete', {id: comment.id}) }}"class="btn btn-primary">
+                            {{ 'action.delete'|trans }}
+                        </a></td>
+                {% endif %}
             </li>
         {% else %}
             <li>Brak komentarzy dla tego elementu.</li>

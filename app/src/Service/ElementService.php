@@ -6,6 +6,8 @@ use App\Entity\Element;
 use App\Repository\ElementRepository;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
+use App\Entity\Category;
+
 
 class ElementService implements ElementServiceInterface{
 
@@ -34,5 +36,16 @@ class ElementService implements ElementServiceInterface{
     {
         $this->elementRepository->delete($element);
     }
-
+    public function getPaginatedListByCategory(int $page, Category $category): PaginationInterface
+    {
+        return $this->paginator->paginate(
+            $this->elementRepository->queryByCategory($category),
+            $page,
+            10,
+            [
+                'defaultSortFieldName' => 'element.createdAt',
+                'defaultSortDirection' => 'desc',
+            ]
+        );
+    }
 }

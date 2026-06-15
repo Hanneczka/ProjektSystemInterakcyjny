@@ -18,6 +18,53 @@
             {{ 'message.record_not_found'|trans }}
         </p>
     {% endif %}
+    {% if pagination is defined and pagination.items|length %}
+        <div class="navigation text-center">
+            {{ knp_pagination_render(pagination) }}
+        </div>
+        <table class="table table-stripped" border="1">
+            <thead>
+            <tr>
+                <th>{{ knp_pagination_sortable(pagination, 'label.id'|trans, 'element.id') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'label.title'|trans, 'element.title') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'label.author'|trans, 'element.author') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'label.year'|trans, 'element.year') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'label.tags'|trans, 'element.tags') }}</th>
+                <th>{{ knp_pagination_sortable(pagination, 'label.created_at'|trans, 'element.createdAt') }}</th>
+                <th>{{ 'label.actions'|trans }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for element in pagination %}
+                <tr>
+                    <td>{{ element.id }}</td>
+                    <td>{{ element.title }}</td>
+                    <td>{{ element.author }}</td>
+                    <td>{{ element.year }}</td>
+                    <td>{{ element.tags|map(t => t.title)|join(', ') }}</td>
+                    <td>{{ element.createdAt|format_date('long') }}</td>
+                    {% if is_granted('ELEMENT_VIEW', element) %}
+                        <td><a href="{{ path('element_view', {id: element.id}) }}"class="btn btn-primary">
+                                {{ 'action.view'|trans }}
+                            </a></td>
+                    {% endif %}
+                </tr>
+            {% else %}
+                <tr>
+                    <td>{{ 'message.empty_list'|trans }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <div class="navigation text-center mt-3">
+            {{ knp_pagination_render(pagination) }}
+        </div>
+    {% else %}
+        {% include 'default/_single_alert_message.html.twig' with {
+            type: 'warning',
+            message: 'message.empty_list'|trans
+        } %}
+    {% endif %}
 
 
 {% endblock %}

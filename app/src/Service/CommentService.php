@@ -30,4 +30,8 @@ class CommentService implements CommentServiceInterface{
     {
         return $this->commentRepository->findByElement($element);
     }
+    public function delete(Comment $comment): void
+    {
+        $this->commentRepository->delete($comment);
+    }
 }
