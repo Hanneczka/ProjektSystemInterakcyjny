@@ -5,6 +5,8 @@ namespace App\Repository;
 use App\Entity\Comment;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\QueryBuilder;
+use App\Entity\Element;
 
 /**
  * @extends ServiceEntityRepository<Comment>
@@ -16,6 +18,13 @@ class CommentRepository extends ServiceEntityRepository
         parent::__construct($registry, Comment::class);
     }
 
+    public function queryByElement(Element $element): QueryBuilder
+    {
+        return $this->createQueryBuilder('comment')
+            ->where('comment.element = :element')
+            ->setParameter('element', $element)
+            ->orderBy('comment.createdAt', 'DESC');
+    }
     //    /**
     //     * @return Comment[] Returns an array of Comment objects
     //     */

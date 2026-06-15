@@ -26,4 +26,20 @@
             {{ 'message.empty_list'|trans }}
         </p>
     {% endif %}
+
+    <ul>
+        {% for comment in comment_pagination %}
+            <li>
+                <strong>{{ comment.author.name }}</strong> ({{ comment.createdAt|format_date('long') }}):
+                <p>{{ comment.content }}</p>
+            </li>
+        {% else %}
+            <li>Brak komentarzy dla tego elementu.</li>
+        {% endfor %}
+    </ul>
+
+    <div class="navigation">
+        {{ knp_pagination_render(comment_pagination) }}
+    </div>
+
 {% endblock %}

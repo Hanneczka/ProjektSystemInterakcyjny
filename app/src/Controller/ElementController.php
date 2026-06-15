@@ -17,12 +17,14 @@ use App\Service\TagService;
 use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use App\Service\CommentServiceInterface;
 
 
 #[Route('/element')]
 class ElementController extends AbstractController
 {
-    public function __construct(private readonly ElementServiceInterface $elementService,  private readonly TranslatorInterface $translator) {}
+    public function __construct(private readonly ElementServiceInterface $elementService,  private readonly TranslatorInterface $translator, private readonly CommentServiceInterface $commentService, private readonly TagService $tagService) {}
+
     #[Route(
         name: 'element_index',
         methods: ['GET'],
@@ -103,13 +105,15 @@ public function index(#[MapQueryParameter] int $page = 1): Response
         methods: ['GET']
     )]
     #[IsGranted(ElementVoter::VIEW, subject: 'element')]
-    public function view(Element $element): Response
+    public function view(Element $element, #[MapQueryParameter] int $page = 1): Response
     {
+        $comments = $this->commentService->getPaginatedList($page, $element);
 
 
         return $this->render(
             'element/view.html.twig',
-            ['element' => $element]
+            ['element' => $element
+            , 'comment_pagination' => $comments]
         );
     }
 
@@ -146,4 +150,6 @@ public function index(#[MapQueryParameter] int $page = 1): Response
             ]
         );
     }
+
+
 }
