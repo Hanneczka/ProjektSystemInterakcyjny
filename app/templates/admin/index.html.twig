@@ -39,6 +39,17 @@
                         </a>
                     {% endif %}
                 </td>
+                <td>
+                    {% if 'ROLE_BLOCKED' in user.roles %}
+                        <a href="{{ path('admin_block_user', {'id': user.id}) }}" class="btn btn-success btn-sm">
+                            {{ 'action.unblock'|trans }}
+                        </a>
+                    {% else %}
+                        <a href="{{ path('admin_user_block_confirm', {'id': user.id}) }}" class="btn btn-danger btn-sm">
+                            {{ 'action.block'|trans }}
+                        </a>
+                    {% endif %}
+                </td>
 
             </tr>
         {% else %}

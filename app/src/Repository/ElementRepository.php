@@ -24,7 +24,7 @@ class ElementRepository extends ServiceEntityRepository
     {
         $queryBuilder = $this->createQueryBuilder('element')
             ->select(
-                'partial element.{id, createdAt, updatedAt, title}',
+                'partial element.{id, createdAt, updatedAt, title, year, author}',
                 'partial category.{id, name}',
                 'partial tags.{id, title}'
             )

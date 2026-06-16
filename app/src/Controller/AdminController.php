@@ -93,9 +93,9 @@ class AdminController extends AbstractController{
                 $this->addFlash('danger', $this->translator->trans('message.cannot_remove_last_admin'));
                 return $this->redirectToRoute('user_index');
             }
-
+            else{
             $roles = array_diff($roles, ['ROLE_ADMIN']);
-            $this->addFlash('success', $this->translator->trans('message.admin_role_removed'));
+            $this->addFlash('success', $this->translator->trans('message.admin_role_removed'));}
         } else {
             $roles[] = 'ROLE_ADMIN';
             $this->addFlash('success', $this->translator->trans('message.admin_role_granted'));
@@ -105,6 +105,32 @@ class AdminController extends AbstractController{
         $this->entityManager->flush();
 
         return $this->redirectToRoute('user_index');
+    }
+
+    #[Route('/{id}/block_user', name: 'admin_block_user', requirements: ['id' => '[1-9]\d*'], methods: ['POST', 'GET'])]
+    public function blockUser(User $user, EntityManagerInterface $entityManager):Response{
+        $roles = $user->getRoles();
+
+        if (in_array('ROLE_BLOCKED', $roles)) {
+            $user->setRoles(array_diff($roles, ['ROLE_BLOCKED']));
+            $this->addFlash('success', $this->translator->trans('message.account_unblocked'));
+        } else {
+            $roles[] = 'ROLE_BLOCKED';
+            $user->setRoles(array_unique($roles));
+            $this->addFlash('warning', $this->translator->trans('message.account_blocked'));
+        }
+
+        $entityManager->flush();
+
+        return $this->redirectToRoute('user_index');
+    }
+
+    #[Route('/{id}/block-confirm', name: 'admin_user_block_confirm', requirements: ['id' => '[1-9]\d*'], methods: ['GET'])]
+    public function blockConfirm(User $user): Response
+    {
+        return $this->render('admin/block_confirm.html.twig', [
+            'user' => $user,
+        ]);
     }
 
 

@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ 'title.block_user'|trans({'%id%': user.id}) }}
+{% endblock %}
+
+{% block body %}
+    <h1>{{ 'title.block_user'|trans({'%id%': user.id}) }}</h1>
+
+    <p>Czy na pewno chcesz zablokować użytkownika?</p>
+
+
+    <a href="{{ path('admin_block_user', {'id': user.id}) }}" class="btn btn-danger px-4">
+        {{ 'block'|trans }}
+    </a>
+
+    <a href="{ path('user_index'}" class="btn btn-secondary">
+        {{ 'action.back_to_list'|trans }}
+    </a>
+{% endblock %}
