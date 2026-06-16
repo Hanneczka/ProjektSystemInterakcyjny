@@ -55,11 +55,11 @@ class UserFixtures extends AbstractBaseFixtures implements DependentFixtureInter
             );
             $user->setName($this->faker->firstName);
 
-            #$randomElements = $this->getRandomReferenceList('element', Element::class, random_int(5, 7));
+            $randomElements = $this->getRandomReferenceList('element', Element::class, random_int(5, 7));
 
-            #foreach ($randomElements as $element) {
-            #    $user->addFavorite($element);
-            #}
+            foreach ($randomElements as $element) {
+                $user->addFavorite($element);
+            }
             return $user;
         });
 
