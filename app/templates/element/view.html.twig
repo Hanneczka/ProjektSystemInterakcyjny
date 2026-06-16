@@ -26,6 +26,15 @@
             {{ 'message.empty_list'|trans }}
         </p>
     {% endif %}
+    {% if app.user %}
+        <a href="{{ path('element_favorite', {'id': element.id}) }}" class="btn btn-sm">
+            {% if element in app.user.favorites %}
+                <span class="text-danger">❤️ Usuń z ulubionych</span>
+            {% else %}
+                <span class="text-secondary">🤍 Dodaj do ulubionych</span>
+            {% endif %}
+        </a>
+    {% endif %}
 
     {% if app.user %}
         {{ form_start(comment_form) }}

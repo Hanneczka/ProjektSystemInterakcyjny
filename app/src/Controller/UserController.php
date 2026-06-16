@@ -75,10 +75,14 @@ class UserController extends AbstractController{
             throw $this->createNotFoundException();
         }
 
+        $user = $this->getUser();
+        $favorites = $user->getFavorites();
+
 
         return $this->render(
             'profile/profile.html.twig',
-            ['user' => $user]
+            ['user' => $user,
+                'favorites' => $favorites,]
         );
     }
 

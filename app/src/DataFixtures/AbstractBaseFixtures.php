@@ -88,6 +88,7 @@ abstract class AbstractBaseFixtures extends Fixture {
         return $this->getReference($randomReferenceName, $className);
     }
 
+
     /**
      * Get array of objects references based on count.
      *

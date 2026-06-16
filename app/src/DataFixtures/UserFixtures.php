@@ -11,13 +11,15 @@ use App\Entity\User;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Generator;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use App\Entity\Element;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
 /**
  * Class UserFixtures.
  *
  * @psalm-suppress MissingConstructor
  */
-class UserFixtures extends AbstractBaseFixtures
+class UserFixtures extends AbstractBaseFixtures implements DependentFixtureInterface
 {
     /**
      * Constructor.
@@ -53,6 +55,11 @@ class UserFixtures extends AbstractBaseFixtures
             );
             $user->setName($this->faker->firstName);
 
+            #$randomElements = $this->getRandomReferenceList('element', Element::class, random_int(5, 7));
+
+            #foreach ($randomElements as $element) {
+            #    $user->addFavorite($element);
+            #}
             return $user;
         });
 
@@ -71,5 +78,11 @@ class UserFixtures extends AbstractBaseFixtures
             return $user;
         });
 
+    }
+    public function getDependencies(): array
+    {
+        return [
+            ElementFixtures::class,
+        ];
     }
 }

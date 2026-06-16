@@ -62,15 +62,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $name = null;
 
     /**
-     * @var Collection<int, Comment>
+     * @var Collection<int, Element>
      */
-    #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'author')]
-    private Collection $comments;
+    #[ORM\ManyToMany(targetEntity: Element::class)]
+    private Collection $favorites;
 
     public function __construct()
     {
-        $this->comments = new ArrayCollection();
+        $this->favorites = new ArrayCollection();
     }
+
+
 
     /**
      * Getter for id.
@@ -186,32 +188,27 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<int, Comment>
+     * @return Collection<int, Element>
      */
-    public function getComments(): Collection
+    public function getFavorites(): Collection
     {
-        return $this->comments;
+        return $this->favorites;
     }
 
-    public function addComment(Comment $comment): static
+    public function addFavorite(Element $favorite): static
     {
-        if (!$this->comments->contains($comment)) {
-            $this->comments->add($comment);
-            $comment->setAuthor($this);
+        if (!$this->favorites->contains($favorite)) {
+            $this->favorites->add($favorite);
         }
 
         return $this;
     }
 
-    public function removeComment(Comment $comment): static
+    public function removeFavorite(Element $favorite): static
     {
-        if ($this->comments->removeElement($comment)) {
-            // set the owning side to null (unless already changed)
-            if ($comment->getAuthor() === $this) {
-                $comment->setAuthor(null);
-            }
-        }
+        $this->favorites->removeElement($favorite);
 
         return $this;
-    }
-}
+    }}
+
+

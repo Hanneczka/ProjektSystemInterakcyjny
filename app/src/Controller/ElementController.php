@@ -210,6 +210,25 @@ public function index(#[MapQueryString(resolver: ElementListInputFiltersDtoResol
             ]
         );
     }
+    #[Route('/{id}/favorite', name: 'element_favorite', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_USER')]
+    public function favorite(Element $element, EntityManagerInterface $entityManager): Response
+    {
+
+        $user = $this->getUser();
+
+        if ($user->getFavorites()->contains($element)) {
+            $user->removeFavorite($element);
+            $this->addFlash('info', 'Usunięto z ulubionych.');
+        } else {
+            $user->addFavorite($element);
+            $this->addFlash('success', 'Dodano do ulubionych!');
+        }
+
+        $entityManager->flush();
+
+        return $this->redirectToRoute('element_view', ['id' => $element->getId()]);
+    }
 
 
 }
