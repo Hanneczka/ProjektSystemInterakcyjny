@@ -52,6 +52,9 @@ class Element
     #[ORM\ManyToMany(targetEntity: Tag::class)]
     private Collection $tags;
 
+    #[ORM\OneToOne(mappedBy: 'element', cascade: ['persist', 'remove'])]
+    private ?Cover $cover = null;
+
 
 
     public function __construct()
@@ -156,6 +159,23 @@ class Element
     public function removeTag(Tag $tag): static
     {
         $this->tags->removeElement($tag);
+
+        return $this;
+    }
+
+    public function getCover(): ?Cover
+    {
+        return $this->cover;
+    }
+
+    public function setCover(Cover $cover): static
+    {
+        // set the owning side of the relation if necessary
+        if ($cover->getElement() !== $this) {
+            $cover->setElement($this);
+        }
+
+        $this->cover = $cover;
 
         return $this;
     }

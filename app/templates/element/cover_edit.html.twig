@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ 'title.cover_edit'|trans({'%id%': element.id}) }}
+{% endblock %}
+{% block body %}
+    <h1>{{ 'title.cover_edit'|trans }}</h1>
+
+    {{ form_start(form, {'attr': {'enctype': 'multipart/form-data'}}) }}
+    {{ form_widget(form) }}
+    <button class="btn btn-primary">{{ 'action.save'|trans }}</button>
+    {{ form_end(form) }}
+{% endblock %}

@@ -6,6 +6,30 @@
 
 {% block body %}
     <h1>{{ 'title.record_view'|trans }}</h1>
+    {% if element.cover %}
+        <img src="{{ asset('uploads/covers/' ~ element.cover.fileName) }}" alt="Cover">
+    {% if is_granted('COVER_DELETE', element.cover) %}
+        <a href="{{ path('cover_delete', {'id': element.cover.id}) }}"
+           class="btn btn-danger"
+           onclick="return confirm('{{ 'message.confirm_delete'|trans }}');">
+            {{ 'action.delete_cover'|trans }}
+        </a>
+        {% endif %}
+    {% if is_granted('COVER_EDIT', element.cover) %}
+        <a href="{{ path('cover_edit', {'id': element.cover.id}) }}"
+           class="btn btn-primary"
+           >
+            {{ 'action.edit_cover'|trans }}
+        </a>
+        {% endif %}
+    {% else %}
+        <img src="{{ asset('images/no-cover.png') }}" alt="No cover">
+    {% if is_granted('ROLE_ADMIN') %}
+<a href="{{ path('cover_create', {id: element.id}) }}"class="btn btn-primary">
+
+    {{ 'action.cover_create'|trans }}</a>
+    {% endif %}
+    {% endif %}
     {% if element is defined and element|length %}
         <dl>
             <dt>{{ 'label.title'|trans }}</dt>
