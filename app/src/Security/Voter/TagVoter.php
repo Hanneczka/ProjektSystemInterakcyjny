@@ -47,9 +47,10 @@ final class TagVoter extends Voter
         switch ($attribute) {
             case self::EDIT:
             case self::DELETE:
+            case self::VIEW:
 
                 return $this->isAdmin($user);
-            case self::VIEW:
+
 
                 return true;
         }

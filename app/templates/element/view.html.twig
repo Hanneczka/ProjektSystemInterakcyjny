@@ -6,68 +6,11 @@
 
 {% block body %}
     <h1>{{ 'title.record_view'|trans }}</h1>
-    {% if element.cover %}
-        <img src="{{ asset('uploads/covers/' ~ element.cover.fileName) }}" alt="Cover">
-    {% if is_granted('COVER_DELETE', element.cover) %}
-        <a href="{{ path('cover_delete', {'id': element.cover.id}) }}"
-           class="btn btn-danger"
-           >
-            {{ 'action.delete_cover'|trans }}
-        </a>
-        {% endif %}
-    {% if is_granted('COVER_EDIT', element.cover) %}
-        <a href="{{ path('cover_edit', {'id': element.cover.id}) }}"
-           class="btn btn-primary"
-           >
-            {{ 'action.edit_cover'|trans }}
-        </a>
-        {% endif %}
-    {% else %}
-        <img src="{{ asset('images/no-cover.png') }}" alt="No cover">
-    {% if is_granted('ROLE_ADMIN') %}
-<a href="{{ path('cover_create', {id: element.id}) }}"class="btn btn-primary">
 
-    {{ 'action.cover_create'|trans }}</a>
-    {% endif %}
-    {% endif %}
-    <div class="rating-section my-4">
-        <h3>Ocena produktu</h3>
 
-        {% if app.user %}
-            {# UŻYTKOWNIK ZALOGOWANY #}
-
-            {% if user_rating %}
-                {# Przypadek 1: Użytkownik już ocenił #}
-                <div class="alert alert-info">
-                    Twoja ocena tego elementu to: <strong>{{ user_rating.value }} / 5</strong>
-                </div>
-            {% else %}
-                {# Przypadek 2: Użytkownik jeszcze nie ocenił (pokazujemy formularz) #}
-                {{ form_start(form, {'action': path('element_rate', {'id': element.id})}) }}
-                {{ form_widget(form) }}
-                <button class="btn btn-primary mt-2">{{ 'action.rate'|trans }}</button>
-                {{ form_end(form) }}
-            {% endif %}
-
-        {% else %}
-            {# UŻYTKOWNIK NIEZALOGOWANY (GOŚĆ) #}
-            <div class="alert alert-warning">
-                <a href="{{ path('app_login') }}">Zaloguj się</a>, aby móc ocenić ten element.
-            </div>
-        {% endif %}
-        <div class="mb-3">
-            <strong>Średnia ocena:</strong>
-            {% if average_rating %}
-                <span class="badge bg-success">{{ average_rating|number_format(1) }} / 5</span>
-            {% else %}
-                <span class="text-muted">Brak ocen</span>
-            {% endif %}
-        </div>
-    </div>
     {% if element is defined and element|length %}
+         <h2>{{ element.title }}</h2>
         <dl>
-            <dt>{{ 'label.title'|trans }}</dt>
-            <dd>{{ element.title }}</dd>
             <dt>{{ 'label.author'|trans }}</dt>
             <dd>{{ element.author }}</dd>
             <dt>{{ 'label.year'|trans }}</dt>
@@ -87,11 +30,67 @@
     {% if app.user %}
         <a href="{{ path('element_favorite', {'id': element.id}) }}" class="btn btn-sm">
             {% if element in app.user.favorites %}
-                <span class="text-danger">❤️ Usuń z ulubionych</span>
+                <span class="text-danger">{{ 'action.delete_from_favorites'|trans }}</span>
             {% else %}
-                <span class="text-secondary">🤍 Dodaj do ulubionych</span>
+                <span class="text-secondary">{{ 'action.add_to_favorites'|trans }}</span>
             {% endif %}
         </a>
+    {% endif %}
+    <div class="rating">
+        <h3>{{ 'label.rating'|trans }}</h3>
+        <div class="average-rating">
+            <strong>{{ 'label.avarage_rating'|trans }}</strong>
+            {% if average_rating %}
+                <span class="badge bg-success">{{ average_rating|number_format(1) }} / 5</span>
+            {% else %}
+                <span class="text-muted">{{ 'message.no_ratings'|trans }}</span>
+            {% endif %}
+        </div>
+
+        {% if app.user %}
+
+            {% if user_rating %}
+                <div class="alert alert-info">
+                    {{ 'label.your_rating'|trans }} <strong>{{ user_rating.value }} / 5</strong>
+                </div>
+            {% else %}
+                {{ form_start(form, {'action': path('element_rate', {'id': element.id})}) }}
+                {{ form_widget(form) }}
+                <button class="btn btn-primary mt-2">{{ 'action.rate'|trans }}</button>
+                {{ form_end(form) }}
+            {% endif %}
+
+        {% else %}
+            <div class="alert alert-warning">
+                <p> {{ 'message.log_in_to_rate'|trans }}</p>
+            </div>
+        {% endif %}
+
+    </div>
+
+    {% if element.cover %}
+        <img src="{{ asset('uploads/covers/' ~ element.cover.fileName) }}" alt="Cover">
+        {% if is_granted('COVER_DELETE', element.cover) %}
+            <a href="{{ path('cover_delete', {'id': element.cover.id}) }}"
+               class="btn btn-danger"
+            >
+                {{ 'action.delete_cover'|trans }}
+            </a>
+        {% endif %}
+        {% if is_granted('COVER_EDIT', element.cover) %}
+            <a href="{{ path('cover_edit', {'id': element.cover.id}) }}"
+               class="btn btn-primary"
+            >
+                {{ 'action.edit_cover'|trans }}
+            </a>
+        {% endif %}
+    {% else %}
+        <img src="{{ asset('images/no-cover.png') }}" alt="{{ 'message.no_cover'|trans }}">
+        {% if is_granted('ROLE_ADMIN') %}
+            <a href="{{ path('cover_create', {id: element.id}) }}"class="btn btn-primary">
+
+                {{ 'action.cover_create'|trans }}</a>
+        {% endif %}
     {% endif %}
 
     {% if app.user %}
@@ -100,7 +99,7 @@
         <button class="btn btn-primary mt-2">{{ 'action.send_comment'|trans }}</button>
         {{ form_end(comment_form) }}
     {% else %}
-        <p>Musisz się <a href="{{ path('app_login') }}">zalogować</a>, aby dodać komentarz.</p>
+        <p>{{ 'message.log_in_to_comment'|trans }}</p>
     {% endif %}
 
     <ul>
@@ -115,7 +114,7 @@
                 {% endif %}
             </li>
         {% else %}
-            <li>Brak komentarzy dla tego elementu.</li>
+            <li>{{ 'message.no_comments'|trans }}</li>
         {% endfor %}
     </ul>
 

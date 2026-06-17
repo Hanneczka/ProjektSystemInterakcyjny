@@ -25,6 +25,9 @@ use App\Security\Voter\CommentVoter;
 use App\Dto\ElementListInputFiltersDto;
 use App\Form\Type\RatingType;
 use App\Repository\RatingRepository;
+use App\Repository\CommentRepository;
+use Doctrine\ORM\EntityManager;
+
 
 #[Route('/element')]
 class ElementController extends AbstractController
@@ -105,13 +108,14 @@ public function index(#[MapQueryString(resolver: ElementListInputFiltersDtoResol
             ]
         );
     }
-    #[Route('/{id}', name: 'element_view', requirements: ['id' => '[1-9]\d*'], methods: ['GET'])]
+    #[Route('/{id}', name: 'element_view', requirements: ['id' => '[1-9]\d*'], methods: ['GET', 'POST'])]
     #[IsGranted(ElementVoter::VIEW, subject: 'element')]
     public function view(
         Element $element,
         Request $request,
         #[MapQueryParameter] ?int $page = null,
-        RatingRepository $ratingRepository
+        RatingRepository $ratingRepository,
+        EntityManagerInterface $entityManager
     ): Response {
         $page = $page ?? 1;
 
@@ -131,15 +135,34 @@ public function index(#[MapQueryString(resolver: ElementListInputFiltersDtoResol
 
         $averageRating = $ratingRepository->getAverageRatingForElement($element);
 
+        $comment = new Comment();
+        $form = $this->createForm(CommentType::class, $comment);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $comment->setElement($element);
+            $comment->setAuthor($this->getUser());
+            $comment->setCreatedAt(new \DateTimeImmutable());
+            $comment->setUpdatedAt(new \DateTimeImmutable());
+
+            $entityManager->persist($comment);
+            $entityManager->flush();
+
+            $this->addFlash(
+                'success',
+                $this->translator->trans('comment_added'));
+
+            return $this->redirectToRoute('element_view', ['id' => $element->getId()]);
+
+
+        }
         $comments = $this->commentService->getPaginatedList($page, $element);
-        $commentForm = $this->createForm(CommentType::class);
 
         return $this->render(
             'element/view.html.twig',
             [
                 'element' => $element,
                 'comment_pagination' => $comments,
-                'comment_form' => $commentForm->createView(),
+                'comment_form' => $form->createView(),
                 'user_rating' => $existingRating,
                 'form' => $ratingFormView,
                 'average_rating' => $averageRating,
@@ -188,7 +211,8 @@ public function index(#[MapQueryString(resolver: ElementListInputFiltersDtoResol
         methods: ['GET', 'DELETE']
     )]
     #[IsGranted(ElementVoter::DELETE, subject: 'element')]
-    public function delete(Request $request, Element $element): Response
+    public function delete(Request $request, Element $element, CommentRepository $commentRepository,
+                           RatingRepository $ratingRepository, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(FormType::class, $element, [
             'method' => 'DELETE',
@@ -197,6 +221,16 @@ public function index(#[MapQueryString(resolver: ElementListInputFiltersDtoResol
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $comments = $commentRepository->findBy(['element' => $element]);
+            foreach ($comments as $comment) {
+                $entityManager->remove($comment);
+            }
+
+            $ratings = $ratingRepository->findBy(['element' => $element]);
+            foreach ($ratings as $rating) {
+                $entityManager->remove($rating);
+            }
+            $entityManager->flush();
             $this->elementService->delete($element);
             $this->addFlash(
                 'success',
@@ -223,10 +257,16 @@ public function index(#[MapQueryString(resolver: ElementListInputFiltersDtoResol
 
         if ($user->getFavorites()->contains($element)) {
             $user->removeFavorite($element);
-            $this->addFlash('info', 'Usunięto z ulubionych.');
+            $this->addFlash(
+                'success',
+                $this->translator->trans('message.deleted_from_favorites')
+            );
         } else {
             $user->addFavorite($element);
-            $this->addFlash('success', 'Dodano do ulubionych!');
+            $this->addFlash(
+                'success',
+                $this->translator->trans('message.added_to_favorites')
+            );
         }
 
         $entityManager->flush();

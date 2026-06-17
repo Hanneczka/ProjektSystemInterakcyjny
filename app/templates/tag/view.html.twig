@@ -5,13 +5,15 @@
 {% endblock %}
 
 {% block body %}
-    <h1>View record</h1>
+    <h1>{{ 'title.tag_view'|trans }}</h1>
     {% if tag is defined and tag|length %}
         <dl>
-            {{ 'label.tags'|trans }}
+            {{ 'label.name'|trans }}
             <dd>{{ tag.title }}</dd>
             {{ 'label.created_at'|trans }}
             <dd>{{ tag.createdAt|format_date('long') }}</dd>
+            {{ 'label.updated_at'|trans }}
+            <dd>{{ tag.updatedAt|format_date('long') }}</dd>
         </dl>
     {% else %}
         <p>

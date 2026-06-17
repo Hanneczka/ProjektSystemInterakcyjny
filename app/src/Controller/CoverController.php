@@ -81,7 +81,7 @@ class CoverController extends AbstractController
                 $this->translator->trans('message.created_successfully')
             );
 
-            return $this->redirectToRoute('element_index');
+            return $this->redirectToRoute('element_view', ['id' => $element->getId()]);
         }
 
         return $this->render(
@@ -133,7 +133,7 @@ class CoverController extends AbstractController
                 $this->translator->trans('message.edited_successfully')
             );
 
-            return $this->redirectToRoute('element_index');
+            return $this->redirectToRoute('element_view', ['id' => $element->getId()]);
         }
 
         return $this->render(
@@ -179,7 +179,7 @@ class CoverController extends AbstractController
             );
 
 
-        return $this->redirectToRoute('element_index');
+            return $this->redirectToRoute('element_view', ['id' => $element->getId()]);
 
     }
         return $this->render(

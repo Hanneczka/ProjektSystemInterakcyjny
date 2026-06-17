@@ -7,6 +7,11 @@
 {% block body %}
 
 <h1>{{ 'title.tag_list'|trans }}</h1>
+
+    {% if is_granted('ROLE_ADMIN') %}
+        <a href="{{ path('tag_create') }}"class="btn btn-primary">{{ 'title.tag_create'|trans }}</a>
+    {% endif %}
+
     {% if pagination is defined and pagination.items|length %}
         <div class="navigation text-center">
             {{ knp_pagination_render(pagination) }}
@@ -14,19 +19,25 @@
 <table class="table table-stripped" border="1">
     <thead>
     <tr>
+    {% if is_granted('ROLE_ADMIN') %}
         <th>{{ knp_pagination_sortable(pagination, 'label.id'|trans , 'tag.id') }}</th>
+        {% endif %}
         <th>{{ knp_pagination_sortable(pagination,  'label.tags'|trans , 'tag.title') }}</th>
-        <th>{{ 'label.actions'|trans }}</th>
     </tr>
     </thead>
     {% for tag in pagination %}
 <tr>
+    {% if is_granted('ROLE_ADMIN') %}
     <td>{{ tag.id }}</td>
-    <td>{{ tag.title }}</td>
-    {% if is_granted('TAG_VIEW', tag) %}
-    <td><a href="{{ path('tag_view', {id: tag.id}) }}"class="btn btn-primary">
-            {{ 'action.view'|trans }}</a></td>
     {% endif %}
+    {% if is_granted('TAG_VIEW', tag) %}
+        <td><a href="{{ path('tag_view', {id: tag.id}) }}">
+                {{ tag.title }}</a></td>
+        {% else %}
+            <td>{{ tag.title }}</td>
+    {% endif %}
+
+
     {% if is_granted('TAG_EDIT', tag) %}
     <td><a href="{{ path('tag_edit', {id: tag.id}) }}"class="btn btn-primary">
             {{ 'action.edit'|trans }}</a></td>
@@ -49,8 +60,6 @@
             message: 'message.empty_list'|trans
         } %}
     {% endif %}
-    {% if is_granted('ROLE_ADMIN') %}
-    <a href="{{ path('tag_create') }}"class="btn btn-primary">{{ 'title.tag_create'|trans }}</a>
-        {% endif %}
+
     {% endblock %}
 

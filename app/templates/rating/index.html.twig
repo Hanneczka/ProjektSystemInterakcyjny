@@ -7,7 +7,7 @@
 {% block body %}
     <div class="card my-4">
         <div class="card-header bg-dark text-white">
-            <h5>Najwyżej oceniane</h5>
+            <h5>{{ 'title.highest_rated'|trans }}</h5>
         </div>
         <ul class="list-group list-group-flush">
             {% for element in highest_rated %}
@@ -21,7 +21,7 @@
         </span>
                 </li>
             {% else %}
-                <li class="list-group-item text-muted">Brak ocenionych elementów.</li>
+                <li class="list-group-item text-muted">{{ 'message.empty_list'|trans }}</li>
             {% endfor %}
         </ul>
     </div>

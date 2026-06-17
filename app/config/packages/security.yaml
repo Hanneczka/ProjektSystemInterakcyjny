@@ -41,7 +41,7 @@ security:
     access_control:
         # - { path: ^/, allow_if: "not is_granted('ROLE_BLOCKED')" }
         - { path: ^/admin, roles: ROLE_ADMIN }
-        # - { path: ^/profile, roles: ROLE_USER }
+        - { path: ^/profile, roles: ROLE_USER }
         - { path: ^/login, roles: PUBLIC_ACCESS }
         - { path: ^/category, roles: PUBLIC_ACCESS}
         - { path: ^/element, roles: PUBLIC_ACCESS}

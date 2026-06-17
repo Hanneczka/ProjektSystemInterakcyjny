@@ -7,7 +7,7 @@
 {% block body %}
     <h1>{{ 'title.block_user'|trans({'%id%': user.id}) }}</h1>
 
-    <p>Czy na pewno chcesz zablokować użytkownika?</p>
+    <p>{{ 'confirm_block'|trans }}</p>
 
 
     <a href="{{ path('admin_block_user', {'id': user.id}) }}" class="btn btn-danger px-4">

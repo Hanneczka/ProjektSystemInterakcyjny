@@ -1,6 +1,5 @@
 {% extends 'base.html.twig' %}
 
-
 {% block title %}
     {{ 'title.record_list'|trans }}
 {% endblock %}
@@ -8,6 +7,11 @@
 {% block body %}
 
     <h1>{{ 'title.record_list'|trans }}</h1>
+
+    {% if is_granted('ROLE_ADMIN') %}
+        <a href="{{ path('element_create') }}"class="btn btn-primary">{{ 'title.element_create'|trans }}</a>
+    {% endif %}
+
     {% if pagination is defined and pagination.items|length %}
     <div class="navigation text-center">
         {{ knp_pagination_render(pagination) }}
@@ -15,21 +19,28 @@
     <table class="table table-stripped" border="1">
         <thead>
         <tr>
+            {% if is_granted('ROLE_ADMIN') %}
             <th>{{ knp_pagination_sortable(pagination, 'label.id'|trans, 'element.id') }}</th>
+            {% endif %}
             <th>{{ knp_pagination_sortable(pagination, 'label.title'|trans, 'element.title') }}</th>
             <th>{{ knp_pagination_sortable(pagination, 'label.author'|trans, 'element.author') }}</th>
             <th>{{ knp_pagination_sortable(pagination, 'label.year'|trans, 'element.year') }}</th>
             <th>{{ knp_pagination_sortable(pagination, 'label.category'|trans, 'category.name') }}</th>
             <th>{{  'label.tags'|trans }}</th>
             <th>{{ knp_pagination_sortable(pagination, 'label.created_at'|trans, 'element.createdAt') }}</th>
-            <th>{{ 'label.actions'|trans }}</th>
+
+
         </tr>
         </thead>
         <tbody>
         {% for element in pagination %}
             <tr>
+                {% if is_granted('ROLE_ADMIN') %}
                 <td>{{ element.id }}</td>
-                <td>{{ element.title }}</td>
+                {% endif %}
+                {% if is_granted('ELEMENT_VIEW', element) %}
+                <td><a href="{{ path('element_view', {id: element.id}) }}">{{ element.title }}</a></td>
+                {% endif %}
                 <td>{{ element.author }}</td>
                 <td>{{ element.year }}</td>
                 <td><a class="btn btn-outline-primary"
@@ -48,12 +59,10 @@
 {% else %}
     &nbsp;
 {% endif %}</td>
+
                 <td>{{ element.createdAt|format_date('long') }}</td>
-                {% if is_granted('ELEMENT_VIEW', element) %}
-                <td><a href="{{ path('element_view', {id: element.id}) }}"class="btn btn-primary">
-                        {{ 'action.view'|trans }}
-                    </a></td>
-                {% endif %}
+
+
                 {% if is_granted('ELEMENT_EDIT', element) %}
                 <td><a href="{{ path('element_edit', {id: element.id}) }}"class="btn btn-primary">
                         {{ 'action.edit'|trans }}
@@ -81,8 +90,6 @@
             message: 'message.empty_list'|trans
         } %}
     {% endif %}
-    {% if is_granted('ROLE_ADMIN') %}
-    <a href="{{ path('element_create') }}"class="btn btn-primary">{{ 'title.element_create'|trans }}</a>
-    {% endif %}
+
 
 {% endblock %}

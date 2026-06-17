@@ -13,22 +13,17 @@
         {{ 'title.user_change'|trans }}
     </a>
 
-    <h3>Moje Ulubione</h3>
+    <h3>{{ 'favorites'|trans }}</h3>
     {% if favorites is empty %}
-        <p class="text-muted">Nie masz jeszcze ulubionych elementów.</p>
+        <p class="text-muted">{{ 'message.no_favorites'|trans }}</p>
     {% else %}
         <ul class="list-group">
-            {# POPRAWIONA LINIA: Zamiana foreach na for #}
             {% for element in favorites %}
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                     <a href="{{ path('element_view', {'id': element.id}) }}">{{ element.title }}</a>
 
-                    {# Szybkie usuwanie z poziomu profilu #}
-                    <a href="{{ path('element_favorite', {'id': element.id}) }}" class="btn btn-sm btn-outline-danger">
-                        Usuń
-                    </a>
+
                 </li>
-                {# POPRAWIONA LINIA: Zamiana endforeach na endfor #}
             {% endfor %}
         </ul>
     {% endif %}

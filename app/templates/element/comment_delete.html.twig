@@ -7,7 +7,7 @@
 {% block body %}
     <h1>{{ 'title.comment_delete'|trans({'%id%': comment.id}) }}</h1>
 
-    <p>Czy na pewno chcesz usunąć ten komentarz?</p>
+    <p>{{ 'confirm_comment_delete'|trans }}</p>
     <blockquote class="blockquote bg-light p-3">
         "{{ comment.content }}"
     </blockquote>
