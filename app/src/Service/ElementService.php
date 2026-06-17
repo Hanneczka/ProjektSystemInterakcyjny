@@ -24,7 +24,7 @@ class ElementService implements ElementServiceInterface{
             $page,
             self::PAGINATOR_ITEMS_PER_PAGE,
             [
-                'sortFieldAllowList' => ['element.id', 'element.createdAt', 'element.updatedAt', 'element.title', 'element.author', 'element.year', 'element.tag.title', 'category.name'],
+                'sortFieldAllowList' => ['element.id', 'element.createdAt', 'element.updatedAt', 'element.title', 'element.author', 'element.year', 'category.name'],
                 'defaultSortFieldName' => 'element.createdAt',
                 'defaultSortDirection' => 'desc',
             ]

@@ -18,6 +18,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use App\Repository\ElementRepository;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
 
 /**
  * Class CoverController.
@@ -148,13 +149,29 @@ class CoverController extends AbstractController
         '/{id}/delete',
         name: 'cover_delete',
         requirements: ['id' => '[1-9]\d*'],
-        methods: ['GET']
+        methods: ['GET', 'POST']
     )]
     #[IsGranted(CoverVoter::DELETE, subject: 'cover')]
     public function delete(Request $request, Cover $cover): Response
     {
+        $element = $cover->getElement();
 
-            $this->coverService->delete($cover);
+
+        $form = $this->createForm(
+            FormType::class,
+            null,
+            [
+                'method' => 'POST',
+                'action' => $this->generateUrl('cover_delete', ['id' => $cover->getId()]),
+            ]
+        );
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $this->coverService->delete(
+                $cover
+            );
 
             $this->addFlash(
                 'success',
@@ -163,7 +180,14 @@ class CoverController extends AbstractController
 
 
         return $this->redirectToRoute('element_index');
-    }
 
-}
+    }
+        return $this->render(
+            'element/cover_delete.html.twig',
+            [
+                'form' => $form->createView(),
+                'cover' => $cover,
+            ]);
+
+}}
 

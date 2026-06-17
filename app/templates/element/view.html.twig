@@ -11,7 +11,7 @@
     {% if is_granted('COVER_DELETE', element.cover) %}
         <a href="{{ path('cover_delete', {'id': element.cover.id}) }}"
            class="btn btn-danger"
-           onclick="return confirm('{{ 'message.confirm_delete'|trans }}');">
+           >
             {{ 'action.delete_cover'|trans }}
         </a>
         {% endif %}

@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ 'title.cover_delete'|trans({'%id%': cover.id}) }}
+{% endblock %}
+
+{% block body %}
+    <h1>{{ 'title.cover_delete'|trans({'%id%': cover.id}) }}</h1>
+
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+
+    <button class="btn btn-danger">
+        {{ 'action.delete'|trans }}
+    </button>
+
+    <a href="{{ path('element_view', {'id': cover.element.id}) }}" class="btn btn-secondary">
+        {{ 'action.back_to_list'|trans }}
+    </a>
+    {{ form_end(form) }}
+{% endblock %}
