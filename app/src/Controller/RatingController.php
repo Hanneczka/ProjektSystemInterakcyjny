@@ -12,6 +12,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use App\Repository\ElementRepository;
+use App\Repository\RatingRepository;
 
 class RatingController extends AbstractController{
 
@@ -40,6 +42,15 @@ class RatingController extends AbstractController{
 
         return $this->redirectToRoute('element_view', ['id' => $element->getId()]);
 
+    }
+    #[Route('/highest_rated', name: 'highest_rated', methods: ['GET'])]
+    public function highestRating(ElementRepository $elementRepository):Response{
+        $highestRated =$elementRepository->getHighestRated(10);
+
+        return $this->render('rating/index.html.twig', [
+            'elements' => $elementRepository->findAll(),
+            'highest_rated' => $highestRated,
+        ]);
     }
 
 }

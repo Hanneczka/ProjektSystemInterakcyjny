@@ -27,6 +27,7 @@ class RatingRepository extends ServiceEntityRepository
             ->getSingleScalarResult();
     }
 
+
     //    /**
     //     * @return Rating[] Returns an array of Rating objects
     //     */

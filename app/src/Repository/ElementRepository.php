@@ -86,6 +86,17 @@ class ElementRepository extends ServiceEntityRepository
 
         return $queryBuilder;
     }
+    public function getHighestRated(int $limit = 10): array
+    {
+        return $this->createQueryBuilder('e')
+            ->select('e, AVG(r.value) as avg_rating')
+            ->leftJoin('App\Entity\Rating', 'r', 'WITH', 'r.element = e')
+            ->groupBy('e.id')
+            ->orderBy('avg_rating', 'DESC')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+    }
     //    /**
     //     * @return Element[] Returns an array of Element objects
     //     */
