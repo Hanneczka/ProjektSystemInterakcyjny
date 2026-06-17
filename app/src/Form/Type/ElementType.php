@@ -41,7 +41,7 @@ $builder
         'choice_label' => 'name',
         'label' => 'label.category',
         'required' => true,
-        'placeholder' => '--- Wybierz kategorię ---',
+        'placeholder' => 'placeholder.choose_category',
     ])
     ->add(
         'tags',

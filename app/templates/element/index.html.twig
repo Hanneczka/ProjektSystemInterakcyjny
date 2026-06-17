@@ -9,13 +9,14 @@
     <h1>{{ 'title.record_list'|trans }}</h1>
 
     {% if is_granted('ROLE_ADMIN') %}
-        <a href="{{ path('element_create') }}"class="btn btn-primary">{{ 'title.element_create'|trans }}</a>
+        <a href="{{ path('element_create') }}" class="btn btn-primary m-3">{{ 'title.element_create'|trans }}</a>
     {% endif %}
 
     {% if pagination is defined and pagination.items|length %}
     <div class="navigation text-center">
         {{ knp_pagination_render(pagination) }}
     </div>
+
     <table class="table table-stripped" border="1">
         <thead>
         <tr>
@@ -28,8 +29,8 @@
             <th>{{ knp_pagination_sortable(pagination, 'label.category'|trans, 'category.name') }}</th>
             <th>{{  'label.tags'|trans }}</th>
             <th>{{ knp_pagination_sortable(pagination, 'label.created_at'|trans, 'element.createdAt') }}</th>
-
-
+            <th></th>
+            <th></th>
         </tr>
         </thead>
         <tbody>
@@ -39,37 +40,28 @@
                 <td>{{ element.id }}</td>
                 {% endif %}
                 {% if is_granted('ELEMENT_VIEW', element) %}
-                <td><a href="{{ path('element_view', {id: element.id}) }}">{{ element.title }}</a></td>
+                <td><a href="{{ path('element_view', {id: element.id}) }}" class="title">{{ element.title }}</a></td>
                 {% endif %}
                 <td>{{ element.author }}</td>
                 <td>{{ element.year }}</td>
-                <td><a class="btn btn-outline-primary"
-                       href="{{ url('element_index', {'categoryId' : element.category.id}) }}"
-                       title="{{ element.category.name }}">
+                <td><a href="{{ url('element_index', {'categoryId' : element.category.id}) }}" title="{{ element.category.name }}" class="btn btn-outline-primary">
                         {{ element.category.name }}
                     </a></td>
                 <td>{% if element.tags is defined and element.tags|length %}
-    {% for tag in element.tags %}
-        <a class="btn btn-outline-primary"
-           href="{{ url('element_index', {'tagId' : tag.id}) }}"
-           title="{{ tag.title }}">
-            {{ tag.title }}
-        </a>
-    {% endfor %}
-{% else %}
-    &nbsp;
-{% endif %}</td>
-
+                    {% for tag in element.tags %}
+                        <a href="{{ url('element_index', {'tagId' : tag.id}) }}" title="{{ tag.title }}" class="btn btn-outline-secondary" >
+                        {{ tag.title }}
+                        </a>
+                    {% endfor %}
+                    {% endif %}</td>
                 <td>{{ element.createdAt|format_date('long') }}</td>
-
-
                 {% if is_granted('ELEMENT_EDIT', element) %}
-                <td><a href="{{ path('element_edit', {id: element.id}) }}"class="btn btn-primary">
+                <td><a href="{{ path('element_edit', {id: element.id}) }}" class="btn btn-primary">
                         {{ 'action.edit'|trans }}
                     </a></td>
                 {% endif %}
                 {% if is_granted('ELEMENT_DELETE', element) %}
-                <td><a href="{{ path('element_delete', {id: element.id}) }}"class="btn btn-primary">
+                <td><a href="{{ path('element_delete', {id: element.id}) }}" class="btn btn-danger">
                         {{ 'action.delete'|trans }}
                     </a></td>
                 {% endif %}
@@ -81,15 +73,15 @@
         {% endfor %}
         </tbody>
     </table>
+
         <div class="navigation text-center mt-3">
             {{ knp_pagination_render(pagination) }}
         </div>
+
     {% else %}
         {% include 'default/_single_alert_message.html.twig' with {
             type: 'warning',
-            message: 'message.empty_list'|trans
-        } %}
+            message: 'message.empty_list'|trans } %}
     {% endif %}
-
 
 {% endblock %}

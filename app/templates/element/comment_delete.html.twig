@@ -5,6 +5,8 @@
 {% endblock %}
 
 {% block body %}
+<div class="custom-card">
+    <div class="card">
     <h1>{{ 'title.comment_delete'|trans({'%id%': comment.id}) }}</h1>
 
     <p>{{ 'confirm_comment_delete'|trans }}</p>
@@ -23,4 +25,6 @@
         {{ 'action.back_to_list'|trans }}
     </a>
     {{ form_end(form) }}
+    </div>
+</div>
 {% endblock %}

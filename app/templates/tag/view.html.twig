@@ -5,6 +5,8 @@
 {% endblock %}
 
 {% block body %}
+<div class="custom-card">
+    <div class="card">
     <h1>{{ 'title.tag_view'|trans }}</h1>
     {% if tag is defined and tag|length %}
         <dl>
@@ -20,6 +22,8 @@
         <p>{{ 'message.record_not_found'|trans }}</p>
         </p>
     {% endif %}
+    </div>
+</div>
 
 
 {% endblock %}

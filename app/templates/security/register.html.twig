@@ -3,6 +3,8 @@
 {% block title %}{{ 'title.sign_up'|trans }}{% endblock %}
 
 {% block body %}
+<div class="custom-card">
+    <div class="card">
     <h1>{{ 'title.sign_up'|trans }}</h1>
 
     {{ form_errors(registrationForm) }}
@@ -19,8 +21,12 @@
             message: 'message.form_error'|trans,
         }%}
     {% endif %}
-
-    <button type="submit" class="btn btn-primary">Sign up</button>
+        <div class="form-group row float-sm-right">
+    <button type="submit" class="btn btn-primary">{{ 'action.sign_up'|trans }}</button>
     {{ form_end(registrationForm) }}
+        </div>
+
+    </div>
+</div>
 
 {% endblock %}

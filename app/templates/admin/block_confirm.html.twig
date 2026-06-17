@@ -5,6 +5,8 @@
 {% endblock %}
 
 {% block body %}
+<div class="custom-card">
+    <div class="card">
     <h1>{{ 'title.block_user'|trans({'%id%': user.id}) }}</h1>
 
     <p>{{ 'confirm_block'|trans }}</p>
@@ -17,4 +19,6 @@
     <a href="{{ path('user_index') }}" class="btn btn-link">
         {{ 'action.back_to_list'|trans }}
     </a>
+    </div>
+</div>
 {% endblock %}
