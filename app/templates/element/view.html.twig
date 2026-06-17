@@ -30,6 +30,32 @@
     {{ 'action.cover_create'|trans }}</a>
     {% endif %}
     {% endif %}
+    <div class="rating-section my-4">
+        <h3>Ocena produktu</h3>
+
+        {% if app.user %}
+            {# UŻYTKOWNIK ZALOGOWANY #}
+
+            {% if user_rating %}
+                {# Przypadek 1: Użytkownik już ocenił #}
+                <div class="alert alert-info">
+                    Twoja ocena tego elementu to: <strong>{{ user_rating.value }} / 5</strong>
+                </div>
+            {% else %}
+                {# Przypadek 2: Użytkownik jeszcze nie ocenił (pokazujemy formularz) #}
+                {{ form_start(form, {'action': path('element_rate', {'id': element.id})}) }}
+                {{ form_widget(form) }}
+                <button class="btn btn-primary mt-2">{{ 'action.rate'|trans }}</button>
+                {{ form_end(form) }}
+            {% endif %}
+
+        {% else %}
+            {# UŻYTKOWNIK NIEZALOGOWANY (GOŚĆ) #}
+            <div class="alert alert-warning">
+                <a href="{{ path('app_login') }}">Zaloguj się</a>, aby móc ocenić ten element.
+            </div>
+        {% endif %}
+    </div>
     {% if element is defined and element|length %}
         <dl>
             <dt>{{ 'label.title'|trans }}</dt>

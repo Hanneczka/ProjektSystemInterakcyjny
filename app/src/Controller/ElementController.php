@@ -23,6 +23,8 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Comment;
 use App\Security\Voter\CommentVoter;
 use App\Dto\ElementListInputFiltersDto;
+use App\Form\Type\RatingType;
+use App\Repository\RatingRepository;
 
 #[Route('/element')]
 class ElementController extends AbstractController
@@ -103,43 +105,42 @@ public function index(#[MapQueryString(resolver: ElementListInputFiltersDtoResol
             ]
         );
     }
-    #[Route(
-        '/{id}',
-        name: 'element_view',
-        requirements: ['id' => '[1-9]\d*'],
-        methods: ['GET', 'POST']
-    )]
+    #[Route('/{id}', name: 'element_view', requirements: ['id' => '[1-9]\d*'], methods: ['GET'])]
     #[IsGranted(ElementVoter::VIEW, subject: 'element')]
-    public function view(Element $element,Request $request,EntityManagerInterface $entityManager, #[MapQueryParameter] int $page = 1): Response
-    {
-        $comment = new Comment();
-        $form = $this->createForm(CommentType::class, $comment);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $comment->setElement($element);
-            $comment->setAuthor($this->getUser());
-            $comment->setCreatedAt(new \DateTimeImmutable());
-            $comment->setUpdatedAt(new \DateTimeImmutable());
+    public function view(
+        Element $element,
+        Request $request,
+        #[MapQueryParameter] ?int $page = null,
+        RatingRepository $ratingRepository
+    ): Response {
+        $page = $page ?? 1;
 
-            $entityManager->persist($comment);
-            $entityManager->flush();
-
-            $this->addFlash(
-                'success',
-                $this->translator->trans('comment_added'));
-
-            return $this->redirectToRoute('element_view', ['id' => $element->getId()]);
-
-
+        $user = $this->getUser();
+        $existingRating = null;
+        $ratingFormView = null;
+        if ($user) {
+            $existingRating = $ratingRepository->findOneBy([
+                'element' => $element,
+                'user' => $user,
+            ]);
         }
-        $comments = $this->commentService->getPaginatedList($page, $element);
+        if ($user && !$existingRating) {
+            $ratingForm = $this->createForm(RatingType::class);
+            $ratingFormView = $ratingForm->createView();
+        }
 
+        $comments = $this->commentService->getPaginatedList($page, $element);
+        $commentForm = $this->createForm(CommentType::class);
 
         return $this->render(
             'element/view.html.twig',
-            ['element' => $element
-            , 'comment_pagination' => $comments,
-            'comment_form' => $form->createView()]
+            [
+                'element' => $element,
+                'comment_pagination' => $comments,
+                'comment_form' => $commentForm->createView(),
+                'user_rating' => $existingRating,
+                'form' => $ratingFormView,
+            ]
         );
     }
 
