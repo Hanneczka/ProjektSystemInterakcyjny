@@ -129,6 +129,8 @@ public function index(#[MapQueryString(resolver: ElementListInputFiltersDtoResol
             $ratingFormView = $ratingForm->createView();
         }
 
+        $averageRating = $ratingRepository->getAverageRatingForElement($element);
+
         $comments = $this->commentService->getPaginatedList($page, $element);
         $commentForm = $this->createForm(CommentType::class);
 
@@ -140,6 +142,7 @@ public function index(#[MapQueryString(resolver: ElementListInputFiltersDtoResol
                 'comment_form' => $commentForm->createView(),
                 'user_rating' => $existingRating,
                 'form' => $ratingFormView,
+                'average_rating' => $averageRating,
             ]
         );
     }

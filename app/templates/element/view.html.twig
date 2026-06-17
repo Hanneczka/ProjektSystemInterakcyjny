@@ -55,6 +55,14 @@
                 <a href="{{ path('app_login') }}">Zaloguj się</a>, aby móc ocenić ten element.
             </div>
         {% endif %}
+        <div class="mb-3">
+            <strong>Średnia ocena:</strong>
+            {% if average_rating %}
+                <span class="badge bg-success">{{ average_rating|number_format(1) }} / 5</span>
+            {% else %}
+                <span class="text-muted">Brak ocen</span>
+            {% endif %}
+        </div>
     </div>
     {% if element is defined and element|length %}
         <dl>
