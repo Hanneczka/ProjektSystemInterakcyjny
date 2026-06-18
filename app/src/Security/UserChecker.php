@@ -11,8 +11,10 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class UserChecker implements UserCheckerInterface
 {
     public function __construct(
-        private TranslatorInterface $translator
-    ) {}
+        private TranslatorInterface $translator,
+    ) {
+    }
+
     public function checkPreAuth(UserInterface $user): void
     {
         if (!$user instanceof User) {

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Element list filters DTO.
  */
@@ -16,8 +17,8 @@ class ElementListFiltersDto
     /**
      * Constructor.
      *
-     * @param Category|null $category   Category entity
-     * @param Tag|null      $tag        Tag entity
+     * @param Category|null $category Category entity
+     * @param Tag|null      $tag      Tag entity
      */
     public function __construct(public readonly ?Category $category, public readonly ?Tag $tag)
     {

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Cover service.
  */
@@ -18,7 +19,7 @@ class CoverService implements CoverServiceInterface
     /**
      * Constructor.
      *
-     * @param CoverRepository           $coverRepository  Cover repository
+     * @param CoverRepository            $coverRepository   Cover repository
      * @param FileUploadServiceInterface $fileUploadService File upload service
      */
     public function __construct(private readonly CoverRepository $coverRepository, private readonly FileUploadServiceInterface $fileUploadService)
@@ -28,9 +29,9 @@ class CoverService implements CoverServiceInterface
     /**
      * Create cover.
      *
-     * @param UploadedFile  $uploadedFile Uploaded file
-     * @param Cover        $cover       Cover entity
-     * @param ElementInterface $element         Element interface
+     * @param UploadedFile     $uploadedFile Uploaded file
+     * @param Cover            $cover        Cover entity
+     * @param ElementInterface $element      Element interface
      */
     public function create(UploadedFile $uploadedFile, Cover $cover, Element $element): void
     {
@@ -46,7 +47,7 @@ class CoverService implements CoverServiceInterface
 
         $oldFilename = $cover->getFileName();
         if ($oldFilename) {
-            $oldFilePath = $this->fileUploadService->getTargetDirectory() . '/' . $oldFilename;
+            $oldFilePath = $this->fileUploadService->getTargetDirectory().'/'.$oldFilename;
             if (file_exists($oldFilePath)) {
                 unlink($oldFilePath);
             }
@@ -57,12 +58,13 @@ class CoverService implements CoverServiceInterface
         $cover->setFileName($newCoverFilename);
         $this->coverRepository->save($cover);
     }
+
     public function delete(Cover $cover): void
     {
 
         $filename = $cover->getFileName();
         if ($filename) {
-            $filePath = $this->fileUploadService->getTargetDirectory() . '/' . $filename;
+            $filePath = $this->fileUploadService->getTargetDirectory().'/'.$filename;
             if (file_exists($filePath)) {
                 unlink($filePath);
             }
@@ -71,4 +73,3 @@ class CoverService implements CoverServiceInterface
         $this->coverRepository->delete($cover);
     }
 }
-

@@ -12,21 +12,21 @@ final class ElementVoter extends Voter
     /**
      * Delete permission.
      *
-     * @const string
+     * @var string
      */
     public const DELETE = 'ELEMENT_DELETE';
 
     /**
      * Edit permission.
      *
-     * @const string
+     * @var string
      */
     public const EDIT = 'ELEMENT_EDIT';
 
     /**
      * Show permission.
      *
-     * @const string
+     * @var string
      */
     public const VIEW = 'ELEMENT_VIEW';
 
@@ -56,11 +56,13 @@ final class ElementVoter extends Voter
 
         return false;
     }
+
     private function isAdmin(?UserInterface $user): bool
     {
         if (!$user) {
             return false;
         }
+
         return in_array('ROLE_ADMIN', $user->getRoles(), true);
     }
 }

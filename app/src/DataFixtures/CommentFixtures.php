@@ -6,8 +6,6 @@ use App\Entity\Element;
 use App\Entity\User;
 use App\Entity\Comment;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
-use Doctrine\Persistence\ObjectManager;
-use Faker\Generator;
 
 class CommentFixtures extends AbstractBaseFixtures implements DependentFixtureInterface
 {
@@ -36,6 +34,7 @@ class CommentFixtures extends AbstractBaseFixtures implements DependentFixtureIn
 
         $this->manager->flush();
     }
+
     public function getDependencies(): array
     {
         return [ElementFixtures::class, UserFixtures::class];

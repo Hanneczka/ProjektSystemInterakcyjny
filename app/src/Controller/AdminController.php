@@ -17,13 +17,15 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 use App\Entity\User;
 
 #[Route('/admin')]
-class AdminController extends AbstractController{
+class AdminController extends AbstractController
+{
     public function __construct(
         private readonly UserServiceInterface $userService,
         private readonly EntityManagerInterface $entityManager,
         private readonly UserPasswordHasherInterface $passwordHasher,
-        private readonly TranslatorInterface $translator
-    ) {}
+        private readonly TranslatorInterface $translator,
+    ) {
+    }
 
     #[Route(
         '/',
@@ -33,82 +35,94 @@ class AdminController extends AbstractController{
     public function index(#[MapQueryParameter] int $page = 1): Response
     {
         $pagination = $this->userService->getPaginatedList($page);
+
         return $this->render(
             'admin/index.html.twig',
             ['pagination' => $pagination]
         );
     }
-    #[Route('/{id}/edit-password', name: 'admin_edit_password', methods: ['GET', 'POST'])]
-    public function editPassword(Request $request, User $user):Response{
 
-        $form = $this->createForm(PasswordType::class, $user, [
-                'method'=>'POST',
+    #[Route('/{id}/edit-password', name: 'admin_edit_password', methods: ['GET', 'PUT'])]
+    public function editPassword(Request $request, User $user): Response
+    {
+
+        $form = $this->createForm(
+            PasswordType::class,
+            $user,
+            [
+                'method' => 'PUT',
                 'action' => $this->generateUrl('admin_edit_password', ['id' => $user->getId()])]
         );
         $form->handleRequest($request);
-        if($form->isSubmitted() && $form->isValid()){
+        if ($form->isSubmitted() && $form->isValid()) {
             $newPassword = $form->get('password')->getData();
             $hashedPassword = $this->passwordHasher->hashPassword($user, $newPassword);
             $user->setPassword($hashedPassword);
-            $this->entityManager->flush();
+            $this->userService->save($user);
 
             $this->addFlash('success', $this->translator->trans('message.password_updated'));
 
             return $this->redirectToRoute('user_index');
 
         }
+
         return $this->render('admin/edit_password.html.twig', ['form' => $form->createView()]);
     }
-    #[Route('/{id}/edit-user', name: 'admin_edit_user', methods: ['GET', 'POST'])]
-    public function editUser(Request $request, User $user):Response{
+
+    #[Route('/{id}/edit-user', name: 'admin_edit_user', methods: ['GET', 'PUT'])]
+    public function editUser(Request $request, User $user): Response
+    {
 
 
-        $form = $this->createForm(UserType::class, $user, [
-                'method'=>'POST',
+        $form = $this->createForm(
+            UserType::class,
+            $user,
+            [
+                'method' => 'PUT',
                 'action' => $this->generateUrl('admin_edit_user', ['id' => $user->getId()])]
         );
         $form->handleRequest($request);
-        if($form->isSubmitted() && $form->isValid()){
-            $this->entityManager->flush();
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->userService->save($user);
 
             $this->addFlash('success', $this->translator->trans('message.user_updated'));
 
             return $this->redirectToRoute('user_index');
 
         }
+
         return $this->render('admin/edit_user.html.twig', ['form' => $form->createView()]);
     }
+
     #[Route('/{id}/change_role', name: 'admin_change_roles', requirements: ['id' => '[1-9]\d*'], methods: ['POST', 'GET'])]
-    public function changeRoles(User $user, UserRepository $userRepository):Response{
+    public function changeRoles(User $user, UserRepository $userRepository): Response
+    {
         $roles = $user->getRoles();
 
         if (in_array('ROLE_ADMIN', $roles, true)) {
-            $allAdmins = $userRepository->createQueryBuilder('u')
-                ->where('u.roles LIKE :role')
-                ->setParameter('role', '%"ROLE_ADMIN"%')
-                ->getQuery()
-                ->getResult();
-
-            if (count($allAdmins) <= 1) {
+            if ($userRepository->countAdmins() <= 1) {
                 $this->addFlash('danger', $this->translator->trans('message.cannot_remove_last_admin'));
+
                 return $this->redirectToRoute('user_index');
             }
-            else{
+
+
             $roles = array_diff($roles, ['ROLE_ADMIN']);
-            $this->addFlash('success', $this->translator->trans('message.admin_role_removed'));}
+            $this->addFlash('success', $this->translator->trans('message.admin_role_removed'));
         } else {
             $roles[] = 'ROLE_ADMIN';
             $this->addFlash('success', $this->translator->trans('message.admin_role_granted'));
         }
 
         $user->setRoles(array_values(array_unique($roles)));
-        $this->entityManager->flush();
+        $this->userService->save($user);
 
         return $this->redirectToRoute('user_index');
     }
 
     #[Route('/{id}/block_user', name: 'admin_block_user', requirements: ['id' => '[1-9]\d*'], methods: ['POST', 'GET'])]
-    public function blockUser(User $user, EntityManagerInterface $entityManager):Response{
+    public function blockUser(User $user, EntityManagerInterface $entityManager): Response
+    {
         $roles = $user->getRoles();
 
         if (in_array('ROLE_BLOCKED', $roles)) {
@@ -120,7 +134,7 @@ class AdminController extends AbstractController{
             $this->addFlash('warning', $this->translator->trans('message.account_blocked'));
         }
 
-        $entityManager->flush();
+        $this->userService->save($user);
 
         return $this->redirectToRoute('user_index');
     }
@@ -132,6 +146,4 @@ class AdminController extends AbstractController{
             'user' => $user,
         ]);
     }
-
-
 }

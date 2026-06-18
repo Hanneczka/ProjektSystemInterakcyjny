@@ -1,10 +1,8 @@
 <?php
+
 namespace App\Controller;
 
 use App\Entity\Category;
-use App\Repository\CategoryRepository;
-use App\Repository\ElementRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -12,7 +10,6 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Form\Type\CategoryType;
 use App\Service\CategoryServiceInterface;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
-use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use App\Security\Voter\CategoryVoter;
@@ -22,9 +19,11 @@ use App\Service\ElementServiceInterface;
 #[Route('/category')]
 class CategoryController extends AbstractController
 {
-    public function __construct(private readonly CategoryServiceInterface $categoryService,  private readonly TranslatorInterface $translator) {
+    public function __construct(private readonly CategoryServiceInterface $categoryService, private readonly TranslatorInterface $translator)
+    {
 
     }
+
     #[Route(
         '/',
         name: 'category_index',
@@ -33,9 +32,11 @@ class CategoryController extends AbstractController
     public function index(#[MapQueryParameter] int $page = 1): Response
     {
         $pagination = $this->categoryService->getPaginatedList($page);
+
         return $this->render(
             'category/index.html.twig',
-            ['pagination' => $pagination]);
+            ['pagination' => $pagination]
+        );
     }
 
     #[Route(
@@ -46,13 +47,14 @@ class CategoryController extends AbstractController
     )]
 
     #[IsGranted(CategoryVoter::VIEW, subject: 'category')]
-    public function view(Category $category,ElementServiceInterface $elementService, #[MapQueryParameter] int $page = 1): Response
+    public function view(Category $category, ElementServiceInterface $elementService, #[MapQueryParameter] int $page = 1): Response
     {
         $elements = $elementService->getPaginatedListByCategory($page, $category);
+
         return $this->render(
             'category/view.html.twig',
             ['category' => $category,
-                'pagination' => $elements,]
+                'pagination' => $elements, ]
         );
     }
 
@@ -83,6 +85,7 @@ class CategoryController extends AbstractController
             ['form' => $form->createView()]
         );
     }
+
     // ...
     /**
      * Edit action.
@@ -118,6 +121,7 @@ class CategoryController extends AbstractController
                 'success',
                 $this->translator->trans('message.edited_successfully')
             );
+
             return $this->redirectToRoute('category_index');
         }
 
@@ -181,7 +185,4 @@ class CategoryController extends AbstractController
             ]
         );
     }
-
-
-
 }

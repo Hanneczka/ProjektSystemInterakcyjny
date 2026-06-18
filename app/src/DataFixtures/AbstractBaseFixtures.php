@@ -7,7 +7,8 @@ use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 use Faker\Generator;
 
-abstract class AbstractBaseFixtures extends Fixture {
+abstract class AbstractBaseFixtures extends Fixture
+{
     /**
      * Faker.
      */
@@ -15,8 +16,6 @@ abstract class AbstractBaseFixtures extends Fixture {
 
     /**
      * Persistence object manager.
-     *
-     * @var ObjectManager
      */
     protected ?ObjectManager $manager = null;
 
@@ -88,7 +87,6 @@ abstract class AbstractBaseFixtures extends Fixture {
         return $this->getReference($randomReferenceName, $className);
     }
 
-
     /**
      * Get array of objects references based on count.
      *
@@ -141,5 +139,4 @@ abstract class AbstractBaseFixtures extends Fixture {
 
         return $referenceNameList;
     }
-
 }

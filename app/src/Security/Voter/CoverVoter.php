@@ -40,11 +40,13 @@ final class CoverVoter extends Voter
 
         return false;
     }
+
     private function isAdmin(?UserInterface $user): bool
     {
         if (!$user) {
             return false;
         }
+
         return in_array('ROLE_ADMIN', $user->getRoles(), true);
     }
 }

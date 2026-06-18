@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Cover service interface.
  */
@@ -18,11 +19,12 @@ interface CoverServiceInterface
      * Create cover.
      *
      * @param UploadedFile $uploadedFile Uploaded file
-     * @param Cover       $cover       Cover entity
-     * @param Element         $element         Element entity
+     * @param Cover        $cover        Cover entity
+     * @param Element      $element      Element entity
      */
     public function create(UploadedFile $uploadedFile, Cover $cover, Element $element): void;
+
     public function update(UploadedFile $uploadedFile, Cover $cover): void;
+
     public function delete(Cover $cover): void;
 }
-

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Cover controller.
  */
@@ -17,7 +18,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use App\Repository\ElementRepository;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 
 /**
@@ -30,7 +30,7 @@ class CoverController extends AbstractController
      * Constructor.
      *
      * @param CoverServiceInterface $coverService Cover service
-     * @param TranslatorInterface    $translator    Translator
+     * @param TranslatorInterface   $translator   Translator
      */
     public function __construct(private readonly CoverServiceInterface $coverService, private readonly TranslatorInterface $translator)
     {
@@ -87,14 +87,15 @@ class CoverController extends AbstractController
         return $this->render(
             'element/cover_create.html.twig',
             ['form' => $form->createView(),
-                'element' => $element,]
+                'element' => $element, ]
         );
     }
+
     /**
      * Edit action.
      *
      * @param Request $request HTTP request
-     * @param Cover  $cover  Cover entity
+     * @param Cover   $cover   Cover entity
      *
      * @return Response HTTP response
      */
@@ -145,6 +146,7 @@ class CoverController extends AbstractController
             ]
         );
     }
+
     #[Route(
         '/{id}/delete',
         name: 'cover_delete',
@@ -181,13 +183,15 @@ class CoverController extends AbstractController
 
             return $this->redirectToRoute('element_view', ['id' => $element->getId()]);
 
-    }
+        }
+
         return $this->render(
             'element/cover_delete.html.twig',
             [
                 'form' => $form->createView(),
                 'cover' => $cover,
-            ]);
+            ]
+        );
 
-}}
-
+    }
+}

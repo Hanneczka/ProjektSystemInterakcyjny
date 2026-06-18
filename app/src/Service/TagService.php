@@ -7,9 +7,13 @@ use App\Repository\TagRepository;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
 
-class TagService implements TagServiceInterface{
-public function __construct(private readonly TagRepository $tagRepository, private readonly PaginatorInterface $paginator) {}
+class TagService implements TagServiceInterface
+{
+    public function __construct(private readonly TagRepository $tagRepository, private readonly PaginatorInterface $paginator)
+    {
+    }
     private const PAGINATOR_ITEMS_PER_PAGE = 10;
+
     public function getPaginatedList(int $page): PaginationInterface
     {
         return $this->paginator->paginate(
@@ -23,15 +27,18 @@ public function __construct(private readonly TagRepository $tagRepository, priva
             ]
         );
     }
+
     public function save(Tag $tag): void
     {
 
         $this->tagRepository->save($tag);
     }
+
     public function delete(Tag $tag): void
     {
         $this->tagRepository->delete($tag);
     }
+
     /**
      * Find by id.
      *
@@ -45,6 +52,7 @@ public function __construct(private readonly TagRepository $tagRepository, priva
     {
         return $this->tagRepository->findOneById($id);
     }
+
     /**
      * Find by title.
      *

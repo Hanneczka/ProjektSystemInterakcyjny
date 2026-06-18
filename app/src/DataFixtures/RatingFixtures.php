@@ -7,7 +7,8 @@ use App\Entity\Element;
 use App\Entity\User;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
-class RatingFixtures extends AbstractBaseFixtures implements DependentFixtureInterface{
+class RatingFixtures extends AbstractBaseFixtures implements DependentFixtureInterface
+{
     public function loadData(): void
     {
         $this->createMany(500, 'Ratings', function (int $i) {
@@ -23,9 +24,9 @@ class RatingFixtures extends AbstractBaseFixtures implements DependentFixtureInt
 
         $this->manager->flush();
     }
+
     public function getDependencies(): array
     {
         return [ElementFixtures::class, UserFixtures::class];
     }
-
 }

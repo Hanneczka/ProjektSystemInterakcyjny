@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Repository\ElementRepository;
 use App\Security\Voter\ElementVoter;
 use App\Service\ElementServiceInterface;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
@@ -10,7 +9,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use App\Entity\Element;
-use Knp\Component\Pager\PaginatorInterface;
 use App\Form\Type\ElementType;
 use Symfony\Component\HttpFoundation\Request;
 use App\Service\TagService;
@@ -26,23 +24,25 @@ use App\Dto\ElementListInputFiltersDto;
 use App\Form\Type\RatingType;
 use App\Repository\RatingRepository;
 use App\Repository\CommentRepository;
-use Doctrine\ORM\EntityManager;
-
 
 #[Route('/element')]
 class ElementController extends AbstractController
 {
-    public function __construct(private readonly ElementServiceInterface $elementService,  private readonly TranslatorInterface $translator, private readonly CommentServiceInterface $commentService, private readonly TagService $tagService) {}
+    public function __construct(private readonly ElementServiceInterface $elementService, private readonly TranslatorInterface $translator, private readonly CommentServiceInterface $commentService, private readonly TagService $tagService)
+    {
+    }
 
     #[Route(
         name: 'element_index',
         methods: ['GET'],
-)]
-public function index(#[MapQueryString(resolver: ElementListInputFiltersDtoResolver::class)] ElementListInputFiltersDto $filters, #[MapQueryParameter] int $page = 1): Response
+    )]
+    public function index(#[MapQueryString(resolver: ElementListInputFiltersDtoResolver::class)] ElementListInputFiltersDto $filters, #[MapQueryParameter] int $page = 1): Response
     {
         $pagination = $this->elementService->getPaginatedList($page, $filters);
+
         return $this->render('element/index.html.twig', ['pagination' => $pagination]);
     }
+
     #[Route(
         '/create',
         name: 'element_create',
@@ -95,6 +95,7 @@ public function index(#[MapQueryString(resolver: ElementListInputFiltersDtoResol
                 'success',
                 $this->translator->trans('message.edited_successfully')
             );
+
             return $this->redirectToRoute('element_index');
         }
 
@@ -103,7 +104,7 @@ public function index(#[MapQueryString(resolver: ElementListInputFiltersDtoResol
             'element/edit.html.twig',
             [
                 'form' => $form->createView(),
-                'element' => $element
+                'element' => $element,
 
             ]
         );
@@ -114,7 +115,7 @@ public function index(#[MapQueryString(resolver: ElementListInputFiltersDtoResol
     public function view(
         Element $element,
         #[MapQueryParameter] ?int $page = null,
-        RatingRepository $ratingRepository
+        RatingRepository $ratingRepository,
     ): Response {
         $page = $page ?? 1;
         $user = $this->getUser();
@@ -146,13 +147,14 @@ public function index(#[MapQueryString(resolver: ElementListInputFiltersDtoResol
         Element $element,
         Request $request,
         RatingRepository $ratingRepository,
-        EntityManagerInterface $entityManager
+        EntityManagerInterface $entityManager,
     ): Response {
         $user = $this->getUser();
         $existingRating = $ratingRepository->findOneBy(['element' => $element, 'user' => $user]);
 
         if ($existingRating) {
             $this->addFlash('error', $this->translator->trans('already_rated'));
+
             return $this->redirectToRoute('element_view', ['id' => $element->getId()]);
         }
 
@@ -172,12 +174,13 @@ public function index(#[MapQueryString(resolver: ElementListInputFiltersDtoResol
 
         return $this->redirectToRoute('element_view', ['id' => $element->getId()]);
     }
+
     #[Route('/{id}/add_comment', name: 'element_comment_add', requirements: ['id' => '[1-9]\d*'], methods: ['POST'])]
     #[IsGranted('ROLE_USER')]
     public function addComment(
         Element $element,
         Request $request,
-        EntityManagerInterface $entityManager
+        EntityManagerInterface $entityManager,
     ): Response {
         $comment = new Comment();
         $form = $this->createForm(CommentType::class, $comment);
@@ -241,9 +244,13 @@ public function index(#[MapQueryString(resolver: ElementListInputFiltersDtoResol
         methods: ['GET', 'DELETE']
     )]
     #[IsGranted(ElementVoter::DELETE, subject: 'element')]
-    public function delete(Request $request, Element $element, CommentRepository $commentRepository,
-                           RatingRepository $ratingRepository, EntityManagerInterface $entityManager): Response
-    {
+    public function delete(
+        Request $request,
+        Element $element,
+        CommentRepository $commentRepository,
+        RatingRepository $ratingRepository,
+        EntityManagerInterface $entityManager,
+    ): Response {
         $form = $this->createForm(FormType::class, $element, [
             'method' => 'DELETE',
             'action' => $this->generateUrl('element_delete', ['id' => $element->getId()]),
@@ -278,6 +285,7 @@ public function index(#[MapQueryString(resolver: ElementListInputFiltersDtoResol
             ]
         );
     }
+
     #[Route('/{id}/favorite', name: 'element_favorite', methods: ['GET', 'POST'])]
     #[IsGranted('ROLE_USER')]
     public function favorite(Element $element, EntityManagerInterface $entityManager): Response
@@ -303,6 +311,4 @@ public function index(#[MapQueryString(resolver: ElementListInputFiltersDtoResol
 
         return $this->redirectToRoute('element_view', ['id' => $element->getId()]);
     }
-
-
 }

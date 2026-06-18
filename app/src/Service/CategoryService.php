@@ -7,12 +7,17 @@ use App\Repository\CategoryRepository;
 use App\Repository\ElementRepository;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
-class CategoryService implements CategoryServiceInterface{
-    public function __construct(private readonly CategoryRepository $categoryRepository,
-                                private readonly ElementRepository $elementRepository,
-                                private readonly PaginatorInterface $paginator) {
+
+class CategoryService implements CategoryServiceInterface
+{
+    public function __construct(
+        private readonly CategoryRepository $categoryRepository,
+        private readonly ElementRepository $elementRepository,
+        private readonly PaginatorInterface $paginator,
+    ) {
     }
     private const PAGINATOR_ITEMS_PER_PAGE = 10;
+
     public function getPaginatedList(int $page): PaginationInterface
     {
         return $this->paginator->paginate(
@@ -26,11 +31,13 @@ class CategoryService implements CategoryServiceInterface{
             ]
         );
     }
+
     public function save(Category $category): void
     {
 
         $this->categoryRepository->save($category);
     }
+
     public function delete(Category $category): void
     {
         $this->categoryRepository->delete($category);
@@ -46,6 +53,7 @@ class CategoryService implements CategoryServiceInterface{
             return false;
         }
     }
+
     /**
      * Find by id.
      *
@@ -59,6 +67,4 @@ class CategoryService implements CategoryServiceInterface{
     {
         return $this->categoryRepository->findOneById($id);
     }
-
-
 }

@@ -5,7 +5,6 @@ namespace App\Security\Voter;
 use App\Entity\Comment;
 use App\Entity\User;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-use Symfony\Component\Security\Core\Authorization\Voter\Vote;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -16,15 +15,15 @@ class CommentVoter extends Voter
     public const EDIT = 'COMMENT_EDIT';
 
     public function __construct(
-        private readonly AuthorizationCheckerInterface $security
-    ) {}
+        private readonly AuthorizationCheckerInterface $security,
+    ) {
+    }
 
     protected function supports(string $attribute, mixed $subject): bool
     {
         return in_array($attribute, [self::DELETE, self::EDIT])
-            && $subject instanceof \App\Entity\Comment;
+            && $subject instanceof Comment;
     }
-
 
     protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
     {
@@ -45,7 +44,6 @@ class CommentVoter extends Voter
             default => false,
         };
     }
-
 
     private function isAuthor(Comment $comment, User $user): bool
     {

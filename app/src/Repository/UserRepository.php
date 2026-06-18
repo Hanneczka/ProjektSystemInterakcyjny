@@ -40,6 +40,27 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->orderBy('user.id', 'DESC');
     }
 
+    public function save(User $user): void
+    {
+        $this->getEntityManager()->persist($user);
+        $this->getEntityManager()->flush();
+    }
+    public function delete(User $user): void
+    {
+        $this->getEntityManager()->remove($user);
+        $this->getEntityManager()->flush();
+    }
+
+    public function countAdmins(): int
+    {
+        return (int) $this->createQueryBuilder('u')
+            ->select('count(u.id)')
+            ->where('u.roles LIKE :role')
+            ->setParameter('role', '%"ROLE_ADMIN"%')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
     //    /**
     //     * @return User[] Returns an array of User objects
     //     */

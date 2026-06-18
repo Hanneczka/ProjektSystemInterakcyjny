@@ -36,7 +36,6 @@ class Category
 
     /**
      * Slug.
-     * @var string|null
      */
     #[ORM\Column(length: 64, nullable: true)]
     private ?string $slug;

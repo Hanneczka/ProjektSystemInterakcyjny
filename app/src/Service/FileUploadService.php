@@ -1,4 +1,5 @@
 <?php
+
 /**
  * File upload service.
  */
@@ -61,4 +62,3 @@ class FileUploadService implements FileUploadServiceInterface
         return $this->targetDirectory;
     }
 }
-

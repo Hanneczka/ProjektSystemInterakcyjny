@@ -10,15 +10,18 @@ use App\Entity\Category;
 use App\Dto\ElementListInputFiltersDto;
 use App\Dto\ElementListFiltersDto;
 
-
-class ElementService implements ElementServiceInterface{
-
+class ElementService implements ElementServiceInterface
+{
     private const PAGINATOR_ITEMS_PER_PAGE = 10;
-    public function __construct(private readonly ElementRepository $elementRepository, private readonly PaginatorInterface $paginator, private readonly CategoryServiceInterface $categoryService, private readonly TagServiceInterface $tagService) {
+
+    public function __construct(private readonly ElementRepository $elementRepository, private readonly PaginatorInterface $paginator, private readonly CategoryServiceInterface $categoryService, private readonly TagServiceInterface $tagService)
+    {
     }
+
     public function getPaginatedList(int $page, ElementListInputFiltersDto $filters): PaginationInterface
     {
         $filters = $this->prepareFilters($filters);
+
         return $this->paginator->paginate(
             $this->elementRepository->queryAll($filters),
             $page,
@@ -30,15 +33,18 @@ class ElementService implements ElementServiceInterface{
             ]
         );
     }
+
     public function save(Element $element): void
     {
 
         $this->elementRepository->save($element);
     }
+
     public function delete(Element $element): void
     {
         $this->elementRepository->delete($element);
     }
+
     public function getPaginatedListByCategory(int $page, Category $category): PaginationInterface
     {
         return $this->paginator->paginate(
@@ -51,6 +57,7 @@ class ElementService implements ElementServiceInterface{
             ]
         );
     }
+
     /**
      * Prepare filters for the elements list.
      *
@@ -63,7 +70,6 @@ class ElementService implements ElementServiceInterface{
         return new ElementListFiltersDto(
             null !== $filters->categoryId ? $this->categoryService->findOneById($filters->categoryId) : null,
             null !== $filters->tagId ? $this->tagService->findOneById($filters->tagId) : null,
-
         );
     }
 }

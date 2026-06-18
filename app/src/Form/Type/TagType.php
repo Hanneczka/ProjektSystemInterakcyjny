@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Tag type.
  */
@@ -36,7 +37,8 @@ class TagType extends AbstractType
                 'label' => 'label.tags',
                 'required' => true,
                 'attr' => ['max_length' => 64],
-            ]);
+            ]
+        );
     }
 
     /**
@@ -62,4 +64,3 @@ class TagType extends AbstractType
         return 'tag';
     }
 }
-

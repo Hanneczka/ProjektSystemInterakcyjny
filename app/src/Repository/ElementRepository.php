@@ -58,7 +58,7 @@ class ElementRepository extends ServiceEntityRepository
             ->getSingleScalarResult();
     }
 
-    public function getOrCreateQueryBuilder(QueryBuilder $qb = null): QueryBuilder
+    public function getOrCreateQueryBuilder(?QueryBuilder $qb = null): QueryBuilder
     {
         return $qb ?? $this->createQueryBuilder('element');
     }
@@ -86,6 +86,7 @@ class ElementRepository extends ServiceEntityRepository
 
         return $queryBuilder;
     }
+
     public function getHighestRated(int $limit = 10): array
     {
         return $this->createQueryBuilder('e')

@@ -33,8 +33,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * Email.
-     *
-     * @var string|null
      */
     #[ORM\Column(type: 'string', length: 180, unique: true)]
     #[Assert\NotBlank]
@@ -51,8 +49,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * Hashed password.
-     *
-     * @var string|null
      */
     #[ORM\Column(type: 'string')]
     #[Assert\NotBlank]
@@ -71,8 +67,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         $this->favorites = new ArrayCollection();
     }
-
-
 
     /**
      * Getter for id.
@@ -209,6 +203,5 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->favorites->removeElement($favorite);
 
         return $this;
-    }}
-
-
+    }
+}

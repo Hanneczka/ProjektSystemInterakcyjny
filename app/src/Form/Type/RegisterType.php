@@ -11,7 +11,8 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\AbstractType;
 
-class RegisterType extends AbstractType{
+class RegisterType extends AbstractType
+{
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
 
@@ -22,7 +23,8 @@ class RegisterType extends AbstractType{
                 'label' => 'label.email',
                 'required' => true,
                 'attr' => ['max_length' => 64],
-            ]);
+            ]
+        );
         $builder->add(
             'name',
             TextType::class,
@@ -30,7 +32,8 @@ class RegisterType extends AbstractType{
                 'label' => 'label.name',
                 'required' => true,
                 'attr' => ['max_length' => 64],
-            ]);
+            ]
+        );
         $builder->add('password', RepeatedType::class, [
             'type' => SymfonyPasswordType::class,
             'first_options'  => [
@@ -45,6 +48,7 @@ class RegisterType extends AbstractType{
             'invalid_message' => 'form.invalid_password_error',
         ]);
     }
+
     /**
      * Configures the options for this type.
      *
@@ -54,5 +58,4 @@ class RegisterType extends AbstractType{
     {
         $resolver->setDefaults(['data_class' => User::class]);
     }
-
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Cover type.
  */
@@ -76,4 +77,3 @@ class CoverType extends AbstractType
         return 'cover';
     }
 }
-

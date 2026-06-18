@@ -21,6 +21,7 @@ class CoverRepository extends ServiceEntityRepository
         $this->getEntityManager()->persist($cover);
         $this->getEntityManager()->flush();
     }
+
     public function delete(Cover $cover): void
     {
         $this->getEntityManager()->remove($cover);

@@ -26,6 +26,17 @@ class RatingRepository extends ServiceEntityRepository
             ->getQuery()
             ->getSingleScalarResult();
     }
+    public function save(Rating $rating): void
+    {
+        $this->getEntityManager()->persist($rating);
+        $this->getEntityManager()->flush();
+    }
+
+    public function delete(Rating $rating): void
+    {
+        $this->getEntityManager()->remove($rating);
+        $this->getEntityManager()->flush();
+    }
 
 
     //    /**

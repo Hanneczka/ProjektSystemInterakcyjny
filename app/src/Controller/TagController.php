@@ -2,11 +2,9 @@
 
 namespace App\Controller;
 
-use App\Repository\TagRepository;
 use App\Security\Voter\TagVoter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
-use Knp\Component\Pager\PaginatorInterface;
 use App\Entity\Tag;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Service\TagServiceInterface;
@@ -18,21 +16,26 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route('/tag')]
-class TagController extends AbstractController{
-    public function __construct(private readonly TagServiceInterface $tagService,  private readonly TranslatorInterface $translator) {
+class TagController extends AbstractController
+{
+    public function __construct(private readonly TagServiceInterface $tagService, private readonly TranslatorInterface $translator)
+    {
 
     }
 
     #[Route(
         '/',
-    name: 'tag_index',
-    methods: ['GET']
-)]
-public function index(#[MapQueryParameter] int $page = 1){
+        name: 'tag_index',
+        methods: ['GET']
+    )]
+    public function index(#[MapQueryParameter] int $page = 1)
+    {
         $pagination = $this->tagService->getPaginatedList($page);
+
         return $this->render(
             'tag/index.html.twig',
-            ['pagination' => $pagination]);
+            ['pagination' => $pagination]
+        );
     }
 
     #[Route(
@@ -53,47 +56,56 @@ public function index(#[MapQueryParameter] int $page = 1){
 
     #[Route(
         '/create',
-    name: 'tag_create',
-    methods: ['GET', 'POST']
-)]
+        name: 'tag_create',
+        methods: ['GET', 'POST']
+    )]
     #[IsGranted('ROLE_ADMIN')]
-public function create(Request $request): Response{
+    public function create(Request $request): Response
+    {
         $tag = new Tag();
         $form = $this->createForm(TagType::class, $tag);
         $form->handleRequest($request);
-        if($form->isSubmitted() && $form->isValid()){
+        if ($form->isSubmitted() && $form->isValid()) {
             $this->tagService->save($tag);
             $this->addFlash(
                 'success',
                 $this->translator->trans('message.created_successfully')
             );
+
             return $this->redirectToRoute('tag_index');
         }
+
         return $this->render('tag/create.html.twig', ['form' => $form->createView()]);
     }
 
     #[Route(
         '/{id}/edit',
-    name: 'tag_edit',
-    requirements: ['id' => '[1-9]\d*'],
-    methods: ['GET', 'PUT']
-)]
+        name: 'tag_edit',
+        requirements: ['id' => '[1-9]\d*'],
+        methods: ['GET', 'PUT']
+    )]
     #[IsGranted(TagVoter::EDIT, subject: 'tag')]
-public function edit(Request $request, Tag $tag): Response{
-        $form = $this->createForm(TagType::class, $tag,
-        [
-            'method' => 'PUT',
-            'action' => $this->generateUrl('tag_edit', ['id' => $tag->getId()])
-        ]);
+    public function edit(Request $request, Tag $tag): Response
+    {
+        $form = $this->createForm(
+            TagType::class,
+            $tag,
+            [
+                'method' => 'PUT',
+                'action' => $this->generateUrl('tag_edit', ['id' => $tag->getId()]),
+            ]
+        );
         $form->handleRequest($request);
-        if($form->isSubmitted() && $form->isValid()){
+        if ($form->isSubmitted() && $form->isValid()) {
             $this->tagService->save($tag);
             $this->addFlash(
                 'success',
                 $this->translator->trans('message.edited_successfully')
             );
+
             return $this->redirectToRoute('tag_index');
         }
+
         return $this->render('tag/edit.html.twig', ['form' => $form->createView(), 'tag' => $tag]);
     }
 
@@ -130,5 +142,4 @@ public function edit(Request $request, Tag $tag): Response{
             ]
         );
     }
-
 }

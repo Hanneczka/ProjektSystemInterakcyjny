@@ -9,7 +9,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 
-class UserType extends AbstractType{
+class UserType extends AbstractType
+{
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add(
@@ -19,7 +20,8 @@ class UserType extends AbstractType{
                 'label' => 'label.name',
                 'required' => true,
                 'attr' => ['max_length' => 64],
-            ]);
+            ]
+        );
         $builder->add(
             'email',
             EmailType::class,
@@ -27,8 +29,10 @@ class UserType extends AbstractType{
                 'label' => 'label.email',
                 'required' => true,
                 'attr' => ['max_length' => 64],
-            ]);
+            ]
+        );
     }
+
     /**
      * Configures the options for this type.
      *

@@ -8,11 +8,13 @@ use Knp\Component\Pager\PaginatorInterface;
 use App\Entity\Element;
 use App\Entity\Comment;
 
-class CommentService implements CommentServiceInterface{
+class CommentService implements CommentServiceInterface
+{
     public function __construct(private readonly CommentRepository $commentRepository, private readonly PaginatorInterface $paginator)
     {
     }
     private const PAGINATOR_ITEMS_PER_PAGE = 5;
+
     public function getPaginatedList(int $page, Element $element): PaginationInterface
     {
         return $this->paginator->paginate(
@@ -26,10 +28,12 @@ class CommentService implements CommentServiceInterface{
             ]
         );
     }
+
     public function findByElement(Element $element): array
     {
         return $this->commentRepository->findByElement($element);
     }
+
     public function delete(Comment $comment): void
     {
         $this->commentRepository->delete($comment);

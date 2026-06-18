@@ -59,7 +59,8 @@ class UserFixtures extends AbstractBaseFixtures implements DependentFixtureInter
 
             foreach ($randomElements as $element) {
                 $user->addFavorite($element);
-            };
+            }
+
             return $user;
         });
 
@@ -78,12 +79,13 @@ class UserFixtures extends AbstractBaseFixtures implements DependentFixtureInter
 
             foreach ($randomElements as $element) {
                 $user->addFavorite($element);
-            };
+            }
 
             return $user;
         });
 
     }
+
     public function getDependencies(): array
     {
         return [

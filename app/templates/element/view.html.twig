@@ -54,12 +54,22 @@
             {% if user_rating %}
                 <div class="alert alert-info mb-0">
                     <strong> {{ 'label.your_rating'|trans }} {{ user_rating.value }} / 5</strong>
+                    <form action="{{ path('element_rate_delete', {'id': element.id}) }}" method="POST" class="d-flex justify-content-end">
+                        <button type="submit" class="btn btn-outline-danger btn-sm">
+                            {{ 'action.delete_rating'|trans }}
+                        </button>
+                    </form>
                 </div>
             {% else %}
 
                 {{ form_start(form, {'action': path('element_rate', {'id': element.id})}) }}
-                <div class="form-check form-check-inline m-0 d-flex align-items-center gap-1">
-                {{ form_widget(form) }}
+                <div class="d-flex align-items-center gap-3 my-2">
+                    {% for child in form.value %}
+                        <div class="form-check form-check-inline m-0">
+                            {{ form_widget(child) }}
+                            {{ form_label(child) }}
+                        </div>
+                    {% endfor %}
                 </div>
                 <button class="btn btn-primary mt-2">{{ 'action.rate'|trans }}</button>
                 {{ form_end(form) }}
@@ -123,13 +133,16 @@
                 <div class="d-flex justify-content-between align-items-center mb-2">
                 <strong>{{ comment.author.name }}</strong>
                     <span class="text-muted small">({{ comment.createdAt|format_date('long') }})</span>
-                {% if is_granted('COMMENT_DELETE', comment) %}
-                    <td><a href="{{ path('comment_delete', {id: comment.id}) }}"class="btn btn-outline-danger btn-sm">
-                            {{ 'action.delete'|trans }}
-                        </a></td>
-                {% endif %}
                 </div>
                 <p>{{ comment.content }}</p>
+                {% if is_granted('COMMENT_DELETE', comment) %}
+                    <td >
+                        <div class="d-flex justify-content-end">
+                        <a href="{{ path('comment_delete', {id: comment.id}) }}"class="btn btn-outline-danger btn-sm">
+                            {{ 'action.delete'|trans }}
+                        </a>
+                        </div> </td>
+                {% endif %}
             </li>
         {% else %}
             <li>{{ 'message.no_comments'|trans }}</li>

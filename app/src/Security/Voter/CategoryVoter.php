@@ -13,21 +13,21 @@ final class CategoryVoter extends Voter
     /**
      * Delete permission.
      *
-     * @const string
+     * @var string
      */
     public const DELETE = 'CATEGORY_DELETE';
 
     /**
      * Edit permission.
      *
-     * @const string
+     * @var string
      */
     public const EDIT = 'CATEGORY_EDIT';
 
     /**
      * Show permission.
      *
-     * @const string
+     * @var string
      */
     public const VIEW = 'CATEGORY_VIEW';
 
@@ -36,7 +36,7 @@ final class CategoryVoter extends Voter
         // replace with your own logic
         // https://symfony.com/doc/current/security/voters.html
         return in_array($attribute, [self::EDIT, self::VIEW, self::DELETE])
-            && $subject instanceof \App\Entity\Category;
+            && $subject instanceof Category;
     }
 
     protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token, ?Vote $vote = null): bool
@@ -57,11 +57,13 @@ final class CategoryVoter extends Voter
 
         return false;
     }
+
     private function isAdmin(?UserInterface $user): bool
     {
         if (!$user) {
             return false;
         }
+
         return in_array('ROLE_ADMIN', $user->getRoles(), true);
     }
 }

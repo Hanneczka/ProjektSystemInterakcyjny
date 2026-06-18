@@ -6,7 +6,8 @@ use App\Entity\Tag;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Generator;
 
-class TagFixtures extends AbstractBaseFixtures {
+class TagFixtures extends AbstractBaseFixtures
+{
     public function loadData(): void
     {
 
@@ -31,5 +32,4 @@ class TagFixtures extends AbstractBaseFixtures {
             return $tag;
         });
     }
-
 }

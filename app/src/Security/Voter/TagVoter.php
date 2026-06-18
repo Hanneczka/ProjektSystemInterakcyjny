@@ -12,21 +12,21 @@ final class TagVoter extends Voter
     /**
      * Delete permission.
      *
-     * @const string
+     * @var string
      */
     public const DELETE = 'TAG_DELETE';
 
     /**
      * Edit permission.
      *
-     * @const string
+     * @var string
      */
     public const EDIT = 'TAG_EDIT';
 
     /**
      * Show permission.
      *
-     * @const string
+     * @var string
      */
     public const VIEW = 'TAG_VIEW';
 
@@ -57,11 +57,13 @@ final class TagVoter extends Voter
 
         return false;
     }
+
     private function isAdmin(?UserInterface $user): bool
     {
         if (!$user) {
             return false;
         }
+
         return in_array('ROLE_ADMIN', $user->getRoles(), true);
     }
 }

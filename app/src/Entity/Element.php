@@ -55,8 +55,6 @@ class Element
     #[ORM\OneToOne(mappedBy: 'element', cascade: ['persist', 'remove'])]
     private ?Cover $cover = null;
 
-
-
     public function __construct()
     {
         $this->tags = new ArrayCollection();
@@ -179,5 +177,4 @@ class Element
 
         return $this;
     }
-
-    }
+}

@@ -16,6 +16,7 @@ class TagRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Tag::class);
     }
+
     public function queryAll(): QueryBuilder
     {
         return $this->createQueryBuilder('tag');
@@ -26,6 +27,7 @@ class TagRepository extends ServiceEntityRepository
         $this->getEntityManager()->persist($tag);
         $this->getEntityManager()->flush();
     }
+
     public function delete(Tag $tag): void
     {
         $this->getEntityManager()->remove($tag);

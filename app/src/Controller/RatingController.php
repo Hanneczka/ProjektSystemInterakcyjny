@@ -13,16 +13,21 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use App\Repository\ElementRepository;
-use App\Repository\RatingRepository;
+use App\Service\RatingServiceInterface;
 
-class RatingController extends AbstractController{
+class RatingController extends AbstractController
+{
+    public function __construct(
+        private readonly RatingServiceInterface $ratingService
+    ) {}
 
     #[Route('/element/{id}/rate', name: 'element_rate', methods: ['POST'])]
     #[IsGranted('ROLE_USER')]
-    public function rate(Request $request,
-                         Element $element,
-                         EntityManagerInterface $entityManager,
-                         TranslatorInterface $translator):Response{
+    public function rate(
+        Request $request,
+        Element $element,
+        TranslatorInterface $translator,
+    ): Response {
         $rating = new Rating();
         $form = $this->createForm(RatingType::class, $rating);
         $form->handleRequest($request);
@@ -30,8 +35,7 @@ class RatingController extends AbstractController{
             $rating->setElement($element);
             $rating->setUser($this->getUser());
 
-            $entityManager->persist($rating);
-            $entityManager->flush();
+            $this->ratingService->save($rating);
             $this->addFlash(
                 'success',
                 $translator->trans('message.created_successfully')
@@ -43,14 +47,40 @@ class RatingController extends AbstractController{
         return $this->redirectToRoute('element_view', ['id' => $element->getId()]);
 
     }
+
+    #[Route('/element/{id}/rate-delete', name: 'element_rate_delete', methods: ['POST'])]
+    #[IsGranted('ROLE_USER')]
+    public function deleteRate(
+        Element $element,
+        TranslatorInterface $translator,
+        \App\Repository\RatingRepository $ratingRepository
+    ): Response {
+        $user = $this->getUser();
+
+        $rating = $ratingRepository->findOneBy([
+            'element' => $element,
+            'user' => $user,
+        ]);
+
+        if ($rating) {
+            $this->ratingService->delete($rating);
+            $this->addFlash(
+                'success',
+                $translator->trans('message.deleted_successfully')
+            );
+        }
+
+        return $this->redirectToRoute('element_view', ['id' => $element->getId()]);
+    }
+
     #[Route('/highest_rated', name: 'highest_rated', methods: ['GET'])]
-    public function highestRating(ElementRepository $elementRepository):Response{
-        $highestRated =$elementRepository->getHighestRated(10);
+    public function highestRating(ElementRepository $elementRepository): Response
+    {
+        $highestRated = $elementRepository->getHighestRated(10);
 
         return $this->render('rating/index.html.twig', [
             'elements' => $elementRepository->findAll(),
             'highest_rated' => $highestRated,
         ]);
     }
-
 }

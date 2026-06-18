@@ -9,7 +9,8 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Generator;
 
-class ElementFixtures extends AbstractBaseFixtures implements DependentFixtureInterface{
+class ElementFixtures extends AbstractBaseFixtures implements DependentFixtureInterface
+{
     public function loadData(): void
     {
         if (!$this->manager instanceof ObjectManager || !$this->faker instanceof Generator) {
@@ -44,6 +45,7 @@ class ElementFixtures extends AbstractBaseFixtures implements DependentFixtureIn
             return $element;
         });
     }
+
     /**
      * This method must return an array of fixtures classes
      * on which the implementing class depends on.

@@ -2,14 +2,12 @@
 
 namespace App\DataFixtures;
 
-
 use App\Entity\Category;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Generator;
 
 class CategoryFixtures extends AbstractBaseFixtures
 {
-
     public function loadData(): void
     {
         if (!$this->manager instanceof ObjectManager || !$this->faker instanceof Generator) {

@@ -9,8 +9,8 @@ use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class PasswordType extends AbstractType{
-
+class PasswordType extends AbstractType
+{
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('password', RepeatedType::class, [
@@ -27,6 +27,7 @@ class PasswordType extends AbstractType{
             'invalid_message' => 'form.invalid_password_error',
         ]);
     }
+
     /**
      * Configures the options for this type.
      *
