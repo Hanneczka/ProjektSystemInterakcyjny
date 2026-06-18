@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
-  <file source-language="en" datatype="plaintext" original="file.ext">
+  <file source-language="pl" datatype="plaintext" original="file.ext">
     <body>
       <trans-unit id="label.actions">
         <source>label.actions</source>
@@ -12,411 +12,410 @@
       </trans-unit>
       <trans-unit id="label.title">
         <source>label.title</source>
-        <target>Title</target>
+        <target>Tytuł</target>
       </trans-unit>
       <trans-unit id="label.content">
         <source>label.content</source>
-        <target>Content</target>
+        <target>Treść</target>
       </trans-unit>
       <trans-unit id="label.tags">
         <source>label.tags</source>
-        <target>Tags</target>
+        <target>Tagi</target>
       </trans-unit>
       <trans-unit id="label.year">
         <source>label.year</source>
-        <target>Release year</target>
+        <target>Rok wydania</target>
       </trans-unit>
       <trans-unit id="label.category">
         <source>label.category</source>
-        <target>Category</target>
+        <target>Kategoria</target>
       </trans-unit>
       <trans-unit id="label.author">
         <source>label.author</source>
-        <target>Author</target>
+        <target>Autor</target>
       </trans-unit>
       <trans-unit id="label.created_at">
         <source>label.created_at</source>
-        <target>Created at</target>
+        <target>Stworzono</target>
       </trans-unit>
       <trans-unit id="title.category_create">
               <source>title.category_create</source>
-              <target>Create category</target>
+              <target>Utwórz kategorię</target>
             </trans-unit>
       <trans-unit id="title.tag_create">
               <source>title.tag_create</source>
-              <target>Create tag</target>
+              <target>Utwórz tag</target>
             </trans-unit>
       <trans-unit id="title.category_delete">
               <source>title.category_delete</source>
-              <target>Delete category</target>
+              <target>Usuń kategorię</target>
             </trans-unit>
       <trans-unit id="title.element_delete">
               <source>title.element_delete</source>
-              <target>Delete element</target>
+              <target>Usuń element</target>
             </trans-unit>
       <trans-unit id="title.tag_delete">
               <source>title.tag_delete</source>
-              <target>Delete tag</target>
+              <target>Usuń tag</target>
             </trans-unit>
       <trans-unit id="title.category_edit">
               <source>title.category_edit</source>
-              <target>Edit category</target>
+              <target>Edytuj kategorię</target>
             </trans-unit>
       <trans-unit id="title.element_edit">
               <source>title.element_edit</source>
-              <target>Edit element</target>
+              <target>Edytuj element</target>
             </trans-unit>
       <trans-unit id="title.tag_edit">
               <source>title.tag_edit</source>
-              <target>Edit tag</target>
+              <target>Edytuj tag</target>
             </trans-unit>
       <trans-unit id="title.category_view">
               <source>title.category_view</source>
-              <target>View category</target>
+              <target>Szczegóły kategorii</target>
             </trans-unit>
       <trans-unit id="title.tag_view">
               <source>title.tag_view</source>
-              <target>View tag</target>
+              <target>Szczegóły tagu</target>
             </trans-unit>
       <trans-unit id="title.category_list">
               <source>title.category_list</source>
-              <target>Category list</target>
+              <target>Lista Kategorii</target>
             </trans-unit>
       <trans-unit id="title.tag_list">
               <source>title.tag_list</source>
-              <target>Tag list</target>
+              <target>Lista tagów</target>
             </trans-unit>
       <trans-unit id="message.empty_list">
         <source>message.empty_list</source>
-        <target>List is empty.</target>
+        <target>Lista jest pusta.</target>
       </trans-unit>
       <trans-unit id="message.record_not_found">
         <source>message.record_not_found</source>
-        <target>Record not found.</target>
+        <target>Nie znaleziono.</target>
       </trans-unit>
       <trans-unit id="title.record_list">
         <source>title.record_list</source>
-        <target>Records list</target>
+        <target>Lista rekordów</target>
       </trans-unit>
       <trans-unit id="title.record_view">
         <source>title.record_view</source>
-        <target>Record view #%id%</target>
+        <target>Szczegóły rekordu</target>
       </trans-unit>
       <trans-unit id="title.element_create">
         <source>title.element_create</source>
-        <target>Create element</target>
+        <target>Utwórz element</target>
       </trans-unit>
       <trans-unit id="action.save">
               <source>action.save</source>
-              <target>Save</target>
+              <target>Zapisz</target>
             </trans-unit>
       <trans-unit id="action.back_to_list">
               <source>action.back_to_list</source>
-              <target>Back to list</target>
+              <target>Powrót</target>
             </trans-unit>
       <trans-unit id="action.delete">
               <source>action.delete</source>
-              <target>Delete</target>
+              <target>Usuń</target>
             </trans-unit>
       <trans-unit id="action.view">
               <source>action.view</source>
-              <target>View</target>
+              <target>Zobacz</target>
             </trans-unit>
       <trans-unit id="action.edit">
               <source>action.edit</source>
-              <target>Edit</target>
+              <target>Edytuj</target>
             </trans-unit>
       <trans-unit id="message.password_updated">
         <source>message.password_updated</source>
-        <target>Password updated successfully.</target>
+        <target>Hasło zostało pomyślnie zmienione.</target>
       </trans-unit>
       <trans-unit id="message.user_updated">
         <source>message.user_updated</source>
-        <target>User profile updated successfully.</target>
+        <target>Dane użytkownika zostały pomyślnie zmienione.</target>
       </trans-unit>
       <trans-unit id="message.cannot_remove_last_admin">
         <source>message.cannot_remove_last_admin</source>
-        <target>Cannot remove the last administrator.</target>
+        <target>Nie można usunąć ostatniego administratora.</target>
       </trans-unit>
       <trans-unit id="message.admin_role_removed">
         <source>message.admin_role_removed</source>
-        <target>Administrator role removed successfully.</target>
+        <target>Pomyślnie usunięto rolę administratora.</target>
       </trans-unit>
       <trans-unit id="message.admin_role_granted">
         <source>message.admin_role_granted</source>
-        <target>Administrator role granted successfully.</target>
+        <target>Pomyślnie nadano rolę administratora.</target>
       </trans-unit>
       <trans-unit id="message.account_unblocked">
         <source>message.account_unblocked</source>
-        <target>Account unblocked successfully.</target>
+        <target>Pomyślnie odblokowano konto.</target>
       </trans-unit>
       <trans-unit id="message.account_blocked">
         <source>message.account_blocked</source>
-        <target>Account blocked successfully.</target>
+        <target>Pomyślnie zablokowano konto</target>
       </trans-unit>
       <trans-unit id="message.created_successfully">
         <source>message.created_successfully</source>
-        <target>Created successfully.</target>
+        <target>Pomyślnie utworzono.</target>
       </trans-unit>
       <trans-unit id="message.edited_successfully">
         <source>message.edited_successfully</source>
-        <target>Edited successfully.</target>
+        <target>Pomyślnie edytowano.</target>
       </trans-unit>
       <trans-unit id="message.category_contains_tasks">
         <source>message.category_contains_tasks</source>
-        <target>This category contains tasks and cannot be deleted.</target>
+        <target>Ta kategoria zawiera elementy i nie może być usunięta.</target>
       </trans-unit>
       <trans-unit id="message.deleted_successfully">
         <source>message.deleted_successfully</source>
-        <target>Deleted successfully.</target>
+        <target>DPomyślnie usunięto</target>
       </trans-unit>
       <trans-unit id="already_rated">
         <source>already_rated</source>
-        <target>You have already rated this.</target>
+        <target>Już oceniono ten element.</target>
       </trans-unit>
       <trans-unit id="rating_added">
         <source>rating_added</source>
-        <target>Rating added successfully.</target>
+        <target>Pomyślnie oceniono.</target>
       </trans-unit>
       <trans-unit id="comment_added">
         <source>comment_added</source>
-        <target>Comment added successfully.</target>
+        <target>Pomyślnie dodano komentarz.</target>
       </trans-unit>
       <trans-unit id="message.form_error">
         <source>message.form_error</source>
-        <target>The form contains errors. Please check your data.</target>
+        <target>Błędny formularz.</target>
       </trans-unit>
       <trans-unit id="message.deleted_from_favorites">
         <source>message.deleted_from_favorites</source>
-        <target>Removed from favorites.</target>
+        <target>Usunięto z ulubionych.</target>
       </trans-unit>
       <trans-unit id="message.added_to_favorites">
         <source>message.added_to_favorites</source>
-        <target>Added to favorites.</target>
+        <target>Dodano do ulubionych.</target>
       </trans-unit>
       <trans-unit id="title.log_in">
         <source>title.log_in</source>
-        <target>Log In</target>
+        <target>Logowanie</target>
       </trans-unit>
       <trans-unit id="logged_in_as">
         <source>logged_in_as</source>
-        <target>Logged in as</target>
+        <target>Zalogowano jako</target>
       </trans-unit>
       <trans-unit id="label.email">
         <source>label.email</source>
-        <target>Email address</target>
+        <target>Adres email</target>
       </trans-unit>
       <trans-unit id="label.password">
         <source>label.password</source>
-        <target>Password</target>
+        <target>Hasło</target>
       </trans-unit>
       <trans-unit id="action.sign_in">
         <source>action.sign_in</source>
-        <target>Sign In</target>
+        <target>Zaloguj się</target>
       </trans-unit>
       <trans-unit id="action.register">
         <source>action.register</source>
-        <target>Register</target>
+        <target>Zarejestruj się</target>
       </trans-unit>
       <trans-unit id="title.sign_up">
         <source>title.sign_up</source>
-        <target>Sign Up</target>
+        <target>Rejestracja</target>
       </trans-unit>
       <trans-unit id="action.sign_up">
         <source>action.sign_up</source>
-        <target>Sign Up</target>
+        <target>Zarejestruj się</target>
       </trans-unit>
       <trans-unit id="label.name">
         <source>label.name</source>
-        <target>Name</target>
+        <target>Imię</target>
       </trans-unit>
       <trans-unit id="label.updated_at">
         <source>label.updated_at</source>
-        <target>Updated at</target>
+        <target>Edytowano</target>
       </trans-unit>
       <trans-unit id="title.cover_edit">
         <source>title.cover_edit</source>
-        <target>Edit Cover</target>
+        <target>Zedytuj okładkę</target>
       </trans-unit>
       <trans-unit id="title.cover_create">
         <source>title.cover_create</source>
-        <target>Create Cover</target>
+        <target>Dodaj okładkę</target>
       </trans-unit>
       <trans-unit id="action.delete_from_favorites">
         <source>action.delete_from_favorites</source>
-        <target>Remove from Favorites</target>
+        <target>Usuń z Ulubionych</target>
       </trans-unit>
       <trans-unit id="action.add_to_favorites">
         <source>action.add_to_favorites</source>
-        <target>Add to Favorites</target>
+        <target>Dodaj do Ulubionych</target>
       </trans-unit>
       <trans-unit id="label.rating">
         <source>label.rating</source>
-        <target>Rating</target>
+        <target>Oceny</target>
       </trans-unit>
       <trans-unit id="label.avarage_rating">
         <source>label.avarage_rating</source>
-        <target>Average Rating</target>
+        <target>Średnia Ocena</target>
       </trans-unit>
       <trans-unit id="message.no_ratings">
         <source>message.no_ratings</source>
-        <target>No ratings yet.</target>
+        <target>Brak ocen.</target>
       </trans-unit>
       <trans-unit id="label.your_rating">
         <source>label.your_rating</source>
-        <target>Your rating</target>
+        <target>Twoja ocena</target>
       </trans-unit>
       <trans-unit id="action.rate">
         <source>action.rate</source>
-        <target>Rate</target>
+        <target>Oceń</target>
       </trans-unit>
       <trans-unit id="message.log_in_to_rate">
         <source>message.log_in_to_rate</source>
-        <target>Please log in to leave a rating.</target>
+        <target>Zaloguj się aby ocenić.</target>
       </trans-unit>
       <trans-unit id="action.delete_cover">
         <source>action.delete_cover</source>
-        <target>Delete Cover</target>
+        <target>Usuń okładkę</target>
       </trans-unit>
       <trans-unit id="action.edit_cover">
         <source>action.edit_cover</source>
-        <target>Edit Cover</target>
+        <target>Edytuj okładkę</target>
       </trans-unit>
       <trans-unit id="message.no_cover">
         <source>message.no_cover</source>
-        <target>No cover available.</target>
+        <target>Brak okładki</target>
       </trans-unit>
       <trans-unit id="action.cover_create">
         <source>action.cover_create</source>
-        <target>Add Cover</target>
+        <target>Dodaj okładkę</target>
       </trans-unit>
       <trans-unit id="title.comments">
         <source>title.comments</source>
-        <target>Comments</target>
+        <target>Komentarze</target>
       </trans-unit>
       <trans-unit id="action.send_comment">
         <source>action.send_comment</source>
-        <target>Post Comment</target>
+        <target>Dodaj komentarz</target>
       </trans-unit>
       <trans-unit id="message.log_in_to_comment">
         <source>message.log_in_to_comment</source>
-        <target>Please log in to add a comment.</target>
+        <target>Zaloguj się aby dodać komentarz</target>
       </trans-unit>
       <trans-unit id="message.no_comments">
         <source>message.no_comments</source>
-        <target>No comments yet.</target>
+        <target>Brak komentarzy.</target>
       </trans-unit>
       <trans-unit id="title.comment_delete">
         <source>title.comment_delete</source>
-        <target>Delete Comment</target>
+        <target>Usuń komentarz</target>
       </trans-unit>
       <trans-unit id="confirm_comment_delete">
         <source>confirm_comment_delete</source>
-        <target>Are you sure you want to delete this comment?</target>
+        <target>Czy na pewno chcesz usunąć ten komentarz?</target>
       </trans-unit>
       <trans-unit id="title.cover_delete">
         <source>title.cover_delete</source>
-        <target>Delete Cover</target>
+        <target>Usuń okładkę</target>
       </trans-unit>
       <trans-unit id="title.highest_rated">
         <source>title.highest_rated</source>
-        <target>Highest Rated</target>
+        <target>Najwyżej oceniane</target>
       </trans-unit>
       <trans-unit id="title.password_edit">
         <source>title.password_edit</source>
-        <target>Edit Password</target>
+        <target>Zmień hasło</target>
       </trans-unit>
       <trans-unit id="title.profile">
         <source>title.profile</source>
-        <target>User Profile</target>
+        <target>Profil użytkownika</target>
       </trans-unit>
       <trans-unit id="title.password_change">
         <source>title.password_change</source>
-        <target>Change Password</target>
+        <target>Zmień hasło</target>
       </trans-unit>
       <trans-unit id="title.user_change">
         <source>title.user_change</source>
-        <target>Change User Data</target>
+        <target>Zmień dane użytkownika</target>
       </trans-unit>
       <trans-unit id="favorites">
         <source>favorites</source>
-        <target>Favorites</target>
+        <target>Ulubione</target>
       </trans-unit>
       <trans-unit id="message.no_favorites">
         <source>message.no_favorites</source>
-        <target>No items in favorites.</target>
+        <target>Brak ulubionych.</target>
       </trans-unit>
       <trans-unit id="title.user_edit">
         <source>title.user_edit</source>
-        <target>Edit User</target>
+        <target>Zmień dane użytkownika</target>
       </trans-unit>
       <trans-unit id="action.logout">
         <source>action.logout</source>
-        <target>Log Out</target>
+        <target>Wyloguj się</target>
       </trans-unit>
       <trans-unit id="action.login">
         <source>action.login</source>
-        <target>Log In</target>
+        <target>Zaloguj się</target>
       </trans-unit>
       <trans-unit id="title.user_index">
         <source>title.user_index</source>
-        <target>Users Directory</target>
+        <target>Panel administracyjny</target>
       </trans-unit>
       <trans-unit id="title.user_list">
         <source>title.user_list</source>
-        <target>User List</target>
+        <target>Lista użytkowników</target>
       </trans-unit>
       <trans-unit id="action.edit_user">
         <source>action.edit_user</source>
-        <target>Edit User</target>
+        <target>Zmień dane użytkownika</target>
       </trans-unit>
       <trans-unit id="action.edit_password">
         <source>action.edit_password</source>
-        <target>Change Password</target>
+        <target>Zmień hasło</target>
       </trans-unit>
       <trans-unit id="action.revoke_admin">
         <source>action.revoke_admin</source>
-        <target>Revoke Admin Role</target>
+        <target>Odbierz rolę administratora</target>
       </trans-unit>
       <trans-unit id="action.grant_admin">
         <source>action.grant_admin</source>
-        <target>Grant Admin Role</target>
+        <target>Nadaj rolę administratora</target>
       </trans-unit>
       <trans-unit id="action.unblock">
         <source>action.unblock</source>
-        <target>Unblock</target>
+        <target>Odblokuj</target>
       </trans-unit>
       <trans-unit id="action.block">
         <source>action.block</source>
-        <target>Block</target>
+        <target>Zablokuj</target>
       </trans-unit>
       <trans-unit id="title.block_user">
         <source>title.block_user</source>
-        <target>Block User</target>
+        <target>Zablokuj użytkownika</target>
       </trans-unit>
       <trans-unit id="confirm_block">
         <source>confirm_block</source>
-        <target>Are you sure you want to block this user?</target>
+        <target>Czy na pewno chcesz zablokować tego użytkownika?</target>
       </trans-unit>
       <trans-unit id="block">
         <source>block</source>
-        <target>Block</target>
+        <target>Zablokuj</target>
       </trans-unit>
       <trans-unit id="label.cover">
-              <source>label.cover</source>
-              <target>Cover</target>
-            </trans-unit>
+                    <source>label.cover</source>
+                    <target>Okładka</target>
+                  </trans-unit>
 
-    <trans-unit id="label.new_password">
-                  <source>label.new_password</source>
-                  <target>New password</target>
-                </trans-unit>
+          <trans-unit id="label.new_password">
+                        <source>label.new_password</source>
+                        <target>Nowe hasło</target>
+                      </trans-unit>
 
-        <trans-unit id="label.confirm_password">
-                      <source>label.confirm_password</source>
-                      <target>Confirm password</target>
-                    </trans-unit>
-            </body>
-
+              <trans-unit id="label.confirm_password">
+                            <source>label.confirm_password</source>
+                            <target>Powtórz hasło</target>
+                          </trans-unit>
+    </body>
   </file>
 </xliff>
