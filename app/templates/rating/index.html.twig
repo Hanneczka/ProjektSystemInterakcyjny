@@ -6,19 +6,22 @@
 
 {% block body %}
     <div class="card my-4">
-        <div class="card-header bg-dark text-white">
-            <h5>{{ 'title.highest_rated'|trans }}</h5>
+        <div class="card-header ">
+            <h1>{{ 'title.highest_rated'|trans }}</h1>
         </div>
         <ul class="list-group list-group-flush">
             {% for element in highest_rated %}
                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <a href="{{ path('element_view', {'id': element[0].id}) }}">
-                        {{ element[0].title }}
-                    </a>
+
+                    {% if is_granted('ELEMENT_VIEW', element[0]) %}
+                        <td><h5><a href="{{ path('element_view', {id: element[0].id}) }}" class="title">{{ element[0].title }}</a></h5></td>
+                    {% else %}
+                        <td><h5 class="title">{{ element[0].title }}</h5></td>
+                    {% endif %}
 
                     <span class="badge bg-success">
-            {{ (element.avg_rating ?? 0)|number_format(1) }} / 5
-        </span>
+                    {{ (element.avg_rating ?? 0)|number_format(1) }} / 5
+                    </span>
                 </li>
             {% else %}
                 <li class="list-group-item text-muted">{{ 'message.empty_list'|trans }}</li>

@@ -7,21 +7,29 @@
 {% block body %}
 <div class="custom-card">
     <div class="card">
+        <div class="card-header ">
     <h1>{{ 'title.tag_view'|trans }}</h1>
+        </div>
     {% if tag is defined and tag|length %}
         <dl>
-            {{ 'label.name'|trans }}
+            <dt>{{ 'label.name'|trans }}</dt>
             <dd>{{ tag.title }}</dd>
-            {{ 'label.created_at'|trans }}
+            <dt>{{ 'label.created_at'|trans }}</dt>
             <dd>{{ tag.createdAt|format_date('long') }}</dd>
-            {{ 'label.updated_at'|trans }}
+            <dt>{{ 'label.updated_at'|trans }}</dt>
             <dd>{{ tag.updatedAt|format_date('long') }}</dd>
         </dl>
     {% else %}
-        <p>
+
         <p>{{ 'message.record_not_found'|trans }}</p>
-        </p>
+
     {% endif %}
+
+        <div class="form-group row float-sm-left">
+            <a href="{{ url('tag_index') }}" class="btn btn-link">
+                {{ 'action.back_to_list'|trans }}
+            </a>
+        </div>
     </div>
 </div>
 

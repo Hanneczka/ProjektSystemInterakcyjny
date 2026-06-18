@@ -39,9 +39,9 @@
                 <td>{{ category.id }}</td>
                 {% endif %}
                 {% if is_granted('CATEGORY_VIEW', category) %}
-                <td><a href="{{ path('category_view', {id: category.id}) }}">
+                <td><h5><a href="{{ path('category_view', {id: category.id}) }}" class='title'>
                             {{ category.name }}
-                    </a></td>
+                    </a></h5></td>
                 {% endif %}
                 {% if is_granted('ROLE_ADMIN') %}
                 <td>{{ category.createdAt|format_date('long') }}</td>

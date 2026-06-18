@@ -35,12 +35,14 @@
         </thead>
         <tbody>
         {% for element in pagination %}
-            <tr>
+            <tr >
                 {% if is_granted('ROLE_ADMIN') %}
                 <td>{{ element.id }}</td>
                 {% endif %}
                 {% if is_granted('ELEMENT_VIEW', element) %}
-                <td><a href="{{ path('element_view', {id: element.id}) }}" class="title">{{ element.title }}</a></td>
+                <td><h5><a href="{{ path('element_view', {id: element.id}) }}" class="title">{{ element.title }}</a></h5></td>
+                    {% else %}
+                        <td><h5 class="title">{{ element.title }}</h5></td>
                 {% endif %}
                 <td>{{ element.author }}</td>
                 <td>{{ element.year }}</td>

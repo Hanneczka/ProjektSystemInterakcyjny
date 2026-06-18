@@ -11,10 +11,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class CommentType extends AbstractType{
     public function buildForm(FormBuilderInterface $builder, array $options): void{
         $builder->add('content', TextareaType::class, [
-            'label' => 'Comment',
             'attr' => [
                 'class' => 'form-control',
                 'rows' => 5,
+                'label' => 'label.content',
             ]
         ]);
     }

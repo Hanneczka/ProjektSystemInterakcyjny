@@ -23,7 +23,7 @@ class RatingType extends AbstractType{
                 ],
                 'expanded' => true,
                 'multiple' => false,
-                'label' => 'label.your_rating',
+                'label' => ' ',
             ]);
 
     }

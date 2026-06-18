@@ -35,10 +35,11 @@
         <td>{{ tag.id }}</td>
         {% endif %}
         {% if is_granted('TAG_VIEW', tag) %}
-        <td><a href="{{ path('tag_view', {id: tag.id}) }}">
-                {{ tag.title }}</a></td>
+        <td><h5><a href="{{ path('tag_view', {id: tag.id}) }}" class='title'>
+                {{ tag.title }}</a></h5></td>
         {% else %}
-        <td>{{ tag.title }}</td>
+            <td><h5 class='title'>
+                        {{ tag.title }}</h5></td>
         {% endif %}
         {% if is_granted('TAG_EDIT', tag) %}
         <td><a href="{{ path('tag_edit', {id: tag.id}) }}" class="btn btn-primary">

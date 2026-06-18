@@ -5,14 +5,14 @@
 {% endblock %}
 
 {% block body %}
-    {{ 'title.category_view'|trans }}
+
     {% if category is defined and category|length %}
-        {{ category.name }}
-    {% if is_granted('ROLE_ADMIN') %}
+       <h1>{{ category.name }}</h1>
+        {% if is_granted('ROLE_ADMIN') %}
         <dl>
-            {{ 'label.created_at'|trans }}
+            <dt>{{ 'label.created_at'|trans }}</dt>
             <dd>{{ category.createdAt|format_date('long') }}</dd>
-            {{ 'label.updated_at'|trans }}
+            <dt>{{ 'label.updated_at'|trans }}</dt>
             <dd>{{ category.updatedAt|format_date('long') }}</dd>
         </dl>
         {% endif %}

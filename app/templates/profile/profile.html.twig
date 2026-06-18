@@ -4,14 +4,23 @@
 
 {% block body %}
     <h1>{{ 'title.profile'|trans }}</h1>
-    <p><strong>Email:</strong> {{ user.email }}</p>
+<div class="row">
+    <div class="col-12 col-md-6">
+    <div class="card p-3 mb-3 shadow-sm">
+        <p><strong>{{ 'label.name'|trans }}</strong> {{ user.name }}</p>
+    <p><strong>{{ 'label.email'|trans }}</strong> {{ user.email }}</p>
 
+        <div class="d-flex gap-2">
     <a href="{{ path('user_edit_password') }}" class="btn btn-primary">
         {{ 'title.password_change'|trans }}
     </a>
     <a href="{{ path('user_edit_user') }}" class="btn btn-primary">
         {{ 'title.user_change'|trans }}
     </a>
+        </div>
+    </div>
+    </div>
+</div>
 
     <h3>{{ 'favorites'|trans }}</h3>
     {% if favorites is empty %}
@@ -20,8 +29,8 @@
         <ul class="list-group">
             {% for element in favorites %}
                 <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <a href="{{ path('element_view', {'id': element.id}) }}">{{ element.title }}</a>
-
+                   <h5><a href="{{ path('element_view', {'id': element.id}) }}">{{ element.title }}</a>
+                   </h5>
 
                 </li>
             {% endfor %}

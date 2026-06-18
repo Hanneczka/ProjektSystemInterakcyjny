@@ -108,36 +108,81 @@ public function index(#[MapQueryString(resolver: ElementListInputFiltersDtoResol
             ]
         );
     }
-    #[Route('/{id}', name: 'element_view', requirements: ['id' => '[1-9]\d*'], methods: ['GET', 'POST'])]
+
+    #[Route('/{id}', name: 'element_view', requirements: ['id' => '[1-9]\d*'], methods: ['GET'])]
     #[IsGranted(ElementVoter::VIEW, subject: 'element')]
     public function view(
         Element $element,
-        Request $request,
         #[MapQueryParameter] ?int $page = null,
+        RatingRepository $ratingRepository
+    ): Response {
+        $page = $page ?? 1;
+        $user = $this->getUser();
+
+        $existingRating = $user ? $ratingRepository->findOneBy(['element' => $element, 'user' => $user]) : null;
+        $averageRating = $ratingRepository->getAverageRatingForElement($element);
+
+        $ratingFormView = ($user && !$existingRating) ? $this->createForm(RatingType::class)->createView() : null;
+        $commentFormView = $user ? $this->createForm(CommentType::class)->createView() : null;
+
+        $comments = $this->commentService->getPaginatedList($page, $element);
+
+        return $this->render(
+            'element/view.html.twig',
+            [
+                'element' => $element,
+                'comment_pagination' => $comments,
+                'comment_form' => $commentFormView,
+                'user_rating' => $existingRating,
+                'form' => $ratingFormView,
+                'average_rating' => $averageRating,
+            ]
+        );
+    }
+
+    #[Route('/{id}/rate', name: 'element_rate', requirements: ['id' => '[1-9]\d*'], methods: ['POST'])]
+    #[IsGranted('ROLE_USER')]
+    public function rate(
+        Element $element,
+        Request $request,
         RatingRepository $ratingRepository,
         EntityManagerInterface $entityManager
     ): Response {
-        $page = $page ?? 1;
-
         $user = $this->getUser();
-        $existingRating = null;
-        $ratingFormView = null;
-        if ($user) {
-            $existingRating = $ratingRepository->findOneBy([
-                'element' => $element,
-                'user' => $user,
-            ]);
-        }
-        if ($user && !$existingRating) {
-            $ratingForm = $this->createForm(RatingType::class);
-            $ratingFormView = $ratingForm->createView();
+        $existingRating = $ratingRepository->findOneBy(['element' => $element, 'user' => $user]);
+
+        if ($existingRating) {
+            $this->addFlash('error', $this->translator->trans('already_rated'));
+            return $this->redirectToRoute('element_view', ['id' => $element->getId()]);
         }
 
-        $averageRating = $ratingRepository->getAverageRatingForElement($element);
+        $rating = new Rating();
+        $form = $this->createForm(RatingType::class, $rating);
+        $form->handleRequest($request);
 
+        if ($form->isSubmitted() && $form->isValid()) {
+            $rating->setElement($element);
+            $rating->setUser($user);
+
+            $entityManager->persist($rating);
+            $entityManager->flush();
+
+            $this->addFlash('success', $this->translator->trans('rating_added'));
+        }
+
+        return $this->redirectToRoute('element_view', ['id' => $element->getId()]);
+    }
+    #[Route('/{id}/add_comment', name: 'element_comment_add', requirements: ['id' => '[1-9]\d*'], methods: ['POST'])]
+    #[IsGranted('ROLE_USER')]
+    public function addComment(
+        Element $element,
+        Request $request,
+        EntityManagerInterface $entityManager
+    ): Response {
         $comment = new Comment();
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
             $comment->setElement($element);
             $comment->setAuthor($this->getUser());
@@ -147,27 +192,12 @@ public function index(#[MapQueryString(resolver: ElementListInputFiltersDtoResol
             $entityManager->persist($comment);
             $entityManager->flush();
 
-            $this->addFlash(
-                'success',
-                $this->translator->trans('comment_added'));
-
-            return $this->redirectToRoute('element_view', ['id' => $element->getId()]);
-
-
+            $this->addFlash('success', $this->translator->trans('comment_added'));
+        } else {
+            $this->addFlash('error', $this->translator->trans('message.form_error'));
         }
-        $comments = $this->commentService->getPaginatedList($page, $element);
 
-        return $this->render(
-            'element/view.html.twig',
-            [
-                'element' => $element,
-                'comment_pagination' => $comments,
-                'comment_form' => $form->createView(),
-                'user_rating' => $existingRating,
-                'form' => $ratingFormView,
-                'average_rating' => $averageRating,
-            ]
-        );
+        return $this->redirectToRoute('element_view', ['id' => $element->getId()]);
     }
 
     #[Route(
