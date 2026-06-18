@@ -18,7 +18,8 @@ use App\Service\RatingServiceInterface;
 class RatingController extends AbstractController
 {
     public function __construct(
-        private readonly RatingServiceInterface $ratingService
+        private readonly RatingServiceInterface $ratingService,
+        TranslatorInterface $translator
     ) {}
 
     #[Route('/element/{id}/rate', name: 'element_rate', methods: ['POST'])]
@@ -26,7 +27,7 @@ class RatingController extends AbstractController
     public function rate(
         Request $request,
         Element $element,
-        TranslatorInterface $translator,
+
     ): Response {
         $rating = new Rating();
         $form = $this->createForm(RatingType::class, $rating);
@@ -38,7 +39,7 @@ class RatingController extends AbstractController
             $this->ratingService->save($rating);
             $this->addFlash(
                 'success',
-                $translator->trans('message.created_successfully')
+                $this->translator->trans('message.created_successfully')
             );
 
             return $this->redirectToRoute('element_view', ['id' => $element->getId()]);
@@ -52,7 +53,6 @@ class RatingController extends AbstractController
     #[IsGranted('ROLE_USER')]
     public function deleteRate(
         Element $element,
-        TranslatorInterface $translator,
         \App\Repository\RatingRepository $ratingRepository
     ): Response {
         $user = $this->getUser();
@@ -66,7 +66,7 @@ class RatingController extends AbstractController
             $this->ratingService->delete($rating);
             $this->addFlash(
                 'success',
-                $translator->trans('message.deleted_successfully')
+                $this->translator->trans('message.deleted_successfully')
             );
         }
 

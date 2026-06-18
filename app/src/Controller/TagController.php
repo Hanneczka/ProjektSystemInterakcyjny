@@ -39,9 +39,8 @@ class TagController extends AbstractController
     }
 
     #[Route(
-        '/{id}',
+        '/{slug}',
         name: 'tag_view',
-        requirements: ['id' => '[1-9]\d*'],
         methods: ['GET']
     )]
     #[IsGranted(TagVoter::VIEW, subject: 'tag')]
@@ -79,9 +78,8 @@ class TagController extends AbstractController
     }
 
     #[Route(
-        '/{id}/edit',
+        '/{slug}/edit',
         name: 'tag_edit',
-        requirements: ['id' => '[1-9]\d*'],
         methods: ['GET', 'PUT']
     )]
     #[IsGranted(TagVoter::EDIT, subject: 'tag')]
@@ -92,7 +90,7 @@ class TagController extends AbstractController
             $tag,
             [
                 'method' => 'PUT',
-                'action' => $this->generateUrl('tag_edit', ['id' => $tag->getId()]),
+                'action' => $this->generateUrl('tag_edit', ['slug' => $tag->getSlug()]),
             ]
         );
         $form->handleRequest($request);
@@ -110,9 +108,8 @@ class TagController extends AbstractController
     }
 
     #[Route(
-        '/{id}/delete',
+        '/{slug}/delete',
         name: 'tag_delete',
-        requirements: ['id' => '[1-9]\d*'],
         methods: ['GET', 'DELETE']
     )]
     #[IsGranted(TagVoter::DELETE, subject: 'tag')]
@@ -120,7 +117,7 @@ class TagController extends AbstractController
     {
         $form = $this->createForm(FormType::class, $tag, [
             'method' => 'DELETE',
-            'action' => $this->generateUrl('tag_delete', ['id' => $tag->getId()]),
+            'action' => $this->generateUrl('tag_delete', ['slug' => $tag->getSlug()]),
         ]);
         $form->handleRequest($request);
 

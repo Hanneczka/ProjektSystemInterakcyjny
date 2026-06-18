@@ -19,10 +19,10 @@ use App\Service\ElementServiceInterface;
 #[Route('/category')]
 class CategoryController extends AbstractController
 {
-    public function __construct(private readonly CategoryServiceInterface $categoryService, private readonly TranslatorInterface $translator)
-    {
-
-    }
+    public function __construct(
+        private readonly CategoryServiceInterface $categoryService,
+        private readonly TranslatorInterface $translator
+    ){}
 
     #[Route(
         '/',
@@ -40,9 +40,8 @@ class CategoryController extends AbstractController
     }
 
     #[Route(
-        '/{id}',
+        '/{slug}',
         name: 'category_view',
-        requirements: ['id' => '[1-9]\d*'],
         methods: ['GET']
     )]
 
@@ -96,9 +95,8 @@ class CategoryController extends AbstractController
      * @return Response HTTP response
      */
     #[Route(
-        '/{id}/edit',
+        '/{slug}/edit',
         name: 'category_edit',
-        requirements: ['id' => '[1-9]\d*'],
         methods: ['GET', 'PUT']
     )]
     #[IsGranted(CategoryVoter::EDIT, subject: 'category')]
@@ -110,7 +108,7 @@ class CategoryController extends AbstractController
             $category,
             [
                 'method' => 'PUT',
-                'action' => $this->generateUrl('category_edit', ['id' => $category->getId()]),
+                'action' => $this->generateUrl('category_edit', ['slug' => $category->getSlug()]),
             ]
         );
         $form->handleRequest($request);
@@ -144,9 +142,8 @@ class CategoryController extends AbstractController
      * @return Response HTTP response
      */
     #[Route(
-        '/{id}/delete',
+        '/{slug}/delete',
         name: 'category_delete',
-        requirements: ['id' => '[1-9]\d*'],
         methods: ['GET', 'DELETE']
     )]
     #[IsGranted(CategoryVoter::DELETE, subject: 'category')]
@@ -163,7 +160,7 @@ class CategoryController extends AbstractController
 
         $form = $this->createForm(FormType::class, $category, [
             'method' => 'DELETE',
-            'action' => $this->generateUrl('category_delete', ['id' => $category->getId()]),
+            'action' => $this->generateUrl('category_delete', ['slug' => $category->getSlug()]),
         ]);
         $form->handleRequest($request);
 

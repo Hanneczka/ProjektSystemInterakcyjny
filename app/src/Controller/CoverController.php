@@ -32,9 +32,10 @@ class CoverController extends AbstractController
      * @param CoverServiceInterface $coverService Cover service
      * @param TranslatorInterface   $translator   Translator
      */
-    public function __construct(private readonly CoverServiceInterface $coverService, private readonly TranslatorInterface $translator)
-    {
-    }
+    public function __construct(
+        private readonly CoverServiceInterface $coverService,
+        private readonly TranslatorInterface $translator
+    ){}
 
     /**
      * Create action.
@@ -158,7 +159,6 @@ class CoverController extends AbstractController
     {
         $element = $cover->getElement();
 
-
         $form = $this->createForm(
             FormType::class,
             null,
@@ -170,19 +170,14 @@ class CoverController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
-            $this->coverService->delete(
-                $cover
-            );
+            $this->coverService->delete($cover);
 
             $this->addFlash(
                 'success',
                 $this->translator->trans('message.deleted_successfully')
             );
 
-
             return $this->redirectToRoute('element_view', ['id' => $element->getId()]);
-
         }
 
         return $this->render(

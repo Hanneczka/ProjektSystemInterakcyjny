@@ -39,7 +39,7 @@
                 <td>{{ category.id }}</td>
                 {% endif %}
                 {% if is_granted('CATEGORY_VIEW', category) %}
-                <td><h5><a href="{{ path('category_view', {id: category.id}) }}" class='title'>
+                <td><h5><a href="{{ path('category_view', {slug: category.slug}) }}" class='title'>
                             {{ category.name }}
                     </a></h5></td>
                 {% endif %}
@@ -47,12 +47,12 @@
                 <td>{{ category.createdAt|format_date('long') }}</td>
                 {% endif %}
                 {% if is_granted('CATEGORY_EDIT', category) %}
-                <td><a href="{{ path('category_edit', {id: category.id}) }}" class="btn btn-primary">
+                <td><a href="{{ path('category_edit', {slug: category.slug}) }}" class="btn btn-primary">
                         {{ 'action.edit'|trans }}
                     </a></td>
                 {% endif %}
                 {% if is_granted('CATEGORY_DELETE', category) %}
-                <td><a href="{{ path('category_delete', {id: category.id}) }}" class="btn btn-danger">
+                <td><a href="{{ path('category_delete', {slug: category.slug}) }}" class="btn btn-danger">
                         {{ 'action.delete'|trans }}
                     </a></td>
                 {% endif %}

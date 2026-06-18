@@ -35,18 +35,18 @@
         <td>{{ tag.id }}</td>
         {% endif %}
         {% if is_granted('TAG_VIEW', tag) %}
-        <td><h5><a href="{{ path('tag_view', {id: tag.id}) }}" class='title'>
+        <td><h5><a href="{{ path('tag_view', {slug: tag.slug}) }}" class='title'>
                 {{ tag.title }}</a></h5></td>
         {% else %}
             <td><h5 class='title'>
                         {{ tag.title }}</h5></td>
         {% endif %}
         {% if is_granted('TAG_EDIT', tag) %}
-        <td><a href="{{ path('tag_edit', {id: tag.id}) }}" class="btn btn-primary">
+        <td><a href="{{ path('tag_edit', {slug: tag.slug}) }}" class="btn btn-primary">
             {{ 'action.edit'|trans }}</a></td>
         {% endif %}
         {% if is_granted('TAG_DELETE', tag) %}
-        <td><a href="{{ path('tag_delete', {id: tag.id}) }}" class="btn btn-danger">
+        <td><a href="{{ path('tag_delete', {slug: tag.slug}) }}" class="btn btn-danger">
             {{ 'action.delete'|trans }}</a></td>
         {% endif %}
     </tr>
