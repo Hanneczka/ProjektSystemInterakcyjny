@@ -26,7 +26,8 @@ class AdminController extends AbstractController
         private readonly UserServiceInterface $userService,
         private readonly UserPasswordHasherInterface $passwordHasher,
         private readonly TranslatorInterface $translator,
-    ) {}
+    ) {
+    }
 
     #[Route(
         '/',
@@ -56,7 +57,7 @@ class AdminController extends AbstractController
             $user,
             [
                 'method' => 'PUT',
-                'action' => $this->generateUrl('admin_edit_password', ['id' => $user->getId()])]
+                'action' => $this->generateUrl('admin_edit_password', ['id' => $user->getId()]), ]
         );
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -86,7 +87,7 @@ class AdminController extends AbstractController
             $user,
             [
                 'method' => 'PUT',
-                'action' => $this->generateUrl('admin_edit_user', ['id' => $user->getId()])]
+                'action' => $this->generateUrl('admin_edit_user', ['id' => $user->getId()]), ]
         );
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -104,7 +105,8 @@ class AdminController extends AbstractController
         '/{id}/change_role',
         name: 'admin_change_roles',
         requirements: ['id' => '[1-9]\d*'],
-        methods: ['POST', 'GET'])]
+        methods: ['POST', 'GET']
+    )]
     public function changeRoles(User $user, UserRepository $userRepository): Response
     {
         if (!$this->isGranted(UserVoter::ROLES, $user)) {
@@ -139,7 +141,8 @@ class AdminController extends AbstractController
         '/{id}/block_user',
         name: 'admin_block_user',
         requirements: ['id' => '[1-9]\d*'],
-        methods: ['POST', 'GET'])]
+        methods: ['POST', 'GET']
+    )]
     public function blockUser(User $user): Response
     {
         if (!$this->isGranted(UserVoter::BLOCK, $user)) {
@@ -168,7 +171,8 @@ class AdminController extends AbstractController
         '/{id}/block-confirm',
         name: 'admin_user_block_confirm',
         requirements: ['id' => '[1-9]\d*'],
-        methods: ['GET'])]
+        methods: ['GET']
+    )]
     public function blockConfirm(User $user): Response
     {
         return $this->render('admin/block_confirm.html.twig', [

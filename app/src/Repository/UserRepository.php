@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * User repository.
+ */
+
 namespace App\Repository;
 
 use App\Entity\User;
@@ -11,10 +15,17 @@ use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 use Doctrine\ORM\QueryBuilder;
 
 /**
+ * Class UserRepository.
+ *
  * @extends ServiceEntityRepository<User>
  */
 class UserRepository extends ServiceEntityRepository implements PasswordUpgraderInterface
 {
+    /**
+     * Constructor.
+     *
+     * @param ManagerRegistry $registry Manager registry
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, User::class);
@@ -22,6 +33,9 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 
     /**
      * Used to upgrade (rehash) the user's password automatically over time.
+     *
+     * @param PasswordAuthenticatedUserInterface $user              User entity
+     * @param string                             $newHashedPassword New hashed password
      */
     public function upgradePassword(PasswordAuthenticatedUserInterface $user, string $newHashedPassword): void
     {
@@ -34,23 +48,40 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->getEntityManager()->flush();
     }
 
+    /**
+     * Query all records.
+     */
     public function queryAll(): QueryBuilder
     {
         return $this->createQueryBuilder('user')
             ->orderBy('user.id', 'DESC');
     }
 
+    /**
+     * Save entity.
+     *
+     * @param User $user User entity
+     */
     public function save(User $user): void
     {
         $this->getEntityManager()->persist($user);
         $this->getEntityManager()->flush();
     }
+
+    /**
+     * Delete entity.
+     *
+     * @param User $user User entity
+     */
     public function delete(User $user): void
     {
         $this->getEntityManager()->remove($user);
         $this->getEntityManager()->flush();
     }
 
+    /**
+     * Count admin users.
+     */
     public function countAdmins(): int
     {
         return (int) $this->createQueryBuilder('u')

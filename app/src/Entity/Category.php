@@ -1,98 +1,146 @@
 <?php
 
+/**
+ * Category entity.
+ */
+
 namespace App\Entity;
 
 use App\Repository\CategoryRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
+/**
+ * Class Category.
+ */
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
 class Category
 {
+    /**
+     * Primary key.
+     */
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
+    /**
+     * Name.
+     */
     #[ORM\Column(length: 64)]
     private ?string $name = null;
 
     /**
      * Created at.
-     *
-     * @var DateTimeImmutable|null
      */
     #[ORM\Column(type: 'datetime_immutable')]
     #[Gedmo\Timestampable(on: 'create')]
-    private ?\DateTimeImmutable $createdAt;
+    private ?\DateTimeImmutable $createdAt = null;
+
     /**
      * Updated at.
-     *
-     * @var DateTimeImmutable|null
      */
     #[ORM\Column(type: 'datetime_immutable')]
     #[Gedmo\Timestampable(on: 'update')]
-    private ?\DateTimeImmutable $updatedAt;
+    private ?\DateTimeImmutable $updatedAt = null;
 
     /**
      * Slug.
      */
     #[ORM\Column(type: 'string', length: 64)]
     #[Gedmo\Slug(fields: ['name'])]
-    private ?string $slug;
+    private ?string $slug = null;
 
+    /**
+     * Getter for Id.
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * Getter for name.
+     */
     public function getName(): ?string
     {
         return $this->name;
     }
 
-    public function setName(string $name): static
+    /**
+     * Setter for name.
+     *
+     * @param string|null $name Name
+     */
+    public function setName(?string $name): static
     {
         $this->name = $name;
 
         return $this;
     }
 
+    /**
+     * Getter for created at.
+     */
     public function getCreatedAt(): ?\DateTimeImmutable
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeImmutable $createdAt): static
+    /**
+     * Setter for created at.
+     *
+     * @param \DateTimeImmutable|null $createdAt Created at
+     */
+    public function setCreatedAt(?\DateTimeImmutable $createdAt): static
     {
         $this->createdAt = $createdAt;
 
         return $this;
     }
 
+    /**
+     * Getter for updated at.
+     */
     public function getUpdatedAt(): ?\DateTimeImmutable
     {
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(\DateTimeImmutable $updatedAt): static
+    /**
+     * Setter for updated at.
+     *
+     * @param \DateTimeImmutable|null $updatedAt Updated at
+     */
+    public function setUpdatedAt(?\DateTimeImmutable $updatedAt): static
     {
         $this->updatedAt = $updatedAt;
 
         return $this;
     }
 
+    /**
+     * Magic method to representation class as a string.
+     */
     public function __toString(): string
     {
         return $this->name ?? '';
     }
 
+    /**
+     * Getter for slug.
+     */
     public function getSlug(): ?string
     {
         return $this->slug;
     }
 
-    public function setSlug(string $slug): static
+    /**
+     * Setter for slug.
+     *
+     * @param string|null $slug Slug
+     */
+    public function setSlug(?string $slug): static
     {
         $this->slug = $slug;
 

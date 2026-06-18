@@ -19,15 +19,15 @@ class RatingController extends AbstractController
 {
     public function __construct(
         private readonly RatingServiceInterface $ratingService,
-        TranslatorInterface $translator
-    ) {}
+        private readonly TranslatorInterface $translator
+    ) {
+    }
 
     #[Route('/element/{id}/rate', name: 'element_rate', methods: ['POST'])]
     #[IsGranted('ROLE_USER')]
     public function rate(
         Request $request,
         Element $element,
-
     ): Response {
         $rating = new Rating();
         $form = $this->createForm(RatingType::class, $rating);
@@ -46,7 +46,6 @@ class RatingController extends AbstractController
         }
 
         return $this->redirectToRoute('element_view', ['id' => $element->getId()]);
-
     }
 
     #[Route('/element/{id}/rate-delete', name: 'element_rate_delete', methods: ['POST'])]

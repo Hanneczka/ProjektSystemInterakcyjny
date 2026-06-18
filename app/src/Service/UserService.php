@@ -48,7 +48,6 @@ class UserService implements UserServiceInterface
             $user->getFavorites(),
             $page,
             self::PAGINATOR_FAVORITES_PER_PAGE,
-
         );
     }
 }

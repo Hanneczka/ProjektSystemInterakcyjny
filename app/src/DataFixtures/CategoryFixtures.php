@@ -1,13 +1,23 @@
 <?php
 
+/**
+ * Category fixtures.
+ */
+
 namespace App\DataFixtures;
 
 use App\Entity\Category;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Generator;
 
+/**
+ * Class CategoryFixtures.
+ */
 class CategoryFixtures extends AbstractBaseFixtures
 {
+    /**
+     * Load data.
+     */
     public function loadData(): void
     {
         if (!$this->manager instanceof ObjectManager || !$this->faker instanceof Generator) {

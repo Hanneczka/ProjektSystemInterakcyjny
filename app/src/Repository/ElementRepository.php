@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Element repository.
+ */
+
 namespace App\Repository;
 
 use App\Entity\Category;
@@ -11,15 +15,32 @@ use App\Entity\Tag;
 use App\Dto\ElementListFiltersDto;
 
 /**
+ * Class ElementRepository.
+ *
  * @extends ServiceEntityRepository<Element>
  */
 class ElementRepository extends ServiceEntityRepository
 {
+    /**
+     * Number of items per page in paginator.
+     */
+    public const PAGINATOR_ITEMS_PER_PAGE = 3;
+
+    /**
+     * Constructor.
+     *
+     * @param ManagerRegistry $registry Manager registry
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Element::class);
     }
 
+    /**
+     * Query all records with filters applied.
+     *
+     * @param ElementListFiltersDto $filters Filters DTO
+     */
     public function queryAll(ElementListFiltersDto $filters): QueryBuilder
     {
         $queryBuilder = $this->createQueryBuilder('element')
@@ -34,19 +55,35 @@ class ElementRepository extends ServiceEntityRepository
         return $this->applyFiltersToList($queryBuilder, $filters);
     }
 
+    /**
+     * Save entity.
+     *
+     * @param Element $element Element entity
+     */
     public function save(Element $element): void
     {
         $this->getEntityManager()->persist($element);
         $this->getEntityManager()->flush();
     }
-    public const PAGINATOR_ITEMS_PER_PAGE = 3;
 
+    /**
+     * Delete entity.
+     *
+     * @param Element $element Element entity
+     */
     public function delete(Element $element): void
     {
         $this->getEntityManager()->remove($element);
         $this->getEntityManager()->flush();
     }
 
+    /**
+     * Count elements by category.
+     *
+     * @param Category $category Category entity
+     *
+     * @return int Number of tasks in category
+     */
     public function countByCategory(Category $category): int
     {
         $qb = $this->getOrCreateQueryBuilder();
@@ -58,11 +95,21 @@ class ElementRepository extends ServiceEntityRepository
             ->getSingleScalarResult();
     }
 
+    /**
+     * Get or create a query builder instance.
+     *
+     * @param QueryBuilder|null $qb Query builder
+     */
     public function getOrCreateQueryBuilder(?QueryBuilder $qb = null): QueryBuilder
     {
         return $qb ?? $this->createQueryBuilder('element');
     }
 
+    /**
+     * Query elements by category.
+     *
+     * @param Category $category Category entity
+     */
     public function queryByCategory(Category $category): QueryBuilder
     {
         return $this->createQueryBuilder('element')
@@ -71,6 +118,31 @@ class ElementRepository extends ServiceEntityRepository
             ->orderBy('element.createdAt', 'DESC');
     }
 
+    /**
+     * Get highest rated elements.
+     *
+     * @param int $limit Results limit
+     *
+     * @return array<int, mixed> List of elements with ratings
+     */
+    public function getHighestRated(int $limit = 10): array
+    {
+        return $this->createQueryBuilder('e')
+            ->select('e, AVG(r.value) as avg_rating')
+            ->leftJoin('App\Entity\Rating', 'r', 'WITH', 'r.element = e')
+            ->groupBy('e.id')
+            ->orderBy('avg_rating', 'DESC')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * Apply filters to element list.
+     *
+     * @param QueryBuilder          $queryBuilder Query builder
+     * @param ElementListFiltersDto $filters      Filters DTO
+     */
     private function applyFiltersToList(QueryBuilder $queryBuilder, ElementListFiltersDto $filters): QueryBuilder
     {
         if ($filters->category instanceof Category) {
@@ -83,20 +155,7 @@ class ElementRepository extends ServiceEntityRepository
                 ->setParameter('tag', $filters->tag);
         }
 
-
         return $queryBuilder;
-    }
-
-    public function getHighestRated(int $limit = 10): array
-    {
-        return $this->createQueryBuilder('e')
-            ->select('e, AVG(r.value) as avg_rating')
-            ->leftJoin('App\Entity\Rating', 'r', 'WITH', 'r.element = e')
-            ->groupBy('e.id')
-            ->orderBy('avg_rating', 'DESC')
-            ->setMaxResults($limit)
-            ->getQuery()
-            ->getResult();
     }
     //    /**
     //     * @return Element[] Returns an array of Element objects

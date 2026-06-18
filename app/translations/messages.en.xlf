@@ -403,24 +403,34 @@
         <target>Block</target>
       </trans-unit>
       <trans-unit id="label.cover">
-              <source>label.cover</source>
-              <target>Cover</target>
+        <source>label.cover</source>
+        <target>Cover</target>
+      </trans-unit>
+      <trans-unit id="label.new_password">
+        <source>label.new_password</source>
+        <target>New password</target>
+      </trans-unit>
+      <trans-unit id="label.confirm_password">
+        <source>label.confirm_password</source>
+        <target>Confirm password</target>
+      </trans-unit>
+      <trans-unit id="placeholder.choose_category">
+        <source>placeholder.choose_category</source>
+        <target>Choose category</target>
+      </trans-unit>
+      <trans-unit id="message.cannot_change_own_roles">
+              <source>message.cannot_change_own_roles</source>
+              <target>You cannot change your own role.</target>
             </trans-unit>
-
-    <trans-unit id="label.new_password">
-                  <source>label.new_password</source>
-                  <target>New password</target>
-                </trans-unit>
-
-        <trans-unit id="label.confirm_password">
-                      <source>label.confirm_password</source>
-                      <target>Confirm password</target>
-                    </trans-unit>
-                    <trans-unit id="placeholder.choose_category">
-                             <source>placeholder.choose_category</source>
-                             <target>Choose category</target>
-                             </trans-unit>
-            </body>
+            <trans-unit id="message.cannot_block_yourself ">
+              <source>message.cannot_block_yourself </source>
+              <target>You cannot block yourself</target>
+            </trans-unit>
+            <trans-unit id="action.delete_rating">
+              <source>action.delete_rating</source>
+              <target>Delate rating</target>
+            </trans-unit>
+      </body>
 
   </file>
 </xliff>

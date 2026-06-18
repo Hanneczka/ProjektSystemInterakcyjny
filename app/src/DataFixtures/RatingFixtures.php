@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Rating fixtures.
+ */
+
 namespace App\DataFixtures;
 
 use App\Entity\Rating;
@@ -7,8 +11,14 @@ use App\Entity\Element;
 use App\Entity\User;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
+/**
+ * Class RatingFixtures.
+ */
 class RatingFixtures extends AbstractBaseFixtures implements DependentFixtureInterface
 {
+    /**
+     * Load data.
+     */
     public function loadData(): void
     {
         $this->createMany(500, 'Ratings', function (int $i) {
@@ -25,6 +35,11 @@ class RatingFixtures extends AbstractBaseFixtures implements DependentFixtureInt
         $this->manager->flush();
     }
 
+    /**
+     * Get dependencies.
+     *
+     * @return array<int, string> List of fixture dependencies
+     */
     public function getDependencies(): array
     {
         return [ElementFixtures::class, UserFixtures::class];

@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Element fixtures.
+ */
+
 namespace App\DataFixtures;
 
 use App\Entity\Element;
@@ -9,8 +13,14 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Generator;
 
+/**
+ * Class ElementFixtures.
+ */
 class ElementFixtures extends AbstractBaseFixtures implements DependentFixtureInterface
 {
+    /**
+     * Load data.
+     */
     public function loadData(): void
     {
         if (!$this->manager instanceof ObjectManager || !$this->faker instanceof Generator) {
@@ -41,18 +51,14 @@ class ElementFixtures extends AbstractBaseFixtures implements DependentFixtureIn
                 $element->addTag($tag);
             }
 
-
             return $element;
         });
     }
 
     /**
-     * This method must return an array of fixtures classes
-     * on which the implementing class depends on.
+     * Get dependencies.
      *
-     * @return string[] of dependencies
-     *
-     * @psalm-return array{0: CategoryFixtures::class}
+     * @return array<int, string> List of fixture dependencies
      */
     public function getDependencies(): array
     {

@@ -23,8 +23,6 @@ class UserFixtures extends AbstractBaseFixtures implements DependentFixtureInter
 {
     /**
      * Constructor.
-     *
-     * @param UserPasswordHasherInterface $passwordHasher Password hasher
      */
     public function __construct(private readonly UserPasswordHasherInterface $passwordHasher)
     {
@@ -83,9 +81,13 @@ class UserFixtures extends AbstractBaseFixtures implements DependentFixtureInter
 
             return $user;
         });
-
     }
 
+    /**
+     * Get dependencies.
+     *
+     * @return array<int, string> List of fixture dependencies
+     */
     public function getDependencies(): array
     {
         return [

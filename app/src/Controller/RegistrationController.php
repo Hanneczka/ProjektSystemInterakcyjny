@@ -16,7 +16,8 @@ class RegistrationController extends AbstractController
 {
     public function __construct(
         private readonly UserServiceInterface $userService
-    ) {}
+    ) {
+    }
     #[Route('/register', name: 'register')]
     public function register(Request $request, UserPasswordHasherInterface $passwordHasher): Response
     {

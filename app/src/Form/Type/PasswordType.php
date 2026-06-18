@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Password type.
+ */
+
 namespace App\Form\Type;
 
 use App\Entity\User;
@@ -9,23 +13,40 @@ use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * Class PasswordType.
+ */
 class PasswordType extends AbstractType
 {
+    /**
+     * Builds the form.
+     *
+     * This method is called for each type in the hierarchy starting from the
+     * top most type. Type extensions can further modify the form.
+     *
+     * @param FormBuilderInterface $builder The form builder
+     * @param array<string, mixed> $options Form options
+     *
+     * @see FormTypeExtensionInterface::buildForm()
+     */
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder->add('password', RepeatedType::class, [
-            'type' => SymfonyPasswordType::class,
-            'first_options'  => [
-                'label' => 'label.new_password',
-                'required' => true,
-            ],
-            'second_options' => [
-                'label' => 'label.confirm_password',
-                'required' => true,
-            ],
-
-            'invalid_message' => 'form.invalid_password_error',
-        ]);
+        $builder->add(
+            'password',
+            RepeatedType::class,
+            [
+                'type' => SymfonyPasswordType::class,
+                'first_options' => [
+                    'label' => 'label.new_password',
+                    'required' => true,
+                ],
+                'second_options' => [
+                    'label' => 'label.confirm_password',
+                    'required' => true,
+                ],
+                'invalid_message' => 'form.invalid_password_error',
+            ]
+        );
     }
 
     /**

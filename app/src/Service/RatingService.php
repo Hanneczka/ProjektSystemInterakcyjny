@@ -5,7 +5,8 @@ namespace App\Service;
 use App\Entity\Rating;
 use App\Repository\RatingRepository;
 
-class RatingService implements RatingServiceInterface{
+class RatingService implements RatingServiceInterface
+{
     public function __construct(
         private readonly RatingRepository $ratingRepository
     ) {
@@ -20,5 +21,4 @@ class RatingService implements RatingServiceInterface{
     {
         $this->ratingRepository->delete($rating);
     }
-
 }

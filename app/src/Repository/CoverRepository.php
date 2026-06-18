@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Cover repository.
+ */
+
 namespace App\Repository;
 
 use App\Entity\Cover;
@@ -7,21 +11,38 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
+ * Class CoverRepository.
+ *
  * @extends ServiceEntityRepository<Cover>
  */
 class CoverRepository extends ServiceEntityRepository
 {
+    /**
+     * Constructor.
+     *
+     * @param ManagerRegistry $registry Manager registry
+     */
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Cover::class);
     }
 
+    /**
+     * Save entity.
+     *
+     * @param Cover $cover Cover entity
+     */
     public function save(Cover $cover): void
     {
         $this->getEntityManager()->persist($cover);
         $this->getEntityManager()->flush();
     }
 
+    /**
+     * Delete entity.
+     *
+     * @param Cover $cover Cover entity
+     */
     public function delete(Cover $cover): void
     {
         $this->getEntityManager()->remove($cover);

@@ -35,7 +35,8 @@ class CoverController extends AbstractController
     public function __construct(
         private readonly CoverServiceInterface $coverService,
         private readonly TranslatorInterface $translator
-    ){}
+    ) {
+    }
 
     /**
      * Create action.
@@ -187,6 +188,5 @@ class CoverController extends AbstractController
                 'cover' => $cover,
             ]
         );
-
     }
 }

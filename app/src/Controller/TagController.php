@@ -20,7 +20,6 @@ class TagController extends AbstractController
 {
     public function __construct(private readonly TagServiceInterface $tagService, private readonly TranslatorInterface $translator)
     {
-
     }
 
     #[Route(

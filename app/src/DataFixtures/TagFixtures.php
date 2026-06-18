@@ -1,16 +1,25 @@
 <?php
 
+/**
+ * Tag fixtures.
+ */
+
 namespace App\DataFixtures;
 
 use App\Entity\Tag;
 use Doctrine\Persistence\ObjectManager;
 use Faker\Generator;
 
+/**
+ * Class TagFixtures.
+ */
 class TagFixtures extends AbstractBaseFixtures
 {
+    /**
+     * Load data.
+     */
     public function loadData(): void
     {
-
         if (!$this->manager instanceof ObjectManager || !$this->faker instanceof Generator) {
             return;
         }

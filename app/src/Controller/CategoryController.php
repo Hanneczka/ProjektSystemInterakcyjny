@@ -22,7 +22,8 @@ class CategoryController extends AbstractController
     public function __construct(
         private readonly CategoryServiceInterface $categoryService,
         private readonly TranslatorInterface $translator
-    ){}
+    ) {
+    }
 
     #[Route(
         '/',

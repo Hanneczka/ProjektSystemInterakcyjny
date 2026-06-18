@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Comment fixtures.
+ */
+
 namespace App\DataFixtures;
 
 use App\Entity\Element;
@@ -7,8 +11,14 @@ use App\Entity\User;
 use App\Entity\Comment;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
+/**
+ * Class CommentFixtures.
+ */
 class CommentFixtures extends AbstractBaseFixtures implements DependentFixtureInterface
 {
+    /**
+     * Load data.
+     */
     public function loadData(): void
     {
         $this->createMany(500, 'comments', function (int $i) {
@@ -22,7 +32,7 @@ class CommentFixtures extends AbstractBaseFixtures implements DependentFixtureIn
             );
             $comment->setUpdatedAt(
                 \DateTimeImmutable::createFromMutable(
-                    $this->faker->dateTimeBetween('-10 days', 'now')
+                    $this->faker->dateTimeBetween('-10 days', '-1 days')
                 )
             );
 
@@ -35,6 +45,11 @@ class CommentFixtures extends AbstractBaseFixtures implements DependentFixtureIn
         $this->manager->flush();
     }
 
+    /**
+     * Get dependencies.
+     *
+     * @return array<int, string> List of fixture dependencies
+     */
     public function getDependencies(): array
     {
         return [ElementFixtures::class, UserFixtures::class];

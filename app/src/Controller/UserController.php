@@ -19,7 +19,6 @@ class UserController extends AbstractController
 {
     public function __construct(private readonly UserServiceInterface $userService, private readonly EntityManagerInterface $entityManager, private readonly TranslatorInterface $translator, private readonly UserPasswordHasherInterface $passwordHasher)
     {
-
     }
 
     #[Route('/profile/edit-password', name: 'user_edit_password', methods: ['GET', 'POST'])]
@@ -36,7 +35,7 @@ class UserController extends AbstractController
             $user,
             [
                 'method' => 'POST',
-                'action' => $this->generateUrl('user_edit_password')]
+                'action' => $this->generateUrl('user_edit_password'), ]
         );
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -48,7 +47,6 @@ class UserController extends AbstractController
             $this->addFlash('success', $this->translator->trans('message.password_updated'));
 
             return $this->redirectToRoute('user_profile', ['id' => $user->getId()]);
-
         }
 
         return $this->render('profile/edit_password.html.twig', ['form' => $form->createView()]);
@@ -65,7 +63,7 @@ class UserController extends AbstractController
             $user,
             [
                 'method' => 'POST',
-                'action' => $this->generateUrl('user_edit_user')]
+                'action' => $this->generateUrl('user_edit_user'), ]
         );
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -74,16 +72,18 @@ class UserController extends AbstractController
             $this->addFlash('success', $this->translator->trans('message.user_updated'));
 
             return $this->redirectToRoute('user_profile', ['id' => $user->getId()]);
-
         }
 
         return $this->render('profile/edit_user.html.twig', ['form' => $form->createView()]);
     }
 
     #[Route('/profile/{id}', name: 'user_profile', methods: ['GET'])]
-    public function view(UserRepository $userRepository, string $id, UserServiceInterface $userService,
-    Request $request): Response
-    {
+    public function view(
+        UserRepository $userRepository,
+        string $id,
+        UserServiceInterface $userService,
+        Request $request
+    ): Response {
         $user = $userRepository->findOneById($id);
 
         if (null === $user) {

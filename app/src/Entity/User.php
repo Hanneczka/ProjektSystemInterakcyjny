@@ -54,15 +54,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\NotBlank]
     private ?string $password = null;
 
+    /**
+     * Name.
+     */
     #[ORM\Column(length: 64)]
     private ?string $name = null;
 
     /**
+     * Favorites collection.
+     *
      * @var Collection<int, Element>
      */
     #[ORM\ManyToMany(targetEntity: Element::class)]
     private Collection $favorites;
 
+    /**
+     * Constructor.
+     */
     public function __construct()
     {
         $this->favorites = new ArrayCollection();
@@ -70,8 +78,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * Getter for id.
-     *
-     * @return int|null Id
      */
     public function getId(): ?int
     {
@@ -80,8 +86,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * Getter for email.
-     *
-     * @return string|null Email
      */
     public function getEmail(): ?string
     {
@@ -91,19 +95,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * Setter for email.
      *
-     * @param string $email Email
+     * @param string|null $email Email
      */
-    public function setEmail(string $email): void
+    public function setEmail(?string $email): void
     {
         $this->email = $email;
     }
 
     /**
      * A visual identifier that represents this user.
-     *
-     * @see UserInterface
-     *
-     * @return string User identifier
      */
     public function getUserIdentifier(): string
     {
@@ -113,9 +113,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * Getter for roles.
      *
-     * @see UserInterface
-     *
-     * @return list<string>
+     * @return list<string> Roles list
      */
     public function getRoles(): array
     {
@@ -138,10 +136,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * Getter for password.
-     *
-     * @see PasswordAuthenticatedUserInterface
-     *
-     * @return string|null Password
      */
     public function getPassword(): ?string
     {
@@ -151,17 +145,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * Setter for password.
      *
-     * @param string $password User password
+     * @param string|null $password User password
      */
-    public function setPassword(string $password): void
+    public function setPassword(?string $password): void
     {
         $this->password = $password;
     }
 
     /**
      * Removes sensitive information from the token.
-     *
-     * @see UserInterface
      */
     public function eraseCredentials(): void
     {
@@ -169,12 +161,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // $this->plainPassword = null;
     }
 
+    /**
+     * Getter for name.
+     */
     public function getName(): ?string
     {
         return $this->name;
     }
 
-    public function setName(string $name): static
+    /**
+     * Setter for name.
+     *
+     * @param string|null $name Name
+     */
+    public function setName(?string $name): static
     {
         $this->name = $name;
 
@@ -182,13 +182,20 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
     /**
-     * @return Collection<int, Element>
+     * Getter for favorites.
+     *
+     * @return Collection<int, Element> Favorites collection
      */
     public function getFavorites(): Collection
     {
         return $this->favorites;
     }
 
+    /**
+     * Add element to favorites.
+     *
+     * @param Element $favorite Element entity
+     */
     public function addFavorite(Element $favorite): static
     {
         if (!$this->favorites->contains($favorite)) {
@@ -198,6 +205,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    /**
+     * Remove element from favorites.
+     *
+     * @param Element $favorite Element entity
+     */
     public function removeFavorite(Element $favorite): static
     {
         $this->favorites->removeElement($favorite);
