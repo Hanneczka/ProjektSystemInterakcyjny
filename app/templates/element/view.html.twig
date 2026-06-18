@@ -56,8 +56,11 @@
                     <strong> {{ 'label.your_rating'|trans }} {{ user_rating.value }} / 5</strong>
                 </div>
             {% else %}
+
                 {{ form_start(form, {'action': path('element_rate', {'id': element.id})}) }}
+                <div class="form-check form-check-inline m-0 d-flex align-items-center gap-1">
                 {{ form_widget(form) }}
+                </div>
                 <button class="btn btn-primary mt-2">{{ 'action.rate'|trans }}</button>
                 {{ form_end(form) }}
             {% endif %}
@@ -105,7 +108,9 @@
     {% if app.user %}
         {{ form_start(comment_form, {'action': path('element_comment_add', {'id': element.id}), 'method': 'POST'}) }}
         {{ form_widget(comment_form) }}
+        <div class="d-flex justify-content-end">
         <button class="btn btn-primary mt-2">{{ 'action.send_comment'|trans }}</button>
+        </div>
         {{ form_end(comment_form) }}
     {% else %}
         <p>{{ 'message.log_in_to_comment'|trans }}</p>

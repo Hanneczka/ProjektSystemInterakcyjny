@@ -19,3 +19,18 @@
     margin: 3px;
     padding: 2px;
 }
+
+.rating-form form div {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 15px; /* Odstęp między opcjami 1, 2, 3... */
+}
+
+/* Wyrównanie kropek i napisów w pionie */
+.rating-form form label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    cursor: pointer;
+}

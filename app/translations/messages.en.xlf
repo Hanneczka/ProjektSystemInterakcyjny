@@ -416,6 +416,10 @@
                       <source>label.confirm_password</source>
                       <target>Confirm password</target>
                     </trans-unit>
+                    <trans-unit id="placeholder.choose_category">
+                             <source>placeholder.choose_category</source>
+                             <target>Choose category</target>
+                             </trans-unit>
             </body>
 
   </file>
