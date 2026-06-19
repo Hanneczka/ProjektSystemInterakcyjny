@@ -6,6 +6,7 @@
 
 namespace App\Security\Voter;
 
+use Symfony\Component\Security\Core\Authorization\Voter\Vote;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -60,10 +61,11 @@ final class UserVoter extends Voter
      * @param string         $attribute Attribute
      * @param mixed          $subject   Subject (expected User instance)
      * @param TokenInterface $token     Token
+     * @param Vote           $vote      Vote
      *
      * @return bool True if permission is granted, false otherwise
      */
-    protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
+    protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token, ?Vote $vote = null): bool
     {
         $user = $token->getUser();
 
@@ -71,17 +73,11 @@ final class UserVoter extends Voter
             return false;
         }
 
-        switch ($attribute) {
-            case self::PASSWORD:
-            case self::CHANGE:
-                return $this->isAdmin($user);
-
-            case self::BLOCK:
-            case self::ROLES:
-                return $this->isAdmin($user) && $user !== $subject;
-        }
-
-        return false;
+        return match ($attribute) {
+            self::PASSWORD, self::CHANGE => $this->isAdmin($user),
+            self::BLOCK, self::ROLES => $this->isAdmin($user) && $user !== $subject,
+            default => false,
+        };
     }
 
     /**

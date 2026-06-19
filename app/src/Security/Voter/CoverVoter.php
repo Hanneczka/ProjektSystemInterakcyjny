@@ -6,6 +6,7 @@
 
 namespace App\Security\Voter;
 
+use App\Entity\Cover;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Vote;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
@@ -37,7 +38,7 @@ final class CoverVoter extends Voter
     protected function supports(string $attribute, mixed $subject): bool
     {
         return in_array($attribute, [self::EDIT, self::DELETE])
-            && $subject instanceof \App\Entity\Cover;
+            && $subject instanceof Cover;
     }
 
     /**
@@ -60,13 +61,10 @@ final class CoverVoter extends Voter
             return false;
         }
 
-        switch ($attribute) {
-            case self::EDIT:
-            case self::DELETE:
-                return $this->isAdmin($user);
-        }
-
-        return false;
+        return match ($attribute) {
+            self::EDIT, self::DELETE => $this->isAdmin($user),
+            default => false,
+        };
     }
 
     /**

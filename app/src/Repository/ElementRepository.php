@@ -6,6 +6,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Rating;
 use App\Entity\Category;
 use App\Entity\Element;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -21,11 +22,6 @@ use App\Dto\ElementListFiltersDto;
  */
 class ElementRepository extends ServiceEntityRepository
 {
-    /**
-     * Number of items per page in paginator.
-     */
-    public const PAGINATOR_ITEMS_PER_PAGE = 3;
-
     /**
      * Constructor.
      *
@@ -137,7 +133,7 @@ class ElementRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('e')
             ->select('e, AVG(r.value) as avg_rating')
-            ->leftJoin('App\Entity\Rating', 'r', 'ON', 'r.element = e')
+            ->leftJoin(Rating::class, 'r', 'ON', 'r.element = e')
             ->groupBy('e.id')
             ->orderBy('avg_rating', 'DESC')
             ->setMaxResults($limit)

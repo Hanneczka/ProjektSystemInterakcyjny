@@ -54,11 +54,11 @@
             {% if user_rating %}
                 <div class="alert alert-info mb-0">
                     <strong> {{ 'label.your_rating'|trans }} {{ user_rating.value }} / 5</strong>
-                    <form action="{{ path('element_rate_delete', {'id': element.id}) }}" method="POST" class="d-flex justify-content-end">
-                        <button type="submit" class="btn btn-outline-danger btn-sm">
-                            {{ 'action.delete_rating'|trans }}
-                        </button>
-                    </form>
+                    {{ form_start(delete_rate_form, {'attr': {'class': 'd-flex justify-content-end'}}) }}
+                    <button type="submit" class="btn btn-outline-danger btn-sm">
+                        {{ 'action.delete_rating'|trans }}
+                    </button>
+                    {{ form_end(delete_rate_form) }}
                 </div>
             {% else %}
 
@@ -116,8 +116,9 @@
 <div class="comments-section">
     <div class="mb-4">
     {% if app.user %}
-        {{ form_start(comment_form, {'action': path('element_comment_add', {'id': element.id}), 'method': 'POST'}) }}
-        {{ form_widget(comment_form) }}
+        {{ form_start(comment_form) }}
+        {{ form_errors(comment_form) }}
+        {{ form_row(comment_form.content) }}
         <div class="d-flex justify-content-end">
         <button class="btn btn-primary mt-2">{{ 'action.send_comment'|trans }}</button>
         </div>
@@ -138,7 +139,7 @@
                 {% if is_granted('COMMENT_DELETE', comment) %}
                     <td >
                         <div class="d-flex justify-content-end">
-                        <a href="{{ path('comment_delete', {id: comment.id}) }}"class="btn btn-outline-danger btn-sm">
+                        <a href="{{ path('comment_delete', {id: comment.id}) }}" class="btn btn-outline-danger btn-sm">
                             {{ 'action.delete'|trans }}
                         </a>
                         </div> </td>

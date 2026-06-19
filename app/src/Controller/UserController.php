@@ -1,24 +1,29 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * User controller.
  */
 
 namespace App\Controller;
 
+use App\Entity\Element;
+use App\Entity\User;
 use App\Form\Type\PasswordType;
 use App\Form\Type\UserType;
 use App\Repository\UserRepository;
+use App\Service\ElementServiceInterface;
 use App\Service\UserServiceInterface;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Contracts\Translation\TranslatorInterface;
-use App\Entity\Element;
-use App\Service\ElementServiceInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Class UserController.
@@ -47,6 +52,7 @@ class UserController extends AbstractController
     #[Route('/profile/edit-password', name: 'user_edit_password', methods: ['GET', 'PUT'])]
     public function editPassword(Request $request): Response
     {
+        /** @var User $user User entity */
         $user = $this->getUser();
 
         if (!$user) {
@@ -62,6 +68,7 @@ class UserController extends AbstractController
             ]
         );
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
             $newPassword = $form->get('password')->getData();
             $hashedPassword = $this->passwordHasher->hashPassword($user, $newPassword);
@@ -73,7 +80,9 @@ class UserController extends AbstractController
             return $this->redirectToRoute('user_profile', ['id' => $user->getId()]);
         }
 
-        return $this->render('profile/edit_password.html.twig', ['form' => $form->createView()]);
+        return $this->render('profile/edit_password.html.twig', [
+            'form' => $form->createView(),
+        ]);
     }
 
     /**
@@ -86,6 +95,7 @@ class UserController extends AbstractController
     #[Route('/profile/edit-user', name: 'user_edit_user', methods: ['GET', 'PUT'])]
     public function editUser(Request $request): Response
     {
+        /** @var User $user User entity */
         $user = $this->getUser();
 
         $form = $this->createForm(
@@ -97,6 +107,7 @@ class UserController extends AbstractController
             ]
         );
         $form->handleRequest($request);
+
         if ($form->isSubmitted() && $form->isValid()) {
             $this->userService->save($user);
 
@@ -105,7 +116,9 @@ class UserController extends AbstractController
             return $this->redirectToRoute('user_profile', ['id' => $user->getId()]);
         }
 
-        return $this->render('profile/edit_user.html.twig', ['form' => $form->createView()]);
+        return $this->render('profile/edit_user.html.twig', [
+            'form' => $form->createView(),
+        ]);
     }
 
     /**
@@ -118,7 +131,7 @@ class UserController extends AbstractController
      *
      * @return Response HTTP response
      */
-    #[Route('/profile/{id}', name: 'user_profile', methods: ['GET'])]
+    #[Route('/profile/{id}', name: 'user_profile', requirements: ['id' => '[1-9]\d*'], methods: ['GET'])]
     public function view(UserRepository $userRepository, string $id, UserServiceInterface $userService, Request $request): Response
     {
         $user = $userRepository->findOneById($id);
@@ -130,32 +143,61 @@ class UserController extends AbstractController
         $page = $request->query->getInt('page', 1);
 
         $favoritesPagination = $userService->getPaginatedFavorites($user, $page);
+        $favoriteElements = $favoritesPagination->getItems();
 
-        return $this->render(
-            'profile/profile.html.twig',
-            [
-                'user' => $user,
-                'favorites' => $favoritesPagination,
-            ]
-        );
+        $removeFromFavoriteForms = [];
+
+        foreach ($favoriteElements as $element) {
+            $form = $this->createForm(
+                FormType::class,
+                null,
+                [
+                    'action' => $this->generateUrl('element_favorite_remove', ['id' => $element->getId()]),
+                    'method' => 'DELETE',
+                ]
+            );
+
+            $removeFromFavoriteForms[$element->getId()] = $form->createView();
+        }
+
+        return $this->render('profile/profile.html.twig', [
+            'user' => $user,
+            'favorites' => $favoritesPagination,
+            'remove_forms' => $removeFromFavoriteForms,
+        ]);
     }
 
     /**
      * Remove favorite action.
      *
      * @param Element $element Element entity
+     * @param Request $request HTTP request
      *
      * @return Response HTTP response
      */
-    #[Route('/favorite/{id}/remove', name: 'element_favorite_remove', requirements: ['id' => '[1-9]\d*'], methods: ['POST'])]
+    #[Route('/favorite/{id}/remove', name: 'element_favorite_remove', requirements: ['id' => '[1-9]\d*'], methods: ['DELETE'])]
     #[IsGranted('ROLE_USER')]
-    public function removeFavorite(Element $element): Response
+    public function removeFavorite(#[MapEntity(mapping: ['id' => 'id'])] Element $element, Request $request): Response
     {
+        /** @var User $user User entity */
         $user = $this->getUser();
 
-        $messageKey = $this->elementService->toggleFavorite($element, $user);
+        $form = $this->createForm(
+            FormType::class,
+            null,
+            [
+                'action' => $this->generateUrl('element_favorite_remove', ['id' => $element->getId()]),
+                'method' => 'DELETE',
+            ]
+        );
+        $form->handleRequest($request);
 
-        $this->addFlash('success', $this->translator->trans($messageKey));
+        if ($form->isSubmitted() && $form->isValid()) {
+            $messageKey = $this->elementService->toggleFavorite($element, $user);
+            $this->addFlash('success', $this->translator->trans($messageKey));
+        } else {
+            $this->addFlash('error', $this->translator->trans('message.form_error'));
+        }
 
         return $this->redirectToRoute('user_profile', ['id' => $user->getId()]);
     }

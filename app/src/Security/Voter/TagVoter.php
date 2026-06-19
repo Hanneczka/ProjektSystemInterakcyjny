@@ -6,6 +6,7 @@
 
 namespace App\Security\Voter;
 
+use App\Entity\Tag;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Vote;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
@@ -42,7 +43,7 @@ final class TagVoter extends Voter
     protected function supports(string $attribute, mixed $subject): bool
     {
         return in_array($attribute, [self::EDIT, self::VIEW, self::DELETE])
-            && $subject instanceof \App\Entity\Tag;
+            && $subject instanceof Tag;
     }
 
     /**
@@ -59,14 +60,10 @@ final class TagVoter extends Voter
     {
         $user = $token->getUser();
 
-        switch ($attribute) {
-            case self::EDIT:
-            case self::DELETE:
-            case self::VIEW:
-                return $this->isAdmin($user);
-        }
-
-        return false;
+        return match ($attribute) {
+            self::EDIT, self::DELETE, self::VIEW => $this->isAdmin($user),
+            default => false,
+        };
     }
 
     /**

@@ -17,11 +17,6 @@ use Doctrine\ORM\QueryBuilder;
 class CategoryRepository extends ServiceEntityRepository
 {
     /**
-     * Number of items per page in paginator.
-     */
-    public const PAGINATOR_ITEMS_PER_PAGE = 3;
-
-    /**
      * Constructor.
      *
      * @param ManagerRegistry $registry Manager registry

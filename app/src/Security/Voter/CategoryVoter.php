@@ -60,15 +60,11 @@ final class CategoryVoter extends Voter
     {
         $user = $token->getUser();
 
-        switch ($attribute) {
-            case self::EDIT:
-            case self::DELETE:
-                return $this->isAdmin($user);
-            case self::VIEW:
-                return true;
-        }
-
-        return false;
+        return match ($attribute) {
+            self::EDIT, self::DELETE => $this->isAdmin($user),
+            self::VIEW => true,
+            default => false,
+        };
     }
 
     /**

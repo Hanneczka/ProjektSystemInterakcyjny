@@ -7,6 +7,7 @@
 namespace App\Controller;
 
 use App\Dto\ElementListInputFiltersDto;
+use App\Entity\Comment;
 use App\Entity\Element;
 use App\Form\Type\CommentType;
 use App\Form\Type\ElementType;
@@ -153,9 +154,18 @@ class ElementController extends AbstractController
     #[IsGranted(ElementVoter::VIEW, subject: 'element')]
     public function view(Element $element, #[MapQueryParameter] ?int $page = null): Response
     {
-        $page = $page ?? 1;
+        $page ??= 1;
 
         $cover = $this->elementService->findCoverForElement($element);
+
+        $deleteForm = $this->createForm(
+            FormType::class,
+            null,
+            [
+                'action' => $this->generateUrl('element_rate_delete', ['id' => $element->getId()]),
+                'method' => 'DELETE',
+            ]
+        );
 
         $user = $this->getUser();
 
@@ -163,7 +173,11 @@ class ElementController extends AbstractController
         $averageRating = $this->elementService->getAverageRating($element);
 
         $ratingFormView = ($user && !$existingRating) ? $this->createForm(RatingType::class)->createView() : null;
-        $commentFormView = $user ? $this->createForm(CommentType::class)->createView() : null;
+        $comment = new Comment();
+        $commentForm = $this->createForm(CommentType::class, $comment, [
+            'action' => $this->generateUrl('element_comment_add', ['id' => $element->getId()]),
+            'method' => 'POST',
+        ]);
 
         $comments = $this->commentService->getPaginatedList($page, $element);
 
@@ -173,10 +187,11 @@ class ElementController extends AbstractController
                 'element' => $element,
                 'cover' => $cover,
                 'comment_pagination' => $comments,
-                'comment_form' => $commentFormView,
+                'comment_form' => $commentForm->createView(),
                 'user_rating' => $existingRating,
                 'form' => $ratingFormView,
                 'average_rating' => $averageRating,
+                'delete_rate_form' => $deleteForm->createView(),
             ]
         );
     }

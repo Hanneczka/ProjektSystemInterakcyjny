@@ -6,6 +6,7 @@
 
 namespace App\Security\Voter;
 
+use App\Entity\Element;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Vote;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
@@ -42,7 +43,7 @@ final class ElementVoter extends Voter
     protected function supports(string $attribute, mixed $subject): bool
     {
         return in_array($attribute, [self::EDIT, self::VIEW, self::DELETE])
-            && $subject instanceof \App\Entity\Element;
+            && $subject instanceof Element;
     }
 
     /**
@@ -59,15 +60,11 @@ final class ElementVoter extends Voter
     {
         $user = $token->getUser();
 
-        switch ($attribute) {
-            case self::EDIT:
-            case self::DELETE:
-                return $this->isAdmin($user);
-            case self::VIEW:
-                return true;
-        }
-
-        return false;
+        return match ($attribute) {
+            self::EDIT, self::DELETE => $this->isAdmin($user),
+            self::VIEW => true,
+            default => false,
+        };
     }
 
     /**

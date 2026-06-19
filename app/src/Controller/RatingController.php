@@ -16,8 +16,8 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use App\Repository\ElementRepository;
-use App\Repository\RatingRepository;
 use App\Service\RatingServiceInterface;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
 
 /**
  * Class RatingController.
@@ -68,28 +68,39 @@ class RatingController extends AbstractController
     /**
      * Delete rate action.
      *
-     * @param Element          $element          Element entity
-     * @param RatingRepository $ratingRepository Rating repository
+     * @param Element $element Element entity
+     * @param Request $request HTTP request
      *
      * @return Response HTTP response
      */
-    #[Route('/element/{id}/rate-delete', name: 'element_rate_delete', methods: ['POST'])]
+    #[Route('/element/{id}/rate-delete', name: 'element_rate_delete', requirements: ['id' => '[1-9]\d*'], methods: ['DELETE'])]
     #[IsGranted('ROLE_USER')]
-    public function deleteRate(Element $element, RatingRepository $ratingRepository): Response
+    public function deleteRate(#[MapEntity(mapping: ['id' => 'id'])] Element $element, Request $request): Response
     {
+
         $user = $this->getUser();
 
-        $rating = $ratingRepository->findOneBy([
-            'element' => $element,
-            'user' => $user,
-        ]);
+        $rating = $this->ratingService->findUserRatingForElement($element, $user);
 
         if ($rating) {
-            $this->ratingService->delete($rating);
-            $this->addFlash(
-                'success',
-                $this->translator->trans('message.deleted_successfully')
+            $form = $this->createForm(
+                FormType::class,
+                null,
+                [
+                    'action' => $this->generateUrl('element_rate_delete', ['id' => $element->getId()]),
+                    'method' => 'DELETE',
+                ]
             );
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid()) {
+                $this->ratingService->delete($rating);
+
+                $this->addFlash(
+                    'success',
+                    $this->translator->trans('message.deleted_successfully')
+                );
+            }
         }
 
         return $this->redirectToRoute('element_view', ['id' => $element->getId()]);
@@ -105,7 +116,7 @@ class RatingController extends AbstractController
     #[Route('/highest_rated', name: 'highest_rated', methods: ['GET'])]
     public function highestRating(ElementRepository $elementRepository): Response
     {
-        $highestRated = $elementRepository->getHighestRated(10);
+        $highestRated = $this->ratingService->getHighestRatedElements(10);
 
         return $this->render('rating/index.html.twig', [
             'elements' => $elementRepository->findAll(),

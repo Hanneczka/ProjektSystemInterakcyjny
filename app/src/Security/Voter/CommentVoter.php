@@ -6,8 +6,10 @@
 
 namespace App\Security\Voter;
 
+use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
 use App\Entity\Comment;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
+use Symfony\Component\Security\Core\Authorization\Voter\Vote;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -34,7 +36,7 @@ class CommentVoter extends Voter
      *
      * @return void
      */
-    public function __construct(private readonly AuthorizationCheckerInterface $security)
+    public function __construct(private readonly AccessDecisionManagerInterface $security)
     {
     }
 
@@ -58,10 +60,11 @@ class CommentVoter extends Voter
      * @param string         $attribute Attribute
      * @param mixed          $subject   Subject
      * @param TokenInterface $token     Token
+     * @param Vote|null      $vote      Vote object
      *
      * @return bool True if permission is granted, false otherwise
      */
-    protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
+    protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token, ?Vote $vote = null): bool
     {
         $user = $token->getUser();
 

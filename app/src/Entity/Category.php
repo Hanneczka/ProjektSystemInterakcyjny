@@ -14,7 +14,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  * Class Category.
  */
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
-class Category
+class Category implements \Stringable
 {
     /**
      * Primary key.
