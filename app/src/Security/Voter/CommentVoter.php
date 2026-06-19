@@ -6,7 +6,7 @@
 
 namespace App\Security\Voter;
 
-use Symfony\Component\Security\Core\Authorization\AccessDecisionManagerInterface;
+use Symfony\Bundle\SecurityBundle\Security;
 use App\Entity\Comment;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Vote;
@@ -36,7 +36,7 @@ class CommentVoter extends Voter
      *
      * @return void
      */
-    public function __construct(private readonly AccessDecisionManagerInterface $security)
+    public function __construct(private readonly Security $security)
     {
     }
 

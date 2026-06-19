@@ -146,7 +146,11 @@
                 {% endif %}
             </li>
         {% else %}
-            <li>{{ 'message.no_comments'|trans }}</li>
+        <li>
+            <div class="alert alert-info mb-0">
+            <strong>{{ 'message.no_comments'|trans }}</strong>
+            </div>
+        </li>
         {% endfor %}
     </ul>
 

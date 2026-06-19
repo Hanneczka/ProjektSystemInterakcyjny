@@ -152,7 +152,7 @@
           </trans-unit>
           <trans-unit id="message.account_blocked">
             <source>message.account_blocked</source>
-            <target>Pomyślnie zablokowano konto</target>
+            <target>Zablokowano konto</target>
           </trans-unit>
           <trans-unit id="message.created_successfully">
             <source>message.created_successfully</source>
