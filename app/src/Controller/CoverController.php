@@ -32,7 +32,7 @@ class CoverController extends AbstractController
      * @param CoverServiceInterface $coverService Cover service
      * @param TranslatorInterface   $translator   Translator
      */
-    public function __construct(private readonly CoverServiceInterface $coverService, private readonly TranslatorInterface $translator,)
+    public function __construct(private readonly CoverServiceInterface $coverService, private readonly TranslatorInterface $translator)
     {
     }
 

@@ -32,7 +32,7 @@ class CommentService implements CommentServiceInterface
      *
      * @return void
      */
-    public function __construct(private readonly CommentRepository $commentRepository, private readonly PaginatorInterface $paginator,)
+    public function __construct(private readonly CommentRepository $commentRepository, private readonly PaginatorInterface $paginator)
     {
     }
 
@@ -74,8 +74,6 @@ class CommentService implements CommentServiceInterface
      * Delete comment.
      *
      * @param Comment $comment Comment entity
-     *
-     * @return void
      */
     public function delete(Comment $comment): void
     {
@@ -86,8 +84,6 @@ class CommentService implements CommentServiceInterface
      * Save comment.
      *
      * @param Comment $comment Comment entity
-     *
-     * @return void
      */
     public function save(Comment $comment): void
     {

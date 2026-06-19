@@ -19,9 +19,7 @@ class ElementListInputFiltersDto
      *
      * @return void
      */
-    public function __construct(
-        public readonly ?int $categoryId = null,
-        public readonly ?int $tagId = null,
-    ) {
+    public function __construct(public readonly ?int $categoryId = null, public readonly ?int $tagId = null)
+    {
     }
 }

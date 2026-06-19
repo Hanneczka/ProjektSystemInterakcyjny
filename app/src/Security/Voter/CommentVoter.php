@@ -34,9 +34,8 @@ class CommentVoter extends Voter
      *
      * @return void
      */
-    public function __construct(
-        private readonly AuthorizationCheckerInterface $security,
-    ) {
+    public function __construct(private readonly AuthorizationCheckerInterface $security)
+    {
     }
 
     /**

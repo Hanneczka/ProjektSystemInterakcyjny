@@ -25,7 +25,7 @@ class UserChecker implements UserCheckerInterface
      *
      * @return void
      */
-    public function __construct(private readonly TranslatorInterface $translator,)
+    public function __construct(private readonly TranslatorInterface $translator)
     {
     }
 
@@ -33,8 +33,6 @@ class UserChecker implements UserCheckerInterface
      * Checks the user account before authentication.
      *
      * @param UserInterface $user User entity
-     *
-     * @return void
      *
      * @throws CustomUserMessageAuthenticationException If the user is blocked
      */
@@ -55,8 +53,6 @@ class UserChecker implements UserCheckerInterface
      *
      * @param UserInterface       $user  User entity
      * @param TokenInterface|null $token Token interface
-     *
-     * @return void
      */
     public function checkPostAuth(UserInterface $user, ?TokenInterface $token = null): void
     {

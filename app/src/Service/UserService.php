@@ -40,11 +40,8 @@ class UserService implements UserServiceInterface
      *
      * @return void
      */
-    public function __construct(
-        private readonly UserRepository $userRepository,
-        private readonly PaginatorInterface $paginator,
-        private readonly UserPasswordHasherInterface $passwordHasher,
-    ) {
+    public function __construct(private readonly UserRepository $userRepository, private readonly PaginatorInterface $paginator, private readonly UserPasswordHasherInterface $passwordHasher)
+    {
     }
 
     /**
@@ -72,8 +69,6 @@ class UserService implements UserServiceInterface
      * Save user.
      *
      * @param User $user User entity
-     *
-     * @return void
      */
     public function save(User $user): void
     {
@@ -84,8 +79,6 @@ class UserService implements UserServiceInterface
      * Delete user.
      *
      * @param User $user User entity
-     *
-     * @return void
      */
     public function delete(User $user): void
     {
@@ -114,8 +107,6 @@ class UserService implements UserServiceInterface
      *
      * @param User   $user        User entity
      * @param string $newPassword New plain password
-     *
-     * @return void
      */
     public function upgradePassword(User $user, string $newPassword): void
     {
@@ -145,8 +136,6 @@ class UserService implements UserServiceInterface
      * Toggle admin role for given user.
      *
      * @param User $user User entity
-     *
-     * @return void
      */
     public function toggleAdminRole(User $user): void
     {
@@ -166,8 +155,6 @@ class UserService implements UserServiceInterface
      * Toggle block user status.
      *
      * @param User $user User entity
-     *
-     * @return void
      */
     public function toggleBlockUser(User $user): void
     {

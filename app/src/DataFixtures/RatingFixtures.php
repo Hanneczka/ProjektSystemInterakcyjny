@@ -18,8 +18,6 @@ class RatingFixtures extends AbstractBaseFixtures implements DependentFixtureInt
 {
     /**
      * Load data.
-     *
-     * @return void
      */
     public function loadData(): void
     {

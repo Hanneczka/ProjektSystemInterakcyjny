@@ -30,8 +30,6 @@ abstract class AbstractBaseFixtures extends Fixture
      * Load.
      *
      * @param ObjectManager $manager Persistence object manager
-     *
-     * @return void
      */
     public function load(ObjectManager $manager): void
     {
@@ -42,8 +40,6 @@ abstract class AbstractBaseFixtures extends Fixture
 
     /**
      * Load data.
-     *
-     * @return void
      */
     abstract protected function loadData(): void;
 
@@ -59,11 +55,9 @@ abstract class AbstractBaseFixtures extends Fixture
      *
      * @param int      $count              Number of object to create
      * @param string   $referenceGroupName Tag these created objects with this group name,
-     * and use this later with getRandomReference(s)
-     * to fetch only from this specific group
+     *                                     and use this later with getRandomReference(s)
+     *                                     to fetch only from this specific group
      * @param callable $factory            Defines method of creating objects
-     *
-     * @return void
      */
     protected function createMany(int $count, string $referenceGroupName, callable $factory): void
     {

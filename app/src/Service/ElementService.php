@@ -46,7 +46,7 @@ class ElementService implements ElementServiceInterface
      *
      * @return void
      */
-    public function __construct(private readonly ElementRepository $elementRepository, private readonly RatingRepository $ratingRepository, private readonly PaginatorInterface $paginator, private readonly CommentRepository $commentRepository, private readonly CategoryServiceInterface $categoryService, private readonly TagServiceInterface $tagService, private readonly EntityManagerInterface $entityManager, private readonly CoverRepository $coverRepository,)
+    public function __construct(private readonly ElementRepository $elementRepository, private readonly RatingRepository $ratingRepository, private readonly PaginatorInterface $paginator, private readonly CommentRepository $commentRepository, private readonly CategoryServiceInterface $categoryService, private readonly TagServiceInterface $tagService, private readonly EntityManagerInterface $entityManager, private readonly CoverRepository $coverRepository)
     {
     }
 
@@ -78,8 +78,6 @@ class ElementService implements ElementServiceInterface
      * Save element.
      *
      * @param Element $element Element entity
-     *
-     * @return void
      */
     public function save(Element $element): void
     {
@@ -90,8 +88,6 @@ class ElementService implements ElementServiceInterface
      * Delete element along with its comments and ratings.
      *
      * @param Element $element Element entity
-     *
-     * @return void
      */
     public function delete(Element $element): void
     {
@@ -187,6 +183,18 @@ class ElementService implements ElementServiceInterface
     }
 
     /**
+     * Find cover for given element.
+     *
+     * @param Element $element Element entity
+     *
+     * @return Cover|null Cover entity or null
+     */
+    public function findCoverForElement(Element $element): ?Cover
+    {
+        return $this->coverRepository->findOneBy(['element' => $element]);
+    }
+
+    /**
      * Prepare filters for the elements list.
      *
      * @param ElementListInputFiltersDto $filters Raw filters from request
@@ -199,17 +207,5 @@ class ElementService implements ElementServiceInterface
             null !== $filters->categoryId ? $this->categoryService->findOneById($filters->categoryId) : null,
             null !== $filters->tagId ? $this->tagService->findOneById($filters->tagId) : null,
         );
-    }
-
-    /**
-     * Find cover for given element.
-     *
-     * @param Element $element Element entity
-     *
-     * @return Cover|null Cover entity or null
-     */
-    public function findCoverForElement(Element $element): ?Cover
-    {
-        return $this->coverRepository->findOneBy(['element' => $element]);
     }
 }

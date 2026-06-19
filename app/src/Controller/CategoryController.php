@@ -7,19 +7,19 @@
 namespace App\Controller;
 
 use App\Entity\Category;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Attribute\Route;
-use Symfony\Component\HttpFoundation\Request;
 use App\Form\Type\CategoryType;
-use App\Service\CategoryServiceInterface;
-use Symfony\Component\Form\Extension\Core\Type\FormType;
-use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
-use Symfony\Contracts\Translation\TranslatorInterface;
 use App\Security\Voter\CategoryVoter;
-use Symfony\Component\Security\Http\Attribute\IsGranted;
+use App\Service\CategoryServiceInterface;
 use App\Service\ElementServiceInterface;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
+use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 /**
  * Class CategoryController.
@@ -33,7 +33,7 @@ class CategoryController extends AbstractController
      * @param CategoryServiceInterface $categoryService Category service
      * @param TranslatorInterface      $translator      Translator
      */
-    public function __construct(private readonly CategoryServiceInterface $categoryService, private readonly TranslatorInterface $translator,)
+    public function __construct(private readonly CategoryServiceInterface $categoryService, private readonly TranslatorInterface $translator)
     {
     }
 

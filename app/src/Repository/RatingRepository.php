@@ -51,8 +51,6 @@ class RatingRepository extends ServiceEntityRepository
      * Save entity.
      *
      * @param Rating $rating Rating entity
-     *
-     * @return void
      */
     public function save(Rating $rating): void
     {
@@ -64,8 +62,6 @@ class RatingRepository extends ServiceEntityRepository
      * Delete entity.
      *
      * @param Rating $rating Rating entity
-     *
-     * @return void
      */
     public function delete(Rating $rating): void
     {

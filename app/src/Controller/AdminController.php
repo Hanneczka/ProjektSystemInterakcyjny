@@ -32,7 +32,7 @@ class AdminController extends AbstractController
      * @param UserServiceInterface $userService User service
      * @param TranslatorInterface  $translator  Translator
      */
-    public function __construct(private readonly UserServiceInterface $userService, private readonly TranslatorInterface $translator,)
+    public function __construct(private readonly UserServiceInterface $userService, private readonly TranslatorInterface $translator)
     {
     }
 
@@ -175,7 +175,7 @@ class AdminController extends AbstractController
         '/{id}/block_user',
         name: 'admin_block_user',
         requirements: ['id' => '[1-9]\d*'],
-        methods: ['GET','POST']
+        methods: ['GET', 'POST']
     )]
     public function blockUser(User $user): Response
     {

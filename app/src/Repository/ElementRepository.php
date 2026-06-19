@@ -63,8 +63,6 @@ class ElementRepository extends ServiceEntityRepository
      * Save entity.
      *
      * @param Element $element Element entity
-     *
-     * @return void
      */
     public function save(Element $element): void
     {
@@ -76,8 +74,6 @@ class ElementRepository extends ServiceEntityRepository
      * Delete entity.
      *
      * @param Element $element Element entity
-     *
-     * @return void
      */
     public function delete(Element $element): void
     {

@@ -32,7 +32,7 @@ class TagService implements TagServiceInterface
      *
      * @return void
      */
-    public function __construct(private readonly TagRepository $tagRepository, private readonly PaginatorInterface $paginator,)
+    public function __construct(private readonly TagRepository $tagRepository, private readonly PaginatorInterface $paginator)
     {
     }
 
@@ -61,8 +61,6 @@ class TagService implements TagServiceInterface
      * Save tag.
      *
      * @param Tag $tag Tag entity
-     *
-     * @return void
      */
     public function save(Tag $tag): void
     {
@@ -73,8 +71,6 @@ class TagService implements TagServiceInterface
      * Delete tag.
      *
      * @param Tag $tag Tag entity
-     *
-     * @return void
      */
     public function delete(Tag $tag): void
     {

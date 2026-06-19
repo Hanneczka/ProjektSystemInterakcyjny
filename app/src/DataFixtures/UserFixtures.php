@@ -25,15 +25,27 @@ class UserFixtures extends AbstractBaseFixtures implements DependentFixtureInter
      * Constructor.
      *
      * @param UserPasswordHasherInterface $passwordHasher Password hasher
+     *
+     * @return void
      */
     public function __construct(private readonly UserPasswordHasherInterface $passwordHasher)
     {
     }
 
     /**
-     * Load data.
+     * Get dependencies.
      *
-     * @return void
+     * @return array<int, string> List of fixture dependencies
+     */
+    public function getDependencies(): array
+    {
+        return [
+            ElementFixtures::class,
+        ];
+    }
+
+    /**
+     * Load data.
      *
      * @psalm-suppress PossiblyNullPropertyFetch
      * @psalm-suppress PossiblyNullReference
@@ -85,17 +97,5 @@ class UserFixtures extends AbstractBaseFixtures implements DependentFixtureInter
 
             return $user;
         });
-    }
-
-    /**
-     * Get dependencies.
-     *
-     * @return array<int, string> List of fixture dependencies
-     */
-    public function getDependencies(): array
-    {
-        return [
-            ElementFixtures::class,
-        ];
     }
 }
