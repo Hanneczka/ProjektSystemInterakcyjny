@@ -28,11 +28,11 @@ class RatingController extends AbstractController
      * Constructor.
      *
      * @param RatingServiceInterface $ratingService Rating service
-     * @param TranslatorInterface   $translator    Translator
+     * @param TranslatorInterface    $translator    Translator
      */
     public function __construct(
         private readonly RatingServiceInterface $ratingService,
-        private readonly TranslatorInterface $translator
+        private readonly TranslatorInterface $translator,
     ) {
     }
 

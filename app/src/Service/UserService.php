@@ -20,14 +20,14 @@ class UserService implements UserServiceInterface
     /**
      * Items per page for users list.
      *
-     * @constant int
+     * @varant int
      */
     private const PAGINATOR_ITEMS_PER_PAGE = 10;
 
     /**
      * Items per page for favorites list.
      *
-     * @constant int
+     * @varant int
      */
     private const PAGINATOR_FAVORITES_PER_PAGE = 5;
 
@@ -35,13 +35,13 @@ class UserService implements UserServiceInterface
      * Constructor.
      *
      * @param UserRepository              $userRepository UserRepository
-     * @param PaginatorInterface         $paginator      Paginator
+     * @param PaginatorInterface          $paginator      Paginator
      * @param UserPasswordHasherInterface $passwordHasher Password hasher
      */
     public function __construct(
         private readonly UserRepository $userRepository,
         private readonly PaginatorInterface $paginator,
-        private readonly UserPasswordHasherInterface $passwordHasher
+        private readonly UserPasswordHasherInterface $passwordHasher,
     ) {
     }
 

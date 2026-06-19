@@ -45,11 +45,11 @@ final class UserVoter extends Voter
     protected function supports(string $attribute, mixed $subject): bool
     {
         return in_array($attribute, [
-                self::CHANGE,
-                self::PASSWORD,
-                self::BLOCK,
-                self::ROLES,
-            ]) && $subject instanceof User;
+            self::CHANGE,
+            self::PASSWORD,
+            self::BLOCK,
+            self::ROLES,
+        ]) && $subject instanceof User;
     }
 
     /**

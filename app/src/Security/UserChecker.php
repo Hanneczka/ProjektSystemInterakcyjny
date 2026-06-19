@@ -11,6 +11,7 @@ use Symfony\Component\Security\Core\Exception\CustomUserMessageAuthenticationExc
 use Symfony\Component\Security\Core\User\UserCheckerInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
 /**
  * Class UserChecker.
@@ -49,9 +50,10 @@ class UserChecker implements UserCheckerInterface
     /**
      * Checks the user account after authentication.
      *
-     * @param UserInterface $user User entity
+     * @param UserInterface       $user  User entity
+     * @param TokenInterface|null $token Token interface
      */
-    public function checkPostAuth(UserInterface $user): void
+    public function checkPostAuth(UserInterface $user, ?TokenInterface $token = null): void
     {
     }
 }

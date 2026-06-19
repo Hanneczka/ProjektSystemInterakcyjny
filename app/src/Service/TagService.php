@@ -20,7 +20,7 @@ class TagService implements TagServiceInterface
     /**
      * Items per page.
      *
-     * @constant int
+     * @varant int
      */
     private const PAGINATOR_ITEMS_PER_PAGE = 10;
 
@@ -32,7 +32,7 @@ class TagService implements TagServiceInterface
      */
     public function __construct(
         private readonly TagRepository $tagRepository,
-        private readonly PaginatorInterface $paginator
+        private readonly PaginatorInterface $paginator,
     ) {
     }
 

@@ -11,6 +11,7 @@ use App\Entity\Element;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use App\Dto\ElementListInputFiltersDto;
 use Symfony\Component\Security\Core\User\UserInterface;
+use App\Entity\Cover;
 
 /**
  * Interface ElementServiceInterface.
@@ -79,4 +80,13 @@ interface ElementServiceInterface
      * @return string Message translation key
      */
     public function toggleFavorite(Element $element, UserInterface $user): string;
+
+    /**
+     * Find cover for given element.
+     *
+     * @param Element $element Element entity
+     *
+     * @return Cover|null Cover entity or null
+     */
+    public function findCoverForElement(Element $element): ?Cover;
 }

@@ -41,7 +41,7 @@ class ElementController extends AbstractController
     public function __construct(
         private readonly ElementServiceInterface $elementService,
         private readonly TranslatorInterface $translator,
-        private readonly CommentServiceInterface $commentService
+        private readonly CommentServiceInterface $commentService,
     ) {
     }
 
@@ -157,6 +157,9 @@ class ElementController extends AbstractController
     public function view(Element $element, #[MapQueryParameter] ?int $page = null): Response
     {
         $page = $page ?? 1;
+
+        $cover = $this->elementService->findCoverForElement($element);
+
         $user = $this->getUser();
 
         $existingRating = $user ? $this->elementService->findUserRating($element, $user) : null;
@@ -171,6 +174,7 @@ class ElementController extends AbstractController
             'element/view.html.twig',
             [
                 'element' => $element,
+                'cover' => $cover,
                 'comment_pagination' => $comments,
                 'comment_form' => $commentFormView,
                 'user_rating' => $existingRating,

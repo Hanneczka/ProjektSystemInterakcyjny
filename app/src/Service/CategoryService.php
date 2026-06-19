@@ -22,7 +22,7 @@ class CategoryService implements CategoryServiceInterface
     /**
      * Items per page.
      *
-     * @constant int
+     * @varant int
      */
     private const PAGINATOR_ITEMS_PER_PAGE = 10;
 

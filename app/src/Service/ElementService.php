@@ -17,6 +17,8 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use App\Repository\CommentRepository;
 use App\Repository\RatingRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\CoverRepository;
+use App\Entity\Cover;
 
 /**
  * Class ElementService.
@@ -26,20 +28,21 @@ class ElementService implements ElementServiceInterface
     /**
      * Items per page.
      *
-     * @constant int
+     * @varant int
      */
     private const PAGINATOR_ITEMS_PER_PAGE = 10;
 
     /**
      * Constructor.
      *
-     * @param ElementRepository      $elementRepository Element repository
-     * @param RatingRepository       $ratingRepository  Rating repository
-     * @param PaginatorInterface     $paginator         Paginator
-     * @param CommentRepository      $commentRepository Comment repository
+     * @param ElementRepository        $elementRepository Element repository
+     * @param RatingRepository         $ratingRepository  Rating repository
+     * @param PaginatorInterface       $paginator         Paginator
+     * @param CommentRepository        $commentRepository Comment repository
      * @param CategoryServiceInterface $categoryService   Category service
      * @param TagServiceInterface      $tagService        Tag service
-     * @param EntityManagerInterface $entityManager     Entity manager
+     * @param EntityManagerInterface   $entityManager     Entity manager
+     * @param CoverRepository          $coverRepository Cover repository
      */
     public function __construct(
         private readonly ElementRepository $elementRepository,
@@ -48,7 +51,8 @@ class ElementService implements ElementServiceInterface
         private readonly CommentRepository $commentRepository,
         private readonly CategoryServiceInterface $categoryService,
         private readonly TagServiceInterface $tagService,
-        private readonly EntityManagerInterface $entityManager
+        private readonly EntityManagerInterface $entityManager,
+        private readonly CoverRepository $coverRepository,
     ) {
     }
 
@@ -102,6 +106,10 @@ class ElementService implements ElementServiceInterface
         foreach ($ratings as $rating) {
             $this->ratingRepository->delete($rating);
         }
+
+        $cover = $this->coverRepository->findOneBy(['element' => $element]);
+        if ($cover) {
+            $this->coverRepository->delete($cover);}
         $this->elementRepository->delete($element);
     }
 
@@ -192,5 +200,17 @@ class ElementService implements ElementServiceInterface
             null !== $filters->categoryId ? $this->categoryService->findOneById($filters->categoryId) : null,
             null !== $filters->tagId ? $this->tagService->findOneById($filters->tagId) : null,
         );
+    }
+
+    /**
+     * Find cover for given element.
+     *
+     * @param Element $element Element entity
+     *
+     * @return Cover|null Cover entity or null
+     */
+    public function findCoverForElement(Element $element): ?Cover
+    {
+        return $this->coverRepository->findOneBy(['element' => $element]);
     }
 }

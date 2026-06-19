@@ -24,7 +24,7 @@ class CoverService implements CoverServiceInterface
      */
     public function __construct(
         private readonly CoverRepository $coverRepository,
-        private readonly FileUploadServiceInterface $fileUploadService
+        private readonly FileUploadServiceInterface $fileUploadService,
     ) {
     }
 

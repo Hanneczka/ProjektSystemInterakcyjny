@@ -8,15 +8,12 @@ namespace App\Controller;
 
 use App\Form\Type\PasswordType;
 use App\Form\Type\UserType;
-use App\Repository\UserRepository;
-use App\Security\Voter\CategoryVoter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 use Symfony\Component\Routing\Attribute\Route;
 use App\Service\UserServiceInterface;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use App\Entity\User;
@@ -148,7 +145,7 @@ class AdminController extends AbstractController
         '/{id}/change_role',
         name: 'admin_change_roles',
         requirements: ['id' => '[1-9]\d*'],
-        methods: ['POST']
+        methods: ['GET', 'POST']
     )]
     public function changeRoles(User $user): Response
     {
@@ -180,7 +177,7 @@ class AdminController extends AbstractController
         '/{id}/block_user',
         name: 'admin_block_user',
         requirements: ['id' => '[1-9]\d*'],
-        methods: ['POST']
+        methods: ['GET','POST']
     )]
     public function blockUser(User $user): Response
     {

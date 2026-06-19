@@ -20,7 +20,7 @@ class RatingService implements RatingServiceInterface
      * @param RatingRepository $ratingRepository Rating repository
      */
     public function __construct(
-        private readonly RatingRepository $ratingRepository
+        private readonly RatingRepository $ratingRepository,
     ) {
     }
 

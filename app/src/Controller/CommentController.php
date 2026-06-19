@@ -32,7 +32,7 @@ class CommentController extends AbstractController
      */
     public function __construct(
         private readonly CommentServiceInterface $commentService,
-        private readonly TranslatorInterface $translator
+        private readonly TranslatorInterface $translator,
     ) {
     }
 

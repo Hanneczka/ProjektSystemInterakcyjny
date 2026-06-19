@@ -34,7 +34,7 @@ class CoverController extends AbstractController
      */
     public function __construct(
         private readonly CoverServiceInterface $coverService,
-        private readonly TranslatorInterface $translator
+        private readonly TranslatorInterface $translator,
     ) {
     }
 
@@ -54,12 +54,6 @@ class CoverController extends AbstractController
     #[IsGranted('ROLE_ADMIN')]
     public function create(Request $request, Element $element): Response
     {
-        if ($element->getCover()) {
-            return $this->redirectToRoute(
-                'cover_edit',
-                ['id' => $element->getId()]
-            );
-        }
 
         $cover = new Cover();
         $form = $this->createForm(

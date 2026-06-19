@@ -83,32 +83,32 @@
 
     </div>
     </div>
-    <div class="col-12 col-md-4 text-center">
-        <div class="card p-3 shadow-sm">
+            <div class="col-12 col-md-4 text-center">
+                <div class="card p-3 shadow-sm">
 
-    {% if element.cover %}
-        <img src="{{ asset('uploads/covers/' ~ element.cover.fileName) }}" alt="Cover" class="img-fluid rounded mb-3">
-        {% if is_granted('COVER_DELETE', element.cover) %}
-            <a href="{{ path('cover_delete', {'id': element.cover.id}) }}"
-               class="btn btn-danger bt-sm m-1">
-                {{ 'action.delete_cover'|trans }}
-            </a>
-        {% endif %}
-        {% if is_granted('COVER_EDIT', element.cover) %}
-            <a href="{{ path('cover_edit', {'id': element.cover.id}) }}"
-               class="btn btn-primary bt-sm m-1">
-                {{ 'action.edit_cover'|trans }}
-            </a>
-        {% endif %}
-    {% else %}
-        <img src="{{ asset('images/no-cover.png') }}" alt="{{ 'message.no_cover'|trans }}" class="img-fluid rounded mb-3">
-        {% if is_granted('ROLE_ADMIN') %}
-            <a href="{{ path('cover_create', {id: element.id}) }}" class="btn btn-primary btn-sm d-block">
-                {{ 'action.cover_create'|trans }}</a>
-        {% endif %}
-    {% endif %}
-    </div>
-    </div>
+                    {% if cover is defined and cover is not null %}
+                        <img src="{{ asset('uploads/covers/' ~ cover.fileName) }}" alt="Cover" class="img-fluid rounded mb-3">
+                        {% if is_granted('COVER_DELETE', cover) %}
+                            <a href="{{ path('cover_delete', {'id': cover.id}) }}"
+                               class="btn btn-danger bt-sm m-1">
+                                {{ 'action.delete_cover'|trans }}
+                            </a>
+                        {% endif %}
+                        {% if is_granted('COVER_EDIT', cover) %}
+                            <a href="{{ path('cover_edit', {'id': cover.id}) }}"
+                               class="btn btn-primary bt-sm m-1">
+                                {{ 'action.edit_cover'|trans }}
+                            </a>
+                        {% endif %}
+                    {% else %}
+                        <img src="{{ asset('images/no-cover.png') }}" alt="{{ 'message.no_cover'|trans }}" class="img-fluid rounded mb-3">
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <a href="{{ path('cover_create', {id: element.id}) }}" class="btn btn-primary btn-sm d-block">
+                                {{ 'action.cover_create'|trans }}</a>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
 
 </div>
 

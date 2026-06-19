@@ -19,6 +19,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 use App\Security\Voter\CategoryVoter;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use App\Service\ElementServiceInterface;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 
 /**
  * Class CategoryController.
@@ -34,7 +35,7 @@ class CategoryController extends AbstractController
      */
     public function __construct(
         private readonly CategoryServiceInterface $categoryService,
-        private readonly TranslatorInterface $translator
+        private readonly TranslatorInterface $translator,
     ) {
     }
 
@@ -110,7 +111,7 @@ class CategoryController extends AbstractController
         methods: ['GET']
     )]
     #[IsGranted(CategoryVoter::VIEW, subject: 'category')]
-    public function view(Category $category, ElementServiceInterface $elementService, #[MapQueryParameter] int $page = 1): Response
+    public function view(#[MapEntity(mapping: ['slug' => 'slug'])] Category $category, ElementServiceInterface $elementService, #[MapQueryParameter] int $page = 1): Response
     {
         $elements = $elementService->getPaginatedListByCategory($page, $category);
 
@@ -137,7 +138,7 @@ class CategoryController extends AbstractController
         methods: ['GET', 'PUT']
     )]
     #[IsGranted(CategoryVoter::EDIT, subject: 'category')]
-    public function edit(Request $request, Category $category): Response
+    public function edit(Request $request, #[MapEntity(mapping: ['slug' => 'slug'])] Category $category): Response
     {
         $form = $this->createForm(
             CategoryType::class,
@@ -182,7 +183,7 @@ class CategoryController extends AbstractController
         methods: ['GET', 'DELETE']
     )]
     #[IsGranted(CategoryVoter::DELETE, subject: 'category')]
-    public function delete(Request $request, Category $category): Response
+    public function delete(Request $request, #[MapEntity(mapping: ['slug' => 'slug'])] Category $category): Response
     {
         if (!$this->categoryService->canBeDeleted($category)) {
             $this->addFlash(

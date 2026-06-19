@@ -39,15 +39,11 @@ class CoverType extends AbstractType
                 'label' => 'label.cover',
                 'required' => true,
                 'constraints' => new Image(
-                    [
-                        'maxSize' => '1024k',
-                        'mimeTypes' => [
-                            'image/png',
-                            'image/jpeg',
-                            'image/pjpeg',
-                            'image/jpeg',
-                            'image/pjpeg',
-                        ],
+                    maxSize: '1024k',
+                    mimeTypes: [
+                        'image/png',
+                        'image/jpeg',
+                        'image/pjpeg',
                     ]
                 ),
             ]

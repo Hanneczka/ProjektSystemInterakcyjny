@@ -74,12 +74,6 @@ class Element
     private Collection $tags;
 
     /**
-     * Cover.
-     */
-    #[ORM\OneToOne(mappedBy: 'element', cascade: ['persist', 'remove'])]
-    private ?Cover $cover = null;
-
-    /**
      * Constructor.
      */
     public function __construct()
@@ -247,31 +241,6 @@ class Element
     public function removeTag(Tag $tag): static
     {
         $this->tags->removeElement($tag);
-
-        return $this;
-    }
-
-    /**
-     * Getter for cover.
-     */
-    public function getCover(): ?Cover
-    {
-        return $this->cover;
-    }
-
-    /**
-     * Setter for cover.
-     *
-     * @param Cover|null $cover Cover
-     */
-    public function setCover(?Cover $cover): static
-    {
-        // set the owning side of the relation if necessary
-        if ($cover->getElement() !== $this) {
-            $cover->setElement($this);
-        }
-
-        $this->cover = $cover;
 
         return $this;
     }

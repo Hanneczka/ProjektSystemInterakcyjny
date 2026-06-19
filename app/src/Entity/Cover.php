@@ -26,7 +26,7 @@ class Cover
     /**
      * Element.
      */
-    #[ORM\OneToOne(inversedBy: 'cover', cascade: ['persist'])]
+    #[ORM\OneToOne(cascade: ['persist'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?Element $element = null;
 

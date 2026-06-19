@@ -20,7 +20,7 @@ class CommentService implements CommentServiceInterface
     /**
      * Items per page.
      *
-     * @constant int
+     * @varant int
      */
     private const PAGINATOR_ITEMS_PER_PAGE = 5;
 
@@ -32,7 +32,7 @@ class CommentService implements CommentServiceInterface
      */
     public function __construct(
         private readonly CommentRepository $commentRepository,
-        private readonly PaginatorInterface $paginator
+        private readonly PaginatorInterface $paginator,
     ) {
     }
 

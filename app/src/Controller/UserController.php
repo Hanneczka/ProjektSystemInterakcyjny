@@ -40,7 +40,7 @@ class UserController extends AbstractController
         private readonly EntityManagerInterface $entityManager,
         private readonly TranslatorInterface $translator,
         private readonly UserPasswordHasherInterface $passwordHasher,
-        private readonly ElementServiceInterface $elementService
+        private readonly ElementServiceInterface $elementService,
     ) {
     }
 

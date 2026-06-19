@@ -18,6 +18,7 @@ use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 
 /**
  * Class TagController.
@@ -33,7 +34,7 @@ class TagController extends AbstractController
      */
     public function __construct(
         private readonly TagServiceInterface $tagService,
-        private readonly TranslatorInterface $translator
+        private readonly TranslatorInterface $translator,
     ) {
     }
 
@@ -103,7 +104,7 @@ class TagController extends AbstractController
         methods: ['GET']
     )]
     #[IsGranted(TagVoter::VIEW, subject: 'tag')]
-    public function view(Tag $tag): Response
+    public function view(#[MapEntity(mapping: ['slug' => 'slug'])] Tag $tag): Response
     {
         return $this->render(
             'tag/view.html.twig',
@@ -125,7 +126,7 @@ class TagController extends AbstractController
         methods: ['GET', 'PUT']
     )]
     #[IsGranted(TagVoter::EDIT, subject: 'tag')]
-    public function edit(Request $request, Tag $tag): Response
+    public function edit(Request $request, #[MapEntity(mapping: ['slug' => 'slug'])] Tag $tag): Response
     {
         $form = $this->createForm(
             TagType::class,
@@ -163,7 +164,7 @@ class TagController extends AbstractController
         methods: ['GET', 'DELETE']
     )]
     #[IsGranted(TagVoter::DELETE, subject: 'tag')]
-    public function delete(Request $request, Tag $tag): Response
+    public function delete(Request $request, #[MapEntity(mapping: ['slug' => 'slug'])] Tag $tag): Response
     {
         $form = $this->createForm(FormType::class, $tag, [
             'method' => 'DELETE',
