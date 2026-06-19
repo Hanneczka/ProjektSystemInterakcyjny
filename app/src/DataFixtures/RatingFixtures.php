@@ -18,18 +18,20 @@ class RatingFixtures extends AbstractBaseFixtures implements DependentFixtureInt
 {
     /**
      * Load data.
+     *
+     * @return void
      */
     public function loadData(): void
     {
         $this->createMany(500, 'Ratings', function (int $i) {
-            $Rating = new Rating();
+            $rating = new Rating();
 
-            $Rating->setValue($this->faker->numberBetween(1, 5));
+            $rating->setValue($this->faker->numberBetween(1, 5));
 
-            $Rating->setUser($this->getRandomReference('user', User::class));
-            $Rating->setElement($this->getRandomReference('element', Element::class));
+            $rating->setUser($this->getRandomReference('user', User::class));
+            $rating->setElement($this->getRandomReference('element', Element::class));
 
-            return $Rating;
+            return $rating;
         });
 
         $this->manager->flush();

@@ -60,6 +60,8 @@ class Comment
 
     /**
      * Getter for Id.
+     *
+     * @return int|null Id
      */
     public function getId(): ?int
     {
@@ -68,6 +70,8 @@ class Comment
 
     /**
      * Getter for content.
+     *
+     * @return string|null Content
      */
     public function getContent(): ?string
     {
@@ -78,6 +82,8 @@ class Comment
      * Setter for content.
      *
      * @param string|null $content Content
+     *
+     * @return $this
      */
     public function setContent(?string $content): static
     {
@@ -88,6 +94,8 @@ class Comment
 
     /**
      * Getter for created at.
+     *
+     * @return \DateTimeImmutable|null Created at
      */
     public function getCreatedAt(): ?\DateTimeImmutable
     {
@@ -98,6 +106,8 @@ class Comment
      * Setter for created at.
      *
      * @param \DateTimeImmutable|null $createdAt Created at
+     *
+     * @return $this
      */
     public function setCreatedAt(?\DateTimeImmutable $createdAt): static
     {
@@ -108,6 +118,8 @@ class Comment
 
     /**
      * Getter for updated at.
+     *
+     * @return \DateTimeImmutable|null Updated at
      */
     public function getUpdatedAt(): ?\DateTimeImmutable
     {
@@ -118,6 +130,8 @@ class Comment
      * Setter for updated at.
      *
      * @param \DateTimeImmutable|null $updatedAt Updated at
+     *
+     * @return $this
      */
     public function setUpdatedAt(?\DateTimeImmutable $updatedAt): static
     {
@@ -128,6 +142,8 @@ class Comment
 
     /**
      * Getter for element.
+     *
+     * @return Element|null Element
      */
     public function getElement(): ?Element
     {
@@ -138,6 +154,8 @@ class Comment
      * Setter for element.
      *
      * @param Element|null $element Element
+     *
+     * @return $this
      */
     public function setElement(?Element $element): static
     {
@@ -148,6 +166,8 @@ class Comment
 
     /**
      * Getter for author.
+     *
+     * @return User|null Author
      */
     public function getAuthor(): ?User
     {
@@ -158,6 +178,8 @@ class Comment
      * Setter for author.
      *
      * @param User|null $author Author
+     *
+     * @return $this
      */
     public function setAuthor(?User $author): static
     {

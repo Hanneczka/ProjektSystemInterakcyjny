@@ -428,7 +428,23 @@
             </trans-unit>
             <trans-unit id="action.delete_rating">
               <source>action.delete_rating</source>
-              <target>Delate rating</target>
+              <target>Delete rating</target>
+            </trans-unit>
+      <trans-unit id="message.role_changed_successfully">
+              <source>message.role_changed_successfully</source>
+              <target>Role changed successfully</target>
+            </trans-unit>
+            <trans-unit id="message.cannot_block_yourself">
+              <source>message.cannot_block_yourself</source>
+              <target>You cannot block yourself</target>
+            </trans-unit>
+            <trans-unit id="message.block_status_changed">
+              <source>message.block_status_changed</source>
+              <target>Block status changed</target>
+            </trans-unit>
+            <trans-unit id="form.invalid_password_error">
+              <source>form.invalid_password_error</source>
+              <target>Invalid password</target>
             </trans-unit>
       </body>
 

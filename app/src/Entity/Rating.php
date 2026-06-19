@@ -50,6 +50,8 @@ class Rating
 
     /**
      * Getter for Id.
+     *
+     * @return int|null Id
      */
     public function getId(): ?int
     {
@@ -58,6 +60,8 @@ class Rating
 
     /**
      * Getter for value.
+     *
+     * @return int|null Rating value
      */
     public function getValue(): ?int
     {
@@ -68,6 +72,8 @@ class Rating
      * Setter for value.
      *
      * @param int|null $value Rating value
+     *
+     * @return $this
      */
     public function setValue(?int $value): static
     {
@@ -78,6 +84,8 @@ class Rating
 
     /**
      * Getter for element.
+     *
+     * @return Element|null Element
      */
     public function getElement(): ?Element
     {
@@ -88,6 +96,8 @@ class Rating
      * Setter for element.
      *
      * @param Element|null $element Element
+     *
+     * @return $this
      */
     public function setElement(?Element $element): static
     {
@@ -98,6 +108,8 @@ class Rating
 
     /**
      * Getter for user.
+     *
+     * @return User|null User
      */
     public function getUser(): ?User
     {
@@ -108,6 +120,8 @@ class Rating
      * Setter for user.
      *
      * @param User|null $user User
+     *
+     * @return $this
      */
     public function setUser(?User $user): static
     {

@@ -53,6 +53,8 @@ class Category
 
     /**
      * Getter for Id.
+     *
+     * @return int|null Id
      */
     public function getId(): ?int
     {
@@ -61,6 +63,8 @@ class Category
 
     /**
      * Getter for name.
+     *
+     * @return string|null Name
      */
     public function getName(): ?string
     {
@@ -71,6 +75,8 @@ class Category
      * Setter for name.
      *
      * @param string|null $name Name
+     *
+     * @return $this
      */
     public function setName(?string $name): static
     {
@@ -81,6 +87,8 @@ class Category
 
     /**
      * Getter for created at.
+     *
+     * @return \DateTimeImmutable|null Created at
      */
     public function getCreatedAt(): ?\DateTimeImmutable
     {
@@ -91,6 +99,8 @@ class Category
      * Setter for created at.
      *
      * @param \DateTimeImmutable|null $createdAt Created at
+     *
+     * @return $this
      */
     public function setCreatedAt(?\DateTimeImmutable $createdAt): static
     {
@@ -101,6 +111,8 @@ class Category
 
     /**
      * Getter for updated at.
+     *
+     * @return \DateTimeImmutable|null Updated at
      */
     public function getUpdatedAt(): ?\DateTimeImmutable
     {
@@ -111,6 +123,8 @@ class Category
      * Setter for updated at.
      *
      * @param \DateTimeImmutable|null $updatedAt Updated at
+     *
+     * @return $this
      */
     public function setUpdatedAt(?\DateTimeImmutable $updatedAt): static
     {
@@ -121,6 +135,8 @@ class Category
 
     /**
      * Magic method to representation class as a string.
+     *
+     * @return string String representation
      */
     public function __toString(): string
     {
@@ -129,6 +145,8 @@ class Category
 
     /**
      * Getter for slug.
+     *
+     * @return string|null Slug
      */
     public function getSlug(): ?string
     {
@@ -139,6 +157,8 @@ class Category
      * Setter for slug.
      *
      * @param string|null $slug Slug
+     *
+     * @return $this
      */
     public function setSlug(?string $slug): static
     {

@@ -20,14 +20,14 @@ class UserService implements UserServiceInterface
     /**
      * Items per page for users list.
      *
-     * @varant int
+     * @var int
      */
     private const PAGINATOR_ITEMS_PER_PAGE = 10;
 
     /**
      * Items per page for favorites list.
      *
-     * @varant int
+     * @var int
      */
     private const PAGINATOR_FAVORITES_PER_PAGE = 5;
 
@@ -37,6 +37,8 @@ class UserService implements UserServiceInterface
      * @param UserRepository              $userRepository UserRepository
      * @param PaginatorInterface          $paginator      Paginator
      * @param UserPasswordHasherInterface $passwordHasher Password hasher
+     *
+     * @return void
      */
     public function __construct(
         private readonly UserRepository $userRepository,
@@ -70,6 +72,8 @@ class UserService implements UserServiceInterface
      * Save user.
      *
      * @param User $user User entity
+     *
+     * @return void
      */
     public function save(User $user): void
     {
@@ -80,6 +84,8 @@ class UserService implements UserServiceInterface
      * Delete user.
      *
      * @param User $user User entity
+     *
+     * @return void
      */
     public function delete(User $user): void
     {
@@ -108,6 +114,8 @@ class UserService implements UserServiceInterface
      *
      * @param User   $user        User entity
      * @param string $newPassword New plain password
+     *
+     * @return void
      */
     public function upgradePassword(User $user, string $newPassword): void
     {
@@ -137,6 +145,8 @@ class UserService implements UserServiceInterface
      * Toggle admin role for given user.
      *
      * @param User $user User entity
+     *
+     * @return void
      */
     public function toggleAdminRole(User $user): void
     {
@@ -156,6 +166,8 @@ class UserService implements UserServiceInterface
      * Toggle block user status.
      *
      * @param User $user User entity
+     *
+     * @return void
      */
     public function toggleBlockUser(User $user): void
     {

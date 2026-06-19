@@ -23,6 +23,8 @@ class CommentRepository extends ServiceEntityRepository
      * Constructor.
      *
      * @param ManagerRegistry $registry Manager registry
+     *
+     * @return void
      */
     public function __construct(ManagerRegistry $registry)
     {
@@ -33,6 +35,8 @@ class CommentRepository extends ServiceEntityRepository
      * Query comments by element.
      *
      * @param Element $element Element entity
+     *
+     * @return QueryBuilder Query builder
      */
     public function queryByElement(Element $element): QueryBuilder
     {
@@ -46,6 +50,8 @@ class CommentRepository extends ServiceEntityRepository
      * Delete entity.
      *
      * @param Comment $comment Comment entity
+     *
+     * @return void
      */
     public function delete(Comment $comment): void
     {
@@ -53,33 +59,16 @@ class CommentRepository extends ServiceEntityRepository
         $this->getEntityManager()->flush();
     }
 
+    /**
+     * Save entity.
+     *
+     * @param Comment $entity Comment entity
+     *
+     * @return void
+     */
     public function save(Comment $entity): void
     {
         $this->getEntityManager()->persist($entity);
         $this->getEntityManager()->flush();
     }
-    //    /**
-    //     * @return Comment[] Returns an array of Comment objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('c')
-    //            ->andWhere('c.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('c.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
-
-    //    public function findOneBySomeField($value): ?Comment
-    //    {
-    //        return $this->createQueryBuilder('c')
-    //            ->andWhere('c.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
 }

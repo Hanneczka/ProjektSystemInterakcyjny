@@ -7,7 +7,6 @@
 namespace App\Security\Voter;
 
 use App\Entity\Comment;
-use App\Entity\User;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
@@ -30,6 +29,10 @@ class CommentVoter extends Voter
 
     /**
      * Constructor.
+     *
+     * @param AuthorizationCheckerInterface $security Authorization checker
+     *
+     * @return void
      */
     public function __construct(
         private readonly AuthorizationCheckerInterface $security,
@@ -41,6 +44,8 @@ class CommentVoter extends Voter
      *
      * @param string $attribute Attribute
      * @param mixed  $subject   Subject
+     *
+     * @return bool True if supported, false otherwise
      */
     protected function supports(string $attribute, mixed $subject): bool
     {
@@ -54,6 +59,8 @@ class CommentVoter extends Voter
      * @param string         $attribute Attribute
      * @param mixed          $subject   Subject
      * @param TokenInterface $token     Token
+     *
+     * @return bool True if permission is granted, false otherwise
      */
     protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
     {
@@ -78,10 +85,12 @@ class CommentVoter extends Voter
     /**
      * Check if user is the author of the comment.
      *
-     * @param Comment $comment Comment entity
-     * @param User    $user    User entity
+     * @param Comment       $comment Comment entity
+     * @param UserInterface $user    User entity
+     *
+     * @return bool True if user is author, false otherwise
      */
-    private function isAuthor(Comment $comment, User $user): bool
+    private function isAuthor(Comment $comment, UserInterface $user): bool
     {
         return $comment->getAuthor() && $comment->getAuthor()->getId() === $user->getId();
     }

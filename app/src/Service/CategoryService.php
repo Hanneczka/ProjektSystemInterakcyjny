@@ -22,7 +22,7 @@ class CategoryService implements CategoryServiceInterface
     /**
      * Items per page.
      *
-     * @varant int
+     * @var int
      */
     private const PAGINATOR_ITEMS_PER_PAGE = 10;
 
@@ -32,12 +32,11 @@ class CategoryService implements CategoryServiceInterface
      * @param CategoryRepository $categoryRepository Category repository
      * @param ElementRepository  $elementRepository  Element repository
      * @param PaginatorInterface $paginator          Paginator
+     *
+     * @return void
      */
-    public function __construct(
-        private readonly CategoryRepository $categoryRepository,
-        private readonly ElementRepository $elementRepository,
-        private readonly PaginatorInterface $paginator,
-    ) {
+    public function __construct(private readonly CategoryRepository $categoryRepository, private readonly ElementRepository $elementRepository, private readonly PaginatorInterface $paginator,)
+    {
     }
 
     /**
@@ -65,6 +64,8 @@ class CategoryService implements CategoryServiceInterface
      * Save category.
      *
      * @param Category $category Category entity
+     *
+     * @return void
      */
     public function save(Category $category): void
     {
@@ -75,6 +76,8 @@ class CategoryService implements CategoryServiceInterface
      * Delete category.
      *
      * @param Category $category Category entity
+     *
+     * @return void
      */
     public function delete(Category $category): void
     {

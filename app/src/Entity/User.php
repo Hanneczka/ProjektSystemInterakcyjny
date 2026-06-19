@@ -78,6 +78,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * Getter for id.
+     *
+     * @return int|null Id
      */
     public function getId(): ?int
     {
@@ -86,6 +88,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * Getter for email.
+     *
+     * @return string|null Email
      */
     public function getEmail(): ?string
     {
@@ -104,6 +108,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * A visual identifier that represents this user.
+     *
+     * @return string User identifier
      */
     public function getUserIdentifier(): string
     {
@@ -136,6 +142,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * Getter for password.
+     *
+     * @return string|null Hashed password
      */
     public function getPassword(): ?string
     {
@@ -163,6 +171,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * Getter for name.
+     *
+     * @return string|null Name
      */
     public function getName(): ?string
     {
@@ -173,6 +183,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * Setter for name.
      *
      * @param string|null $name Name
+     *
+     * @return $this
      */
     public function setName(?string $name): static
     {
@@ -195,6 +207,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * Add element to favorites.
      *
      * @param Element $favorite Element entity
+     *
+     * @return $this
      */
     public function addFavorite(Element $favorite): static
     {
@@ -209,6 +223,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * Remove element from favorites.
      *
      * @param Element $favorite Element entity
+     *
+     * @return $this
      */
     public function removeFavorite(Element $favorite): static
     {

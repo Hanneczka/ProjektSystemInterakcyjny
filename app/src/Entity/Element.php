@@ -83,6 +83,8 @@ class Element
 
     /**
      * Getter for Id.
+     *
+     * @return int|null Id
      */
     public function getId(): ?int
     {
@@ -91,6 +93,8 @@ class Element
 
     /**
      * Getter for created at.
+     *
+     * @return \DateTimeImmutable|null Created at
      */
     public function getCreatedAt(): ?\DateTimeImmutable
     {
@@ -101,6 +105,8 @@ class Element
      * Setter for created at.
      *
      * @param \DateTimeImmutable|null $createdAt Created at
+     *
+     * @return $this
      */
     public function setCreatedAt(?\DateTimeImmutable $createdAt): static
     {
@@ -111,6 +117,8 @@ class Element
 
     /**
      * Getter for updated at.
+     *
+     * @return \DateTimeImmutable|null Updated at
      */
     public function getUpdatedAt(): ?\DateTimeImmutable
     {
@@ -121,6 +129,8 @@ class Element
      * Setter for updated at.
      *
      * @param \DateTimeImmutable|null $updatedAt Updated at
+     *
+     * @return $this
      */
     public function setUpdatedAt(?\DateTimeImmutable $updatedAt): static
     {
@@ -131,6 +141,8 @@ class Element
 
     /**
      * Getter for title.
+     *
+     * @return string|null Title
      */
     public function getTitle(): ?string
     {
@@ -141,6 +153,8 @@ class Element
      * Setter for title.
      *
      * @param string|null $title Title
+     *
+     * @return $this
      */
     public function setTitle(?string $title): static
     {
@@ -151,6 +165,8 @@ class Element
 
     /**
      * Getter for category.
+     *
+     * @return Category|null Category
      */
     public function getCategory(): ?Category
     {
@@ -161,6 +177,8 @@ class Element
      * Setter for category.
      *
      * @param Category|null $category Category
+     *
+     * @return $this
      */
     public function setCategory(?Category $category): static
     {
@@ -171,6 +189,8 @@ class Element
 
     /**
      * Getter for author.
+     *
+     * @return string|null Author
      */
     public function getAuthor(): ?string
     {
@@ -181,6 +201,8 @@ class Element
      * Setter for author.
      *
      * @param string|null $author Author
+     *
+     * @return $this
      */
     public function setAuthor(?string $author): static
     {
@@ -191,6 +213,8 @@ class Element
 
     /**
      * Getter for year.
+     *
+     * @return int|null Year
      */
     public function getYear(): ?int
     {
@@ -201,6 +225,8 @@ class Element
      * Setter for year.
      *
      * @param int|null $year Year
+     *
+     * @return $this
      */
     public function setYear(?int $year): static
     {
@@ -223,6 +249,8 @@ class Element
      * Add tag to collection.
      *
      * @param Tag $tag Tag entity
+     *
+     * @return $this
      */
     public function addTag(Tag $tag): static
     {
@@ -237,6 +265,8 @@ class Element
      * Remove tag from collection.
      *
      * @param Tag $tag Tag entity
+     *
+     * @return $this
      */
     public function removeTag(Tag $tag): static
     {

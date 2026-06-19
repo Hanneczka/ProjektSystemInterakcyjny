@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Abstract base fixtures.
+ */
+
 namespace App\DataFixtures;
 
 use Doctrine\Bundle\FixturesBundle\Fixture;
@@ -7,6 +11,9 @@ use Doctrine\Persistence\ObjectManager;
 use Faker\Factory;
 use Faker\Generator;
 
+/**
+ * Class AbstractBaseFixtures.
+ */
 abstract class AbstractBaseFixtures extends Fixture
 {
     /**
@@ -23,6 +30,8 @@ abstract class AbstractBaseFixtures extends Fixture
      * Load.
      *
      * @param ObjectManager $manager Persistence object manager
+     *
+     * @return void
      */
     public function load(ObjectManager $manager): void
     {
@@ -33,24 +42,28 @@ abstract class AbstractBaseFixtures extends Fixture
 
     /**
      * Load data.
+     *
+     * @return void
      */
     abstract protected function loadData(): void;
 
     /**
      * Create many objects at once:.
      *
-     *      $this->createMany(10, 'user', function(int $i) {
-     *          $user = new User();
-     *          $user->setFirstName('Ryan');
+     * $this->createMany(10, 'user', function(int $i) {
+     * $user = new User();
+     * $user->setFirstName('Ryan');
      *
-     *           return $user;
-     *      });
+     * return $user;
+     * });
      *
      * @param int      $count              Number of object to create
      * @param string   $referenceGroupName Tag these created objects with this group name,
-     *                                     and use this later with getRandomReference(s)
-     *                                     to fetch only from this specific group
+     * and use this later with getRandomReference(s)
+     * to fetch only from this specific group
      * @param callable $factory            Defines method of creating objects
+     *
+     * @return void
      */
     protected function createMany(int $count, string $referenceGroupName, callable $factory): void
     {
@@ -130,7 +143,7 @@ abstract class AbstractBaseFixtures extends Fixture
 
         $referenceNameList = array_filter(
             $referenceNameListByClass,
-            fn ($referenceName) => preg_match_all("/^{$referenceGroupName}_\\d+\$/", (string) $referenceName)
+            fn (string|int $referenceName) => preg_match_all("/^{$referenceGroupName}_\\d+\$/", (string) $referenceName)
         );
 
         if ([] === $referenceNameList) {

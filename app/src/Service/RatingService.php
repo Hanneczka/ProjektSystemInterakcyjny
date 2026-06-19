@@ -18,16 +18,19 @@ class RatingService implements RatingServiceInterface
      * Constructor.
      *
      * @param RatingRepository $ratingRepository Rating repository
+     *
+     * @return void
      */
-    public function __construct(
-        private readonly RatingRepository $ratingRepository,
-    ) {
+    public function __construct(private readonly RatingRepository $ratingRepository,)
+    {
     }
 
     /**
      * Save rating.
      *
      * @param Rating $rating Rating entity
+     *
+     * @return void
      */
     public function save(Rating $rating): void
     {
@@ -38,6 +41,8 @@ class RatingService implements RatingServiceInterface
      * Delete rating.
      *
      * @param Rating $rating Rating entity
+     *
+     * @return void
      */
     public function delete(Rating $rating): void
     {

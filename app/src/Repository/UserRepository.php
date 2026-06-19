@@ -25,6 +25,8 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
      * Constructor.
      *
      * @param ManagerRegistry $registry Manager registry
+     *
+     * @return void
      */
     public function __construct(ManagerRegistry $registry)
     {
@@ -36,6 +38,8 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
      *
      * @param PasswordAuthenticatedUserInterface $user              User entity
      * @param string                             $newHashedPassword New hashed password
+     *
+     * @return void
      */
     public function upgradePassword(PasswordAuthenticatedUserInterface $user, string $newHashedPassword): void
     {
@@ -50,6 +54,8 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 
     /**
      * Query all records.
+     *
+     * @return QueryBuilder Query builder
      */
     public function queryAll(): QueryBuilder
     {
@@ -61,6 +67,8 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
      * Save entity.
      *
      * @param User $user User entity
+     *
+     * @return void
      */
     public function save(User $user): void
     {
@@ -72,6 +80,8 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
      * Delete entity.
      *
      * @param User $user User entity
+     *
+     * @return void
      */
     public function delete(User $user): void
     {
@@ -81,6 +91,8 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 
     /**
      * Count admin users.
+     *
+     * @return int Number of admin users
      */
     public function countAdmins(): int
     {
@@ -91,29 +103,4 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->getQuery()
             ->getSingleScalarResult();
     }
-
-    //    /**
-    //     * @return User[] Returns an array of User objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('u')
-    //            ->andWhere('u.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('u.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
-
-    //    public function findOneBySomeField($value): ?User
-    //    {
-    //        return $this->createQueryBuilder('u')
-    //            ->andWhere('u.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
 }

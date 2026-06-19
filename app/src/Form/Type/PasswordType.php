@@ -44,7 +44,6 @@ class PasswordType extends AbstractType
                     'label' => 'label.confirm_password',
                     'required' => true,
                 ],
-                'invalid_message' => 'form.invalid_password_error',
             ]
         );
     }

@@ -25,9 +25,8 @@ class RegistrationController extends AbstractController
      *
      * @param UserServiceInterface $userService User service
      */
-    public function __construct(
-        private readonly UserServiceInterface $userService,
-    ) {
+    public function __construct(private readonly UserServiceInterface $userService,)
+    {
     }
 
     /**

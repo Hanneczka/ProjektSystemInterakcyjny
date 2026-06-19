@@ -23,6 +23,8 @@ class UserFixtures extends AbstractBaseFixtures implements DependentFixtureInter
 {
     /**
      * Constructor.
+     *
+     * @param UserPasswordHasherInterface $passwordHasher Password hasher
      */
     public function __construct(private readonly UserPasswordHasherInterface $passwordHasher)
     {
@@ -30,6 +32,8 @@ class UserFixtures extends AbstractBaseFixtures implements DependentFixtureInter
 
     /**
      * Load data.
+     *
+     * @return void
      *
      * @psalm-suppress PossiblyNullPropertyFetch
      * @psalm-suppress PossiblyNullReference
@@ -62,7 +66,7 @@ class UserFixtures extends AbstractBaseFixtures implements DependentFixtureInter
             return $user;
         });
 
-        $this->createMany(3, 'admin', factory: function (int $i = 10) {
+        $this->createMany(3, 'admin', function (int $i) {
             $user = new User();
             $user->setEmail(sprintf('admin%d@example.com', $i));
             $user->setRoles([UserRole::ROLE_USER->value, UserRole::ROLE_ADMIN->value]);

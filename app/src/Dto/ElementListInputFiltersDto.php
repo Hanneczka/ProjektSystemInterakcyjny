@@ -16,6 +16,8 @@ class ElementListInputFiltersDto
      *
      * @param int|null $categoryId Category ID filter
      * @param int|null $tagId      Tag ID filter
+     *
+     * @return void
      */
     public function __construct(
         public readonly ?int $categoryId = null,

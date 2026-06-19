@@ -27,6 +27,8 @@ class TagRepository extends ServiceEntityRepository
      * Constructor.
      *
      * @param ManagerRegistry $registry Manager registry
+     *
+     * @return void
      */
     public function __construct(ManagerRegistry $registry)
     {
@@ -35,6 +37,8 @@ class TagRepository extends ServiceEntityRepository
 
     /**
      * Query all records.
+     *
+     * @return QueryBuilder Query builder
      */
     public function queryAll(): QueryBuilder
     {
@@ -45,6 +49,8 @@ class TagRepository extends ServiceEntityRepository
      * Save entity.
      *
      * @param Tag $tag Tag entity
+     *
+     * @return void
      */
     public function save(Tag $tag): void
     {
@@ -56,35 +62,12 @@ class TagRepository extends ServiceEntityRepository
      * Delete entity.
      *
      * @param Tag $tag Tag entity
+     *
+     * @return void
      */
     public function delete(Tag $tag): void
     {
         $this->getEntityManager()->remove($tag);
         $this->getEntityManager()->flush();
     }
-
-    //    /**
-    //     * @return Tag[] Returns an array of Tag objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('t')
-    //            ->andWhere('t.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('t.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
-
-    //    public function findOneBySomeField($value): ?Tag
-    //    {
-    //        return $this->createQueryBuilder('t')
-    //            ->andWhere('t.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
 }

@@ -41,15 +41,17 @@ final class UserVoter extends Voter
      *
      * @param string $attribute Attribute
      * @param mixed  $subject   Subject
+     *
+     * @return bool True if supported, false otherwise
      */
     protected function supports(string $attribute, mixed $subject): bool
     {
         return in_array($attribute, [
-            self::CHANGE,
-            self::PASSWORD,
-            self::BLOCK,
-            self::ROLES,
-        ]) && $subject instanceof User;
+                self::CHANGE,
+                self::PASSWORD,
+                self::BLOCK,
+                self::ROLES,
+            ]) && $subject instanceof User;
     }
 
     /**
@@ -58,6 +60,8 @@ final class UserVoter extends Voter
      * @param string         $attribute Attribute
      * @param mixed          $subject   Subject (expected User instance)
      * @param TokenInterface $token     Token
+     *
+     * @return bool True if permission is granted, false otherwise
      */
     protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
     {
@@ -84,6 +88,8 @@ final class UserVoter extends Voter
      * Check if user has admin role.
      *
      * @param UserInterface|null $user User entity
+     *
+     * @return bool True if user is admin, false otherwise
      */
     private function isAdmin(?UserInterface $user): bool
     {

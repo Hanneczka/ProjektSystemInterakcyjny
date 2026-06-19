@@ -22,6 +22,8 @@ class RatingRepository extends ServiceEntityRepository
      * Constructor.
      *
      * @param ManagerRegistry $registry Manager registry
+     *
+     * @return void
      */
     public function __construct(ManagerRegistry $registry)
     {
@@ -32,6 +34,8 @@ class RatingRepository extends ServiceEntityRepository
      * Get average rating for a specific element.
      *
      * @param Element $element Element entity
+     *
+     * @return float|null Average rating or null
      */
     public function getAverageRatingForElement(Element $element): ?float
     {
@@ -47,6 +51,8 @@ class RatingRepository extends ServiceEntityRepository
      * Save entity.
      *
      * @param Rating $rating Rating entity
+     *
+     * @return void
      */
     public function save(Rating $rating): void
     {
@@ -58,35 +64,12 @@ class RatingRepository extends ServiceEntityRepository
      * Delete entity.
      *
      * @param Rating $rating Rating entity
+     *
+     * @return void
      */
     public function delete(Rating $rating): void
     {
         $this->getEntityManager()->remove($rating);
         $this->getEntityManager()->flush();
     }
-
-    //    /**
-    //     * @return Rating[] Returns an array of Rating objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('r')
-    //            ->andWhere('r.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('r.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
-
-    //    public function findOneBySomeField($value): ?Rating
-    //    {
-    //        return $this->createQueryBuilder('r')
-    //            ->andWhere('r.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
 }

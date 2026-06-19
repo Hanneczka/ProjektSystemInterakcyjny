@@ -424,14 +424,27 @@
                            <source>message.cannot_change_own_roles</source>
                            <target>Nie możesz zmienić swoich własnych uprawnień.</target>
                          </trans-unit>
-             <trans-unit id="message.cannot_block_yourself ">
-                           <source>message.cannot_block_yourself</source>
-                           <target>Nie możesz zablokować siebie samego.</target>
-                         </trans-unit>
+
              <trans-unit id="action.delete_rating">
                            <source>action.delete_rating</source>
                            <target>Usuń ocenę</target>
                          </trans-unit>
+          <trans-unit id="message.role_changed_successfully">
+                        <source>message.role_changed_successfully</source>
+                        <target>Pomyślnie zmieniono uprawnienia</target>
+                      </trans-unit>
+                      <trans-unit id="message.cannot_block_yourself">
+                        <source>message.cannot_block_yourself</source>
+                        <target>Nie możesz zablokować samego siebie</target>
+                      </trans-unit>
+                      <trans-unit id="message.block_status_changed">
+                        <source>message.block_status_changed</source>
+                        <target>Zmieniono blokadę</target>
+                      </trans-unit>
+                      <trans-unit id="form.invalid_password_error">
+                        <source>form.invalid_password_error</source>
+                        <target>Niepoprawne hasło</target>
+                      </trans-unit>
     </body>
   </file>
 </xliff>

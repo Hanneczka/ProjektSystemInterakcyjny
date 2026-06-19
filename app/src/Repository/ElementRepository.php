@@ -30,6 +30,8 @@ class ElementRepository extends ServiceEntityRepository
      * Constructor.
      *
      * @param ManagerRegistry $registry Manager registry
+     *
+     * @return void
      */
     public function __construct(ManagerRegistry $registry)
     {
@@ -40,6 +42,8 @@ class ElementRepository extends ServiceEntityRepository
      * Query all records with filters applied.
      *
      * @param ElementListFiltersDto $filters Filters DTO
+     *
+     * @return QueryBuilder Query builder
      */
     public function queryAll(ElementListFiltersDto $filters): QueryBuilder
     {
@@ -59,6 +63,8 @@ class ElementRepository extends ServiceEntityRepository
      * Save entity.
      *
      * @param Element $element Element entity
+     *
+     * @return void
      */
     public function save(Element $element): void
     {
@@ -70,6 +76,8 @@ class ElementRepository extends ServiceEntityRepository
      * Delete entity.
      *
      * @param Element $element Element entity
+     *
+     * @return void
      */
     public function delete(Element $element): void
     {
@@ -99,6 +107,8 @@ class ElementRepository extends ServiceEntityRepository
      * Get or create a query builder instance.
      *
      * @param QueryBuilder|null $qb Query builder
+     *
+     * @return QueryBuilder Query builder
      */
     public function getOrCreateQueryBuilder(?QueryBuilder $qb = null): QueryBuilder
     {
@@ -109,6 +119,8 @@ class ElementRepository extends ServiceEntityRepository
      * Query elements by category.
      *
      * @param Category $category Category entity
+     *
+     * @return QueryBuilder Query builder
      */
     public function queryByCategory(Category $category): QueryBuilder
     {
@@ -142,6 +154,8 @@ class ElementRepository extends ServiceEntityRepository
      *
      * @param QueryBuilder          $queryBuilder Query builder
      * @param ElementListFiltersDto $filters      Filters DTO
+     *
+     * @return QueryBuilder Query builder
      */
     private function applyFiltersToList(QueryBuilder $queryBuilder, ElementListFiltersDto $filters): QueryBuilder
     {
@@ -157,28 +171,4 @@ class ElementRepository extends ServiceEntityRepository
 
         return $queryBuilder;
     }
-    //    /**
-    //     * @return Element[] Returns an array of Element objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('e')
-    //            ->andWhere('e.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('e.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
-
-    //    public function findOneBySomeField($value): ?Element
-    //    {
-    //        return $this->createQueryBuilder('e')
-    //            ->andWhere('e.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
 }

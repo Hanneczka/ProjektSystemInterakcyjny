@@ -38,11 +38,8 @@ class ElementController extends AbstractController
      * @param TranslatorInterface     $translator     Translator
      * @param CommentServiceInterface $commentService Comment service
      */
-    public function __construct(
-        private readonly ElementServiceInterface $elementService,
-        private readonly TranslatorInterface $translator,
-        private readonly CommentServiceInterface $commentService,
-    ) {
+    public function __construct(private readonly ElementServiceInterface $elementService, private readonly TranslatorInterface $translator, private readonly CommentServiceInterface $commentService,)
+    {
     }
 
     /**

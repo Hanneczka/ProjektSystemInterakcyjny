@@ -36,6 +36,8 @@ final class TagVoter extends Voter
      *
      * @param string $attribute Attribute
      * @param mixed  $subject   Subject
+     *
+     * @return bool True if supported, false otherwise
      */
     protected function supports(string $attribute, mixed $subject): bool
     {
@@ -50,6 +52,8 @@ final class TagVoter extends Voter
      * @param mixed          $subject   Subject
      * @param TokenInterface $token     Token
      * @param Vote|null      $vote      Vote object
+     *
+     * @return bool True if permission is granted, false otherwise
      */
     protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token, ?Vote $vote = null): bool
     {
@@ -69,6 +73,8 @@ final class TagVoter extends Voter
      * Check if user has admin role.
      *
      * @param UserInterface|null $user User entity
+     *
+     * @return bool True if user is admin, false otherwise
      */
     private function isAdmin(?UserInterface $user): bool
     {

@@ -10,7 +10,6 @@ use App\Form\Type\PasswordType;
 use App\Form\Type\UserType;
 use App\Repository\UserRepository;
 use App\Service\UserServiceInterface;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -30,18 +29,12 @@ class UserController extends AbstractController
      * Constructor.
      *
      * @param UserServiceInterface        $userService    User service
-     * @param EntityManagerInterface      $entityManager  Entity manager
      * @param TranslatorInterface         $translator     Translator
      * @param UserPasswordHasherInterface $passwordHasher Password hasher
      * @param ElementServiceInterface     $elementService Element service
      */
-    public function __construct(
-        private readonly UserServiceInterface $userService,
-        private readonly EntityManagerInterface $entityManager,
-        private readonly TranslatorInterface $translator,
-        private readonly UserPasswordHasherInterface $passwordHasher,
-        private readonly ElementServiceInterface $elementService,
-    ) {
+    public function __construct(private readonly UserServiceInterface $userService, private readonly TranslatorInterface $translator, private readonly UserPasswordHasherInterface $passwordHasher, private readonly ElementServiceInterface $elementService,)
+    {
     }
 
     /**

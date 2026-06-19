@@ -28,7 +28,7 @@ class ElementService implements ElementServiceInterface
     /**
      * Items per page.
      *
-     * @varant int
+     * @var int
      */
     private const PAGINATOR_ITEMS_PER_PAGE = 10;
 
@@ -42,18 +42,12 @@ class ElementService implements ElementServiceInterface
      * @param CategoryServiceInterface $categoryService   Category service
      * @param TagServiceInterface      $tagService        Tag service
      * @param EntityManagerInterface   $entityManager     Entity manager
-     * @param CoverRepository          $coverRepository Cover repository
+     * @param CoverRepository          $coverRepository   Cover repository
+     *
+     * @return void
      */
-    public function __construct(
-        private readonly ElementRepository $elementRepository,
-        private readonly RatingRepository $ratingRepository,
-        private readonly PaginatorInterface $paginator,
-        private readonly CommentRepository $commentRepository,
-        private readonly CategoryServiceInterface $categoryService,
-        private readonly TagServiceInterface $tagService,
-        private readonly EntityManagerInterface $entityManager,
-        private readonly CoverRepository $coverRepository,
-    ) {
+    public function __construct(private readonly ElementRepository $elementRepository, private readonly RatingRepository $ratingRepository, private readonly PaginatorInterface $paginator, private readonly CommentRepository $commentRepository, private readonly CategoryServiceInterface $categoryService, private readonly TagServiceInterface $tagService, private readonly EntityManagerInterface $entityManager, private readonly CoverRepository $coverRepository,)
+    {
     }
 
     /**
@@ -84,6 +78,8 @@ class ElementService implements ElementServiceInterface
      * Save element.
      *
      * @param Element $element Element entity
+     *
+     * @return void
      */
     public function save(Element $element): void
     {
@@ -94,6 +90,8 @@ class ElementService implements ElementServiceInterface
      * Delete element along with its comments and ratings.
      *
      * @param Element $element Element entity
+     *
+     * @return void
      */
     public function delete(Element $element): void
     {
@@ -109,7 +107,8 @@ class ElementService implements ElementServiceInterface
 
         $cover = $this->coverRepository->findOneBy(['element' => $element]);
         if ($cover) {
-            $this->coverRepository->delete($cover);}
+            $this->coverRepository->delete($cover);
+        }
         $this->elementRepository->delete($element);
     }
 

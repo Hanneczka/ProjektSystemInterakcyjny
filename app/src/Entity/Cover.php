@@ -38,6 +38,8 @@ class Cover
 
     /**
      * Getter for Id.
+     *
+     * @return int|null Id
      */
     public function getId(): ?int
     {
@@ -46,6 +48,8 @@ class Cover
 
     /**
      * Getter for element.
+     *
+     * @return Element|null Element
      */
     public function getElement(): ?Element
     {
@@ -56,6 +60,8 @@ class Cover
      * Setter for element.
      *
      * @param Element|null $element Element
+     *
+     * @return $this
      */
     public function setElement(?Element $element): static
     {
@@ -66,6 +72,8 @@ class Cover
 
     /**
      * Getter for file name.
+     *
+     * @return string|null File name
      */
     public function getFileName(): ?string
     {
@@ -76,6 +84,8 @@ class Cover
      * Setter for file name.
      *
      * @param string|null $fileName File name
+     *
+     * @return $this
      */
     public function setFileName(?string $fileName): static
     {
