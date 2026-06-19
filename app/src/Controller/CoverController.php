@@ -153,7 +153,7 @@ class CoverController extends AbstractController
         '/{id}/delete',
         name: 'cover_delete',
         requirements: ['id' => '[1-9]\d*'],
-        methods: ['GET', 'POST']
+        methods: ['GET', 'DELETE']
     )]
     #[IsGranted(CoverVoter::DELETE, subject: 'cover')]
     public function delete(Request $request, Cover $cover): Response
@@ -164,7 +164,7 @@ class CoverController extends AbstractController
             FormType::class,
             null,
             [
-                'method' => 'POST',
+                'method' => 'DELETE',
                 'action' => $this->generateUrl('cover_delete', ['id' => $cover->getId()]),
             ]
         );

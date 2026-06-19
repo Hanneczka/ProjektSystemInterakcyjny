@@ -38,4 +38,9 @@ class CommentService implements CommentServiceInterface
     {
         $this->commentRepository->delete($comment);
     }
+
+    public function save(Comment $comment): void
+    {
+        $this->commentRepository->save($comment);
+    }
 }

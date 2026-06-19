@@ -38,21 +38,6 @@ class TagController extends AbstractController
     }
 
     #[Route(
-        '/{slug}',
-        name: 'tag_view',
-        methods: ['GET']
-    )]
-    #[IsGranted(TagVoter::VIEW, subject: 'tag')]
-    public function view(Tag $tag): Response
-    {
-
-        return $this->render(
-            'tag/view.html.twig',
-            ['tag' => $tag]
-        );
-    }
-
-    #[Route(
         '/create',
         name: 'tag_create',
         methods: ['GET', 'POST']
@@ -75,6 +60,23 @@ class TagController extends AbstractController
 
         return $this->render('tag/create.html.twig', ['form' => $form->createView()]);
     }
+
+    #[Route(
+        '/{slug}',
+        name: 'tag_view',
+        methods: ['GET']
+    )]
+    #[IsGranted(TagVoter::VIEW, subject: 'tag')]
+    public function view(Tag $tag): Response
+    {
+
+        return $this->render(
+            'tag/view.html.twig',
+            ['tag' => $tag]
+        );
+    }
+
+
 
     #[Route(
         '/{slug}/edit',

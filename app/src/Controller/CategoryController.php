@@ -41,24 +41,6 @@ class CategoryController extends AbstractController
     }
 
     #[Route(
-        '/{slug}',
-        name: 'category_view',
-        methods: ['GET']
-    )]
-
-    #[IsGranted(CategoryVoter::VIEW, subject: 'category')]
-    public function view(Category $category, ElementServiceInterface $elementService, #[MapQueryParameter] int $page = 1): Response
-    {
-        $elements = $elementService->getPaginatedListByCategory($page, $category);
-
-        return $this->render(
-            'category/view.html.twig',
-            ['category' => $category,
-                'pagination' => $elements, ]
-        );
-    }
-
-    #[Route(
         '/create',
         name: 'category_create',
         methods: ['GET', 'POST']
@@ -85,6 +67,26 @@ class CategoryController extends AbstractController
             ['form' => $form->createView()]
         );
     }
+
+    #[Route(
+        '/{slug}',
+        name: 'category_view',
+        methods: ['GET']
+    )]
+
+    #[IsGranted(CategoryVoter::VIEW, subject: 'category')]
+    public function view(Category $category, ElementServiceInterface $elementService, #[MapQueryParameter] int $page = 1): Response
+    {
+        $elements = $elementService->getPaginatedListByCategory($page, $category);
+
+        return $this->render(
+            'category/view.html.twig',
+            ['category' => $category,
+                'pagination' => $elements, ]
+        );
+    }
+
+
 
     // ...
     /**

@@ -43,6 +43,7 @@ class RatingType extends AbstractType
                 'expanded' => true,
                 'multiple' => false,
                 'label' => ' ',
+                'choice_translation_domain' => false,
             ]
         );
     }

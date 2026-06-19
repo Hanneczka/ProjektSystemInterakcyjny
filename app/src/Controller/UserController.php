@@ -21,7 +21,7 @@ class UserController extends AbstractController
     {
     }
 
-    #[Route('/profile/edit-password', name: 'user_edit_password', methods: ['GET', 'POST'])]
+    #[Route('/profile/edit-password', name: 'user_edit_password', methods: ['GET', 'PUT'])]
     public function editPassword(Request $request): Response
     {
         $user = $this->getUser();
@@ -34,7 +34,7 @@ class UserController extends AbstractController
             PasswordType::class,
             $user,
             [
-                'method' => 'POST',
+                'method' => 'PUT',
                 'action' => $this->generateUrl('user_edit_password'), ]
         );
         $form->handleRequest($request);
@@ -52,7 +52,7 @@ class UserController extends AbstractController
         return $this->render('profile/edit_password.html.twig', ['form' => $form->createView()]);
     }
 
-    #[Route('/profile/edit-user', name: 'user_edit_user', methods: ['GET', 'POST'])]
+    #[Route('/profile/edit-user', name: 'user_edit_user', methods: ['GET', 'PUT'])]
     public function editUser(Request $request): Response
     {
         $user = $this->getUser();
@@ -62,7 +62,7 @@ class UserController extends AbstractController
             UserType::class,
             $user,
             [
-                'method' => 'POST',
+                'method' => 'PUT',
                 'action' => $this->generateUrl('user_edit_user'), ]
         );
         $form->handleRequest($request);

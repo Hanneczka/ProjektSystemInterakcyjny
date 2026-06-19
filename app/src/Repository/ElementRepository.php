@@ -129,7 +129,7 @@ class ElementRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('e')
             ->select('e, AVG(r.value) as avg_rating')
-            ->leftJoin('App\Entity\Rating', 'r', 'WITH', 'r.element = e')
+            ->leftJoin('App\Entity\Rating', 'r', 'ON', 'r.element = e')
             ->groupBy('e.id')
             ->orderBy('avg_rating', 'DESC')
             ->setMaxResults($limit)

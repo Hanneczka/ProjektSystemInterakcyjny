@@ -13,4 +13,6 @@ interface CommentServiceInterface
     public function findByElement(Element $element): array;
 
     public function delete(Comment $comment): void;
+
+    public function save(Comment $comment): void;
 }
