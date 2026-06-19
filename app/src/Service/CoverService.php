@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use App\Entity\Element;
 
 /**
- * Class Cover service.
+ * Class CoverService.
  */
 class CoverService implements CoverServiceInterface
 {
@@ -22,16 +22,18 @@ class CoverService implements CoverServiceInterface
      * @param CoverRepository            $coverRepository   Cover repository
      * @param FileUploadServiceInterface $fileUploadService File upload service
      */
-    public function __construct(private readonly CoverRepository $coverRepository, private readonly FileUploadServiceInterface $fileUploadService)
-    {
+    public function __construct(
+        private readonly CoverRepository $coverRepository,
+        private readonly FileUploadServiceInterface $fileUploadService
+    ) {
     }
 
     /**
      * Create cover.
      *
-     * @param UploadedFile     $uploadedFile Uploaded file
-     * @param Cover            $cover        Cover entity
-     * @param ElementInterface $element      Element interface
+     * @param UploadedFile $uploadedFile Uploaded file
+     * @param Cover        $cover        Cover entity
+     * @param Element      $element      Element entity
      */
     public function create(UploadedFile $uploadedFile, Cover $cover, Element $element): void
     {
@@ -42,9 +44,14 @@ class CoverService implements CoverServiceInterface
         $this->coverRepository->save($cover);
     }
 
+    /**
+     * Update cover.
+     *
+     * @param UploadedFile $uploadedFile Uploaded file
+     * @param Cover        $cover        Cover entity
+     */
     public function update(UploadedFile $uploadedFile, Cover $cover): void
     {
-
         $oldFilename = $cover->getFileName();
         if ($oldFilename) {
             $oldFilePath = $this->fileUploadService->getTargetDirectory().'/'.$oldFilename;
@@ -59,9 +66,13 @@ class CoverService implements CoverServiceInterface
         $this->coverRepository->save($cover);
     }
 
+    /**
+     * Delete cover.
+     *
+     * @param Cover $cover Cover entity
+     */
     public function delete(Cover $cover): void
     {
-
         $filename = $cover->getFileName();
         if ($filename) {
             $filePath = $this->fileUploadService->getTargetDirectory().'/'.$filename;

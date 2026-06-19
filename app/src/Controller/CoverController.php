@@ -42,6 +42,7 @@ class CoverController extends AbstractController
      * Create action.
      *
      * @param Request $request HTTP request
+     * @param Element $element Element entity
      *
      * @return Response HTTP response
      */
@@ -53,7 +54,6 @@ class CoverController extends AbstractController
     #[IsGranted('ROLE_ADMIN')]
     public function create(Request $request, Element $element): Response
     {
-
         if ($element->getCover()) {
             return $this->redirectToRoute(
                 'cover_edit',
@@ -88,8 +88,10 @@ class CoverController extends AbstractController
 
         return $this->render(
             'element/cover_create.html.twig',
-            ['form' => $form->createView(),
-                'element' => $element, ]
+            [
+                'form' => $form->createView(),
+                'element' => $element,
+            ]
         );
     }
 
@@ -105,13 +107,12 @@ class CoverController extends AbstractController
         '/{id}/edit',
         name: 'cover_edit',
         requirements: ['id' => '[1-9]\d*'],
-        methods: ['GET', 'PUT', 'POST']
+        methods: ['GET', 'PUT']
     )]
     #[IsGranted(CoverVoter::EDIT, subject: 'cover')]
     public function edit(Request $request, Cover $cover): Response
     {
         $element = $cover->getElement();
-
 
         $form = $this->createForm(
             CoverType::class,
@@ -140,7 +141,7 @@ class CoverController extends AbstractController
         }
 
         return $this->render(
-            'element\cover_edit.html.twig',
+            'element/cover_edit.html.twig',
             [
                 'form' => $form->createView(),
                 'cover' => $cover,
@@ -149,6 +150,14 @@ class CoverController extends AbstractController
         );
     }
 
+    /**
+     * Delete action.
+     *
+     * @param Request $request HTTP request
+     * @param Cover   $cover   Cover entity
+     *
+     * @return Response HTTP response
+     */
     #[Route(
         '/{id}/delete',
         name: 'cover_delete',

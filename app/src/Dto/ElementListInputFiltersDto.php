@@ -1,10 +1,25 @@
 <?php
 
+/**
+ * Element list input filters DTO.
+ */
+
 namespace App\Dto;
 
+/**
+ * Class ElementListInputFiltersDto.
+ */
 class ElementListInputFiltersDto
 {
-    public function __construct(public readonly ?int $categoryId = null, public readonly ?int $tagId = null)
-    {
+    /**
+     * Constructor.
+     *
+     * @param int|null $categoryId Category ID filter
+     * @param int|null $tagId      Tag ID filter
+     */
+    public function __construct(
+        public readonly ?int $categoryId = null,
+        public readonly ?int $tagId = null
+    ) {
     }
 }

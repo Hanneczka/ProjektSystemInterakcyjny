@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Category controller.
+ */
+
 namespace App\Controller;
 
 use App\Entity\Category;
@@ -16,15 +20,31 @@ use App\Security\Voter\CategoryVoter;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use App\Service\ElementServiceInterface;
 
+/**
+ * Class CategoryController.
+ */
 #[Route('/category')]
 class CategoryController extends AbstractController
 {
+    /**
+     * Constructor.
+     *
+     * @param CategoryServiceInterface $categoryService Category service
+     * @param TranslatorInterface      $translator      Translator
+     */
     public function __construct(
         private readonly CategoryServiceInterface $categoryService,
         private readonly TranslatorInterface $translator
     ) {
     }
 
+    /**
+     * Index action.
+     *
+     * @param int $page Page number
+     *
+     * @return Response HTTP response
+     */
     #[Route(
         '/',
         name: 'category_index',
@@ -40,6 +60,13 @@ class CategoryController extends AbstractController
         );
     }
 
+    /**
+     * Create action.
+     *
+     * @param Request $request HTTP request
+     *
+     * @return Response HTTP response
+     */
     #[Route(
         '/create',
         name: 'category_create',
@@ -68,12 +95,20 @@ class CategoryController extends AbstractController
         );
     }
 
+    /**
+     * View action.
+     *
+     * @param Category                $category       Category entity
+     * @param ElementServiceInterface $elementService Element service
+     * @param int                     $page           Page number
+     *
+     * @return Response HTTP response
+     */
     #[Route(
         '/{slug}',
         name: 'category_view',
         methods: ['GET']
     )]
-
     #[IsGranted(CategoryVoter::VIEW, subject: 'category')]
     public function view(Category $category, ElementServiceInterface $elementService, #[MapQueryParameter] int $page = 1): Response
     {
@@ -81,14 +116,13 @@ class CategoryController extends AbstractController
 
         return $this->render(
             'category/view.html.twig',
-            ['category' => $category,
-                'pagination' => $elements, ]
+            [
+                'category' => $category,
+                'pagination' => $elements,
+            ]
         );
     }
 
-
-
-    // ...
     /**
      * Edit action.
      *
@@ -105,7 +139,6 @@ class CategoryController extends AbstractController
     #[IsGranted(CategoryVoter::EDIT, subject: 'category')]
     public function edit(Request $request, Category $category): Response
     {
-
         $form = $this->createForm(
             CategoryType::class,
             $category,
@@ -125,7 +158,6 @@ class CategoryController extends AbstractController
 
             return $this->redirectToRoute('category_index');
         }
-
 
         return $this->render(
             'category/edit.html.twig',

@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Element service.
+ */
+
 namespace App\Service;
 
 use App\Entity\Element;
@@ -9,15 +13,53 @@ use Knp\Component\Pager\PaginatorInterface;
 use App\Entity\Category;
 use App\Dto\ElementListInputFiltersDto;
 use App\Dto\ElementListFiltersDto;
+use Symfony\Component\Security\Core\User\UserInterface;
+use App\Repository\CommentRepository;
+use App\Repository\RatingRepository;
+use Doctrine\ORM\EntityManagerInterface;
 
+/**
+ * Class ElementService.
+ */
 class ElementService implements ElementServiceInterface
 {
+    /**
+     * Items per page.
+     *
+     * @constant int
+     */
     private const PAGINATOR_ITEMS_PER_PAGE = 10;
 
-    public function __construct(private readonly ElementRepository $elementRepository, private readonly PaginatorInterface $paginator, private readonly CategoryServiceInterface $categoryService, private readonly TagServiceInterface $tagService)
-    {
+    /**
+     * Constructor.
+     *
+     * @param ElementRepository      $elementRepository Element repository
+     * @param RatingRepository       $ratingRepository  Rating repository
+     * @param PaginatorInterface     $paginator         Paginator
+     * @param CommentRepository      $commentRepository Comment repository
+     * @param CategoryServiceInterface $categoryService   Category service
+     * @param TagServiceInterface      $tagService        Tag service
+     * @param EntityManagerInterface $entityManager     Entity manager
+     */
+    public function __construct(
+        private readonly ElementRepository $elementRepository,
+        private readonly RatingRepository $ratingRepository,
+        private readonly PaginatorInterface $paginator,
+        private readonly CommentRepository $commentRepository,
+        private readonly CategoryServiceInterface $categoryService,
+        private readonly TagServiceInterface $tagService,
+        private readonly EntityManagerInterface $entityManager
+    ) {
     }
 
+    /**
+     * Get paginated list of elements.
+     *
+     * @param int                        $page    Page number
+     * @param ElementListInputFiltersDto $filters Input filters
+     *
+     * @return PaginationInterface<string, mixed> Paginated list
+     */
     public function getPaginatedList(int $page, ElementListInputFiltersDto $filters): PaginationInterface
     {
         $filters = $this->prepareFilters($filters);
@@ -34,28 +76,107 @@ class ElementService implements ElementServiceInterface
         );
     }
 
+    /**
+     * Save element.
+     *
+     * @param Element $element Element entity
+     */
     public function save(Element $element): void
     {
-
         $this->elementRepository->save($element);
     }
 
+    /**
+     * Delete element along with its comments and ratings.
+     *
+     * @param Element $element Element entity
+     */
     public function delete(Element $element): void
     {
+        $comments = $this->commentRepository->findBy(['element' => $element]);
+        foreach ($comments as $comment) {
+            $this->commentRepository->delete($comment);
+        }
+
+        $ratings = $this->ratingRepository->findBy(['element' => $element]);
+        foreach ($ratings as $rating) {
+            $this->ratingRepository->delete($rating);
+        }
         $this->elementRepository->delete($element);
     }
 
+    /**
+     * Get paginated list of elements filtered by category.
+     *
+     * @param int      $page     Page number
+     * @param Category $category Category entity
+     *
+     * @return PaginationInterface<string, mixed> Paginated list
+     */
     public function getPaginatedListByCategory(int $page, Category $category): PaginationInterface
     {
         return $this->paginator->paginate(
             $this->elementRepository->queryByCategory($category),
             $page,
-            10,
+            self::PAGINATOR_ITEMS_PER_PAGE,
             [
                 'defaultSortFieldName' => 'element.createdAt',
                 'defaultSortDirection' => 'desc',
             ]
         );
+    }
+
+    /**
+     * Find user rating for given element.
+     *
+     * @param Element       $element Element entity
+     * @param UserInterface $user    User entity
+     *
+     * @return object|null Rating object or null
+     */
+    public function findUserRating(Element $element, UserInterface $user): ?object
+    {
+        return $this->ratingRepository->findOneBy([
+            'element' => $element,
+            'user' => $user,
+        ]);
+    }
+
+    /**
+     * Get average rating for element.
+     *
+     * @param Element $element Element entity
+     *
+     * @return float Average rating
+     */
+    public function getAverageRating(Element $element): float
+    {
+        $average = $this->ratingRepository->getAverageRatingForElement($element);
+
+        return (float) $average;
+    }
+
+    /**
+     * Toggle favorite status of given element for current user.
+     *
+     * @param Element       $element Element entity
+     * @param UserInterface $user    User entity
+     *
+     * @return string Message translation key
+     */
+    public function toggleFavorite(Element $element, UserInterface $user): string
+    {
+        if ($user->getFavorites()->contains($element)) {
+            $user->removeFavorite($element);
+            $messageKey = 'message.deleted_from_favorites';
+        } else {
+            $user->addFavorite($element);
+            $messageKey = 'message.added_to_favorites';
+        }
+
+        $this->entityManager->flush();
+
+        return $messageKey;
     }
 
     /**

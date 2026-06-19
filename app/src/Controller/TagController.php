@@ -1,12 +1,16 @@
 <?php
 
+/**
+ * Tag controller.
+ */
+
 namespace App\Controller;
 
 use App\Security\Voter\TagVoter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use App\Entity\Tag;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use App\Service\TagServiceInterface;
 use App\Form\Type\TagType;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,19 +19,37 @@ use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
+/**
+ * Class TagController.
+ */
 #[Route('/tag')]
 class TagController extends AbstractController
 {
-    public function __construct(private readonly TagServiceInterface $tagService, private readonly TranslatorInterface $translator)
-    {
+    /**
+     * Constructor.
+     *
+     * @param TagServiceInterface $tagService Tag service
+     * @param TranslatorInterface $translator Translator
+     */
+    public function __construct(
+        private readonly TagServiceInterface $tagService,
+        private readonly TranslatorInterface $translator
+    ) {
     }
 
+    /**
+     * Index action.
+     *
+     * @param int $page Page number
+     *
+     * @return Response HTTP response
+     */
     #[Route(
         '/',
         name: 'tag_index',
         methods: ['GET']
     )]
-    public function index(#[MapQueryParameter] int $page = 1)
+    public function index(#[MapQueryParameter] int $page = 1): Response
     {
         $pagination = $this->tagService->getPaginatedList($page);
 
@@ -37,6 +59,13 @@ class TagController extends AbstractController
         );
     }
 
+    /**
+     * Create action.
+     *
+     * @param Request $request HTTP request
+     *
+     * @return Response HTTP response
+     */
     #[Route(
         '/create',
         name: 'tag_create',
@@ -61,6 +90,13 @@ class TagController extends AbstractController
         return $this->render('tag/create.html.twig', ['form' => $form->createView()]);
     }
 
+    /**
+     * View action.
+     *
+     * @param Tag $tag Tag entity
+     *
+     * @return Response HTTP response
+     */
     #[Route(
         '/{slug}',
         name: 'tag_view',
@@ -69,15 +105,20 @@ class TagController extends AbstractController
     #[IsGranted(TagVoter::VIEW, subject: 'tag')]
     public function view(Tag $tag): Response
     {
-
         return $this->render(
             'tag/view.html.twig',
             ['tag' => $tag]
         );
     }
 
-
-
+    /**
+     * Edit action.
+     *
+     * @param Request $request HTTP request
+     * @param Tag     $tag     Tag entity
+     *
+     * @return Response HTTP response
+     */
     #[Route(
         '/{slug}/edit',
         name: 'tag_edit',
@@ -108,6 +149,14 @@ class TagController extends AbstractController
         return $this->render('tag/edit.html.twig', ['form' => $form->createView(), 'tag' => $tag]);
     }
 
+    /**
+     * Delete action.
+     *
+     * @param Request $request HTTP request
+     * @param Tag     $tag     Tag entity
+     *
+     * @return Response HTTP response
+     */
     #[Route(
         '/{slug}/delete',
         name: 'tag_delete',
