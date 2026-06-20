@@ -446,6 +446,10 @@
               <source>form.invalid_password_error</source>
               <target>Invalid password</target>
             </trans-unit>
+            <trans-unit id="message.email_already_in_use">
+                          <source>message.email_already_in_use</source>
+                          <target>Email already in use</target>
+                        </trans-unit>
       </body>
 
   </file>

@@ -445,6 +445,10 @@
                         <source>form.invalid_password_error</source>
                         <target>Niepoprawne hasło</target>
                       </trans-unit>
+                      <trans-unit id="message.email_already_in_use">
+                                                <source>message.email_already_in_use</source>
+                                                <target>Adres email jest już zajęty</target>
+                                              </trans-unit>
     </body>
   </file>
 </xliff>
