@@ -11,6 +11,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * Class CommentType.
@@ -39,6 +40,9 @@ class CommentType extends AbstractType
                 'attr' => [
                     'class' => 'form-control',
                     'rows' => 5,
+                ],
+                'constraints' => [
+                    new NotBlank(),
                 ],
             ]
         );

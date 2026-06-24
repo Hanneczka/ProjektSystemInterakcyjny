@@ -11,6 +11,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * Class CategoryType.
@@ -37,6 +38,9 @@ class CategoryType extends AbstractType
                 'label' => 'label.category',
                 'required' => true,
                 'attr' => ['max_length' => 64],
+                'constraints' => [
+                    new NotBlank(),
+                ],
             ]
         );
     }

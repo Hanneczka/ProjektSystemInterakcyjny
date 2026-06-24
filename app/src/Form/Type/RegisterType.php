@@ -15,6 +15,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * Class RegisterType.
@@ -51,6 +52,9 @@ class RegisterType extends AbstractType
                 'label' => 'label.name',
                 'required' => true,
                 'attr' => ['max_length' => 64],
+                'constraints' => [
+                    new NotBlank(),
+                ],
             ]
         );
 

@@ -15,6 +15,7 @@ use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use App\Entity\Category;
 use App\Form\DataTransformer\TagsDataTransformer;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 /**
  * Class ElementType.
@@ -51,6 +52,9 @@ class ElementType extends AbstractType
                     'label' => 'label.title',
                     'required' => true,
                     'attr' => ['max_length' => 64],
+                    'constraints' => [
+                        new NotBlank(),
+                    ],
                 ]
             )
             ->add(
